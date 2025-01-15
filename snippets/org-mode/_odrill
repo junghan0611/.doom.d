@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: org-drill
+# key: <ot
+# --
+
+** $1 :drill:
+$2
+*** Answer
+$3

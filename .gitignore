@@ -1,0 +1,13 @@
+.DS_Store
+.idea
+*.log
+tmp/
+custom.el
+flycheck_config.el
+assets/.aspell_en_personal
+local/*
+.aider*
+.env
+ccmenu
+modules
+user-keys.el

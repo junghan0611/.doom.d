@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: BEGIN_EXAMPLE
+# key: <ot
+# --
+#+BEGIN_EXAMPLE
+$1
+#+END_EXAMPLE

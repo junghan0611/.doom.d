@@ -1,0 +1,52 @@
+* The Daily End-of-day Evening Ritual                               :checkin:
+** TODO Evening Journal
+| Question to Self                                                                        | YES/NO + Notes |
+|-----------------------------------------------------------------------------------------+----------------|
+| Did I spend time aligned to my highlight today?                                         |                |
+| - Did I make progress towards my goals?                                                 |                |
+|-----------------------------------------------------------------------------------------+----------------|
+| Did I write code today?                                                                 |                |
+| - What does =tokei= say?                                                                |                |
+|-----------------------------------------------------------------------------------------+----------------|
+| Did I exercise today?                                                                   |                |
+| - Meditation?                                                                           |                |
+| - Flexibility or Cardio?                                                                |                |
+| - Strength training?                                                                    |                |
+| - If NO, can I do something to fix it right now?                                        |                |
+|-----------------------------------------------------------------------------------------+----------------|
+| How could I have made today even better?                                                |                |
+|-----------------------------------------------------------------------------------------+----------------|
+| What tactics did I try today for improving productivity?                                |                |
+|-----------------------------------------------------------------------------------------+----------------|
+| Moments that I really appreciated today and that I'm grateful for                       |                |
+|-----------------------------------------------------------------------------------------+----------------|
+| Situations or tasks that I handled well today                                           |                |
+|-----------------------------------------------------------------------------------------+----------------|
+| New Insights I realized or learned today                                                |                |
+|-----------------------------------------------------------------------------------------+----------------|
+| Something that would have made me feel more connected to others today would have been:  |                |
+|-----------------------------------------------------------------------------------------+----------------|
+| If I was my own high performance coach, I would tell myself this statement about today: |                |
+|-----------------------------------------------------------------------------------------+----------------|
+|                                                                                         |                |
+
+** TODO Daily Habits Scorecard
+- Notes:
+  - CLARITY can be thought of also as LASER. How focussed was I today?
+
+| Field        | Description                                                            | Score (1: bad, 5: great) |
+|--------------+------------------------------------------------------------------------+--------------------------|
+| CLARITY      | I knew my "why" and lived intentionally today.                         |                          |
+|--------------+------------------------------------------------------------------------+--------------------------|
+| PRODUCTIVITY | I worked on the things that mattered the most today.                   |                          |
+|--------------+------------------------------------------------------------------------+--------------------------|
+| ENERGY       | I managed my mental and physical energy well today.                    |                          |
+|--------------+------------------------------------------------------------------------+--------------------------|
+| INFLUENCE    | I guided or treated others well today.                                 |                          |
+|--------------+------------------------------------------------------------------------+--------------------------|
+| NECESSITY    | I felt it was necessary to be my best and made success "a must" today. |                          |
+|--------------+------------------------------------------------------------------------+--------------------------|
+| COURAGE      | I shared my real self, thoughts and feelings today.                    |                          |
+|--------------+------------------------------------------------------------------------+--------------------------|
+| SCORE        |                                                                        |                          |
+#+TBLFM: @8$3=vsum(@2$3..@-1$3)

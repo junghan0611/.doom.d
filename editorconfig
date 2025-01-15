@@ -1,0 +1,99 @@
+# -*- mode: editorconfig-conf; -*-
+# see http://editorconfig.org/
+
+# EditorConfig is awesome: https://EditorConfig.org
+# https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties
+
+# top-most EditorConfig file
+root = true
+
+# Unix-style newlines with a newline ending every file
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.md]
+trim_trailing_whitespace = false
+# 'wikidocs' : indent_size '4'
+indent_size = 4
+
+# Tab indentation (no size specified)
+[Makefile]
+indent_style = tab
+
+# Emacs Lisp style
+[*.el]
+charset = utf-8
+indent_style = space
+max_line_length = 80
+tab_width = 8
+
+# [*.rb]
+# charset = utf-8
+# indent_style = space
+# indent_size = 4
+
+# [*.{py,pl}]
+# charset = utf-8
+# indent_style = space
+# indent_size = 4
+
+# [*.{c,cc,cpp,h,hpp}]
+# indent_style = space
+# tab_width = 4
+# indent_size = 4
+
+# [*.{html,css,scss}]
+# indent_style = space
+# indent_size = 2
+# tab_width = 2
+# continuation_indent_size = 2
+# charset = utf-8
+
+# # Matches multiple files with brace expansion notation
+# # Set default charset
+# [*.{js,ts}]
+# charset = utf-8
+# indent_size = 2
+# tab_width = 2
+# continuation_indent_size = 2
+
+# # Indentation override for all JS under lib directory
+# [lib/**.js]
+# indent_style = space
+# indent_size = 2
+
+
+# [*.{json,yml,yaml}]
+# indent_style = space
+# indent_size = 2
+# insert_final_newline = ignore
+
+# [*.snip]
+# indent_style = tab
+# indent_size = 4
+# tab_width = 4
+
+# [*.rs]
+# indent_size = 4
+# indent_style = space
+
+# [*.{sh,zsh,bash}]
+# indent_size = 8
+# indent_style = tab
+
+# [*.go]
+# indent_size = 8
+# indent_style = tab
+
+# [*.toml]
+# indent_style = space
+# indent_size = 4
+
+# # Matches the exact files either package.json or .travis.yml
+# [{package.json,.travis.yml}]
+# indent_style = space
+# indent_size = 4

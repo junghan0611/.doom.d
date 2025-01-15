@@ -1,0 +1,25 @@
+GTD/BASB Templates for Emacs and Org-Mode
+
+* Reviews
+- [[https://gist.github.com/mwfogleman/94c8d1e2dee18d37cdd389f7ca0d839f][Daily Review Template]]
+- [[https://gist.github.com/mwfogleman/fbec1cc11f9eaac5e5d36b92c671ec8b][Weekly Review Template]]
+- [[https://gist.github.com/mwfogleman/b347d64a4fd600d3991ae85997d4d48e][Monthly Review Template]]
+- [[https://gist.github.com/mwfogleman/0b6ba3ba700994fd90670e4daab0c3fb][Annual Review Template]] (I don't usually do these in Emacs, but I've included them for the sake of completeness)
+
+As I've said [[https://twitter.com/mwfogleman/status/968287080634900482][on Twitter]], I don't actually necessarily perform these on a chronological basis.
+
+#+BEGIN_QUOTE
+Do you do GTD-style reviews?
+
+The reviews have chronological names but don't need to be performed on those schedules. Do them when you need reorientation at different levels:
+
+- daily: tasks
+- weekly: projects
+- monthly: goals
+- annual: vision
+#+END_QUOTE
+
+These are configured as capture templates, but I wrap them with Emacs Lisp functions so that they do things like fetching my most recent calendar data. I then call those functions with a hydra for easy and mnemonic binding. See the sections in my Emacs config on [[https://github.com/mwfogleman/.emacs.d/blob/master/michael.org#capture-templates][Capture Templates]] and [[https://github.com/mwfogleman/.emacs.d/blob/master/michael.org#reviews][Reviews]] for the full context on how I use these.
+* Project Templates
+- [[https://gist.github.com/mwfogleman/58db3efd064cd43c65cf5ba28a58f601][New Project Template]] (see [[https://orgmode.org/manual/Template-expansion.html#Template-expansion][The Org Manual: Template expansion]] for understanding the elements in this capture template)
+- [[https://gist.github.com/mwfogleman/f2db7fb2116108d08a760dfa8205540f][Project Completion Template]] (I use Yankpad for this so as to be able to insert it at point within a specific project)

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: BEGIN_QUOTE
+# key: _qt
+# --
+#+BEGIN_QUOTE
+$1
+#+END_QUOTE

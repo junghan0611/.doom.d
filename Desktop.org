@@ -1,0 +1,183 @@
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+OPTIONS: author:t broken-links:nil c:nil creator:nil
+#+OPTIONS: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:nil
+#+OPTIONS: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+OPTIONS: timestamp:t title:t toc:2 todo:t |:t
+#+TITLE: Scripts and configs to support tiling window managers including i3wm
+#+DATE: [2024-03-15 Fri 16:01]
+#+AUTHOR: Junghan Kim
+#+EMAIL: junghanacs@gmail.com
+#+LANGUAGE: ko
+#+SELECT_TAGS: export
+#+EXCLUDE_TAGS: noexport
+#+CREATOR: Emacs 29.2 with nativecomp
+# #+setupfile: ~/projects/emacs/org-themes/src/readtheorg_inline/readtheorg_inline.theme
+#+PROPERTY: header-args:emacs-lisp :results none
+#+PROPERTY: header-args:bash :results none :comments both :shebang #!/usr/bin/env bash
+
+[2024-03-15 Fri 16:02] 데스크톱 환경 설정 파일
+
+~/sync/man/dotsamples/vanilla/gregoryg-dotfiles-gpt/Desktop.org
+
+* OS Applications
+The shell scripts here expect certain applications to be installed, so let's take care
+of those
+** DONT Guix
+GNU Guix changes everything - packages will be added declaratively*
+** NEXT Debian and Ubuntu
+
+수정 해야 합니다.
+
+#+begin_src bash
+sudo apt update
+sudo apt -y install \
+    autorandr \
+    blueman \
+    cifs-utils \
+    cmake \
+    compton \
+    cowsay \
+    dbus-x11 \
+    discount \
+    dunst \
+    evdi-dkms \
+    feh \
+    flatpak \
+    font-manager \
+    fonts-hack \
+    fonts-opensymbol \
+    fonts-cantarell \
+    fonts-material-design-icons-iconfont \
+    fonts-firacode \
+    fortune-mod \
+    texlive-fonts-extra \
+    fonts-oxygen \
+    fonts-freefont-otf \
+    fortunes \
+    gcc \
+    git \
+    gwenview \
+    ipython3 \
+    jupyter \
+    libreoffice-gtk3 \
+    libnotify-bin \
+    libtool-bin \
+    lightdm \
+    keychain \
+    locate \
+    net-tools \
+    nm-tray \
+    network-manager-openvpn-gnome \
+    pdsh \
+    playerctl \
+    policykit-1-gnome \
+    polybar \
+    python3-venv \
+    qlipper \
+    ripgrep \
+    rofi \
+    ruby \
+    slick-greeter \
+    tree \
+    vlc \
+    wmctrl \
+    xdotool \
+    xfce4-mount-plugin \
+    xfce4-panel \
+    xfce4-power-manager-plugins \
+    xfce4-pulseaudio-plugin \
+    xfce4-screenshooter \
+    xfce4-whiskermenu-plugin \
+    xfconf \
+    xfce4-screensaver
+#+end_src
+** TODO i3wm설치
+** TODO neo4j ...
+* Desktop files to use with Albert / ulauncher / rofi
+** Assure directories are created before tangling
+#+begin_src bash
+mkdir -p ~/.local/share/applications ~/.local/share/pixmaps/
+sudo update-alternatives --install /usr/bin/x-www-browser x-www-browser /usr/bin/firefox 50
+#+end_src
+** Images referred to in the files below
+These images are to be placed in =~/.local/share/pixmaps/=
+
+Copy all images from the [[file:~/projects/emacs/emacs-gregoryg/emacs/pixmaps/][~/emacs/pixmaps]] directory
+#+begin_src bash :results none
+rsync -av ~/emacs/pixmaps/ ~/.local/share/pixmaps/
+#+end_src
+
+** GitHub
+#+begin_src bash  :tangle ~/.local/share/applications/github.desktop
+[Desktop Entry]
+Name=GitHub
+Comment=GitHub
+Exec=xdg-open https://github.com/junghan0611?tab=repositories
+Icon= /home/junghan/.local/share/pixmaps/github4.jpg
+Terminal=false
+Type=Application
+Categories=Development;Coding
+#+end_src
+
+#+RESULTS:
+
+** Neo4j Desktop
+#+begin_src conf :tangle ~/.local/share/applications/neo4j-desktop.desktop
+[Desktop Entry]
+Name=Neo4j Desktop
+Comment=
+Exec=/usr/local/bin/neo4j-desktop
+Icon= /home/junghan/.local/share/pixmaps/neo4j-desktop.png
+Terminal=false
+Type=Application
+Categories=Database;
+#+end_src
+** Stardog Documentation
+#+begin_src conf :tangle ~/.local/share/applications/stardog.desktop
+[Desktop Entry]
+Name=Dog Docs
+Comment=
+Exec=xdg-open https://docs.stardog.com/
+Icon= /home/junghan/.local/share/pixmaps/stardog-logo.png
+Terminal=false
+Type=Application
+Categories=Docs
+#+end_src
+** Vterm
+Emacs vterm!
+#+begin_src conf :tangle ~/.local/share/applications/vterm.desktop
+[Desktop Entry]
+Name=Emacs Vterm
+Comment=Terminal
+Exec=/usr/local/bin/emacsclient -e '(vterm)'
+Icon= /home/junghan/.local/share/pixmaps/cool-terminal.jpeg
+Terminal=true
+Type=Application
+Categories=System;TerminalEmulator
+#+end_src
+** Stardog Studio
+#+begin_src conf :tangle ~/.local/share/applications/stardog-studio.desktop
+[Desktop Entry]
+Name=Stardog Studio
+Comment=
+Exec=xdg-open http://localhost:8888/
+Icon= /home/junghan/.local/share/pixmaps/stardog-logo.png
+Terminal=false
+Type=Application
+Categories=Database;Graph;dh
+#+end_src
+** Suspend laptop
+   #+begin_src conf :tangle ~/.local/share/applications/suspend-laptop.desktop
+     [Desktop Entry]
+     Name=Suspend / Sleep
+     Comment=Sleepytime
+     # Exec=/usr/bin/systemctl suspend
+     Exec=systemctl suspend
+     Icon= /home/junghan/.local/share/pixmaps/sleepy-stars.png
+     Terminal=false
+     Type=Application
+     Categories=System
+   #+end_src
+** TODO DoomEmacs
+** TODO Junghanacs
+** TODO ...

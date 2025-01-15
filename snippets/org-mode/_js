@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: SRC js
+# key: _js
+# --
+#+BEGIN_SRC js :results output
+$1
+#+END_SRC

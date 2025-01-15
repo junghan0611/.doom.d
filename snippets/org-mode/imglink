@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+#name : imglink
+#key : imglink
+#contributor : junghan
+# --
+
+#+attr_org: :width 400px
+[[file:$0]]

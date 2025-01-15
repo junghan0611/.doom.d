@@ -1,0 +1,31 @@
+;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8; mode: lisp-data -*-
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+((".doom.d" (filename . "/home/junghan/.doom.d/")
+ (front-context-string . "config.el\n  -rw-")
+ (rear-context-string . "024-09-10 21:14 ") (position . 1149)
+ (last-modified 26336 42379 87715 900000))
+("org/notes" (filename . "/home/junghan/sync/org/notes/")
+ (front-context-string . "images/\n  drwxrw")
+ (rear-context-string . "024-06-18 12:52 ") (position . 70)
+ (last-modified 26335 50806 465036 692000))
+("isamert emacs dotfiles"
+ (filename
+  . "/home/junghan/sync/man/dotsamples/vanilla/isamert-dotfiles-imdb/emacs/init.el")
+ (front-context-string . "                ")
+ (rear-context-string . "lock-is-active)\n") (position . 523882)
+ (last-modified 26330 8027 667090 36000))
+("ews-emacs" (filename . "/home/junghan/sync/emacs/")
+ (front-context-string . "ews-emacs/\n  drw")
+ (rear-context-string . "024-08-23 12:06 ") (position . 615)
+ (last-modified 26312 137 185811 810000))
+("SAVED" (filename . "~/.doom.d/config.el")
+ (front-context-string . "         (\"C-<f6")
+ (rear-context-string . " . bm-previous)\n") (position . 70580)
+ (last-modified 26100 2964 704192 139000))
+("doom config.el" (filename . "~/.doom.d/config.el")
+ (front-context-string . ";; BM - Bookmark")
+ (rear-context-string . "\n;;; Reading\n\n;;") (position . 68439)
+ (last-modified 26100 2249 37238 997000))
+)

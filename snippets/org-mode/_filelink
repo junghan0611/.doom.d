@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : org-filelink
+#key : <ot
+#contributor : junghan
+# --
+[[file:$1::$2][$3]]$0

@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: hugo-frontmatter
+# key: hfm
+# --
+#+author: junghanacs
+#+hugo_publishdate: `(format-time-string "%Y-%m-%dT%T%z")`
+#+date: `(format-time-string "%Y-%m-%dT%T%z")`
+#+hugo_auto_set_lastmod: t
+#+filetags: $1
+#+toc: headlines 3
+#+draft: false
+#+hugo_section: ${2:post}
+#+hugo_custom_front_matter: :summary "I NEED A SUMMARY"

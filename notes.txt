@@ -1,0 +1,67 @@
+
+- [X] denote
+- [X] journal with clocking
+- [ ] SPC D Diff/Compare
+- [ ] SPC C Capture
+- [ ] SPC i a : abbrev
+- [X] C-` vterm-toggle
+- [X] car
+
+
+그룹 1은 잠재적 판구 간격 앞에 있는 문자를 포함하고 그룹 2는 그 뒤에 있는 문자를
+포함합니다. 그룹 1과 그룹 2가 모두 공백이 아닌 경우 공백이 필요합니다. 그룹 3은
+제외된 문자에 대한 해결 방법으로 존재합니다. Rx는 두 개의 정규식을 동시에
+만족하는 텍스트 일치를 지원하지 않으므로(구두점은 제외하고 모든 중국어 2바이트
+문자를 일치시키고자 함), 먼저 제외된 문자를 일치시킨 다음 판구 간격이 필요한
+문자를 일치시키려고 합니다. 제외된 문자는 그룹 3에 일치시키고 중국어 문자에 대한
+일치를 건너뛰게 됩니다. 따라서 판구 공백이 필요한 경우 그룹 1과 그룹 2는 모두
+nil이 아닙니다.
+
+
+git/org 이게 좋은 패스 정책일 수도 있겠다.
+
+ (setq org-directory "~/git/org")
+ (setq org-default-notes-file "~/git/org/refile.org")
+
+
+# org-capture
+
+daytree 적극 활용.
+근데 노랑님은 사용안했다.
+
++ 't' 오늘 날짜에 todo 생성
+Fleeting point
+
+
++ 2024-01-19 outline evil-collection 키를 크래프트처럼 사용하자.
+
+    (exercism :toggle (not (or *is-windows* my/remote-server IS-TERMUX)))
+
+
++ Useful Command
+
+- M-g M-l 'git-link
+- M-g l 'toggle-line-number
+
+
++ Useful Evil
+
+- zu 'outline-up-heading
+=> C-S-k 'outline-up-heading
+
++ Heading Navigation
+
+++ evil 은 gj gk gh 으로 매핑
+++ zu 는 outline-up-heading 이다.
+++ z와 g는 중요하다.
+
+
++ Applications
+
+
+git
+evil
+editing
+feed
+language
+

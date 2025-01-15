@@ -1,0 +1,113 @@
+#+title: README
+#+date: <2024-02-15 Thu>
+#+author: junghanacs
+
+
+
+* TLDR
+
+[2025-01-15 Wed 09:43]
+
+- Daily uses Dotfiles - Doomemacs
+- Emacs 30.0.93
+
+* Screenshot
+[2025-01-15 Wed 09:42]
+
+[[file:assets/20250115T093818--doomdashboard.png]]
+
+* References
+** Agzam Doom Emacs config and custom modules
+
+#+begin_src sh :results raw
+git clone git@github.com:agzam/.doom.d.git
+# git submodule update --init --recursive
+#+end_src
+
+After 10 years of standard Emacs keybindings this was a big jump.
+
+Enjoy and be patient if traveling the same waters.
+
+[[file:docs/README.org][Learn more about Doom and Evil]]
+
+[[file:docs/try-this-out.org][Do you want to try this out?]]
+
+** Wanderson Ferreira - Evil Doom
+
+April 30, 2022
+
+Doom Emacs + Evil mode. I'm enjoying a lot. After 10 years of standard Emacs
+keybindings this was a big jump. Enjoy and be patient if traveling the same
+waters.
+
+[[file:docs/README.org][Learn more about Doom and Evil]]
+
+[[file:docs/try-this-out.org][Do you want to try this out?]]
+
+
+** Practicalli Doom Emacs Config
+
+A personal configuration for Doom Emacs with a focus on creating a similar key binding and menu experience to that of Spacemacs, as [[https://jr0cket.co.uk/2015/08/spacemacs-first-impressions-from-an-emacs-driven-developer.html][Practicalli has used Spacemacs since 2015]].
+
+*** To Archive
+
+Practicalli is not actively developing this configuration, although it should be
+useable with current versions of Doom Emacs and Emacs 28 onward as it is mostly
+key binding configuration.
+
+*** Overview
+
+Doom Emacs default key bindings have been changed significantly and further
+changes will be made as this project evolves. Therefore this configuration is
+probably not directly applicable for those already comfortable with the Doom
+Emacs maintainers workflow (although there are quite a few commonalities).
+
+둠 이맥스의 기본 키 바인딩이 크게 변경되었으며 이 프로젝트가 발전함에 따라 추가
+변경이 이루어질 예정입니다. 따라서 이 구성은 (몇 가지 공통점이 있긴 하지만) 이미
+Doom Emacs 유지관리자 워크플로에 익숙한 사용자에게는 직접 적용되지 않을 수도
+있습니다.
+
+*** Notable key binding changes
+
+~+bindings.el~ contains all the additonal, remapped and delete Doom key bindings
+to provide a more mnemonic menu. Module specific configurations may also contain
+key bindings that override the Doom defaults.
+
+The most noticalbe key bindings changed from the Doom Emacs defaults include:
+
+~,~ is set to local leader and ~SPC~ remains the leader key
+
+~SPC TAB~ jumps to previous buffer
+
+~SPC l TAB~ jumps to previously selected workspace (layout in Spacemacs terms)
+
+~SPC g s~ opens Magit status (rather than stage hunk at point)
+
+~fd~ alternative key binding to pressing ~ESC~ key
+
+*** Org-mode [1/2]
+
+- [-] Pretty checkboxes [1/2]
+  - [X] Added code from practicalli/spacemacs.d
+  - [ ] Review why checkbox icons not being used
+- [ ] Review org-mode key bindings
+  - [ ]  ~, b d~ to add code blocks via babel demarcate
+
+*** Screencasts
+
+~SPC t k~ to enable ~keycast-mode~ which shows key bindings and commands in the
+modeline as you type, exspecially useful for screencasts (or to learn what
+commands the key bindings are calling)
+
+*** Git
+
+For Commit message buffer Doom key binding kept rather than use Spacemacs:
+
+- ~Z Z~ rather than ~, ,~ to confirm the message and commit
+- ~Z Q~ rather than ~, k~ to cancel the message without commit
+
+*** Clojure
+
+~+clojure.el~ configuration overrides many CIDER variables defined in the clojure Doom module, as well as adding keybindings similar to the Spacemacs Clojure layer.
+
+lisp/

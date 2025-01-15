@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: BEGIN_COMMENT
+# key: <ot
+# --
+#+BEGIN_COMMENT
+$1
+#+END_COMMENT

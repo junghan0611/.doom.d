@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: The Check-in Template
+# key: checkin
+# --
+
+* The Daily Ongoing Check-in   :noexport:
+$0 Capture your generic check-in here
