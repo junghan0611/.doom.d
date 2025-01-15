@@ -112,10 +112,10 @@
 (defun my/org-links-file () (my/expand-org-file-name "20230219T035500--links.org"))
 
 (defun my/org-mobile-file () (my/expand-org-file-name "agenda/20240312T111900--mobile.org")) ;; agenda
+(defun my/org-quote-file () (my/expand-org-file-name "agenda/20240312T031200--quote.org"))
 
 (defun my/org-diary-file () (my/expand-org-file-name "20220101T010100--diary.org"))
 (defun my/org-drill-file () (my/expand-org-file-name "20240124T164402--drill.org"))
-(defun my/org-quote-file () (my/expand-org-file-name "20240312T031200--quote.org"))
 (defun my/org-life-file () (my/expand-org-file-name "20240327T112315--life.org"))
 (defun my/org-elfeed-file () (my/expand-org-file-name "20220706T160000--elfeed.org"))
 

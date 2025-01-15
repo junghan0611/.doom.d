@@ -179,7 +179,8 @@
             (denote heading (denote-keywords-prompt) 'org)
             (insert text)))))
 
-  ;; TODO 아직 미완성
+  ;; Backlogged Project는  작업 목록에 있으나 아직 시작되지 않은 프로젝트입니다.
+  ;; Closed Project는 완료되어 더 이상 작업이 필요 없는 프로젝트입니다.  즉, 상태의 차이입니다.
   (defvar my/denote-keywords
     '(("aprj" . "Active Project")
       ("bprj" . "Backlogged Project")

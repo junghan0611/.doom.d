@@ -229,7 +229,7 @@
   :defer 3
   :commands (modus-themes-toggle)
   :init
-  (setq modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted))
+  (setq modus-themes-to-toggle '(modus-operandi modus-vivendi-tinted))
   :config
   (setq modus-themes-italic-constructs nil
         modus-themes-bold-constructs t
