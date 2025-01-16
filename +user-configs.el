@@ -3617,47 +3617,47 @@ ${content}"))
     ) ; progn gptel-quick
   )
 
-;;;;; gptel with citations
+;;;;; DONT gptel with citations
 
-(after! gptel
-  ;;--------------------------------------------------------------------------------
-  ;; Workaround: show citations
-  ;;--------------------------------------------------------------------------------
-  (cl-defmethod gptel-curl--parse-stream ((_backend gptel-openai) _info)
-    (let* ((content-strs)
-           (citations-strs (or (plist-get _info :citations-strs) '()))  ;; 从 info 中获取 citations-strs
-           (citations-added (plist-get _info :citations-added)))  ;; 从 info 中获取 citations-added
-      (condition-case nil
-          (while (re-search-forward "^data:" nil t)
-            (save-match-data
-              (unless (looking-at " *\\[DONE\\]")
-                (let* ((response (gptel--json-read))
-                       (delta (map-nested-elt
-                               response '(:choices 0 :delta)))
-                       (content (plist-get delta :content))
-                       (citations (plist-get response :citations)))
-                  (push content content-strs)
-                  (unless citations-added
-                    (when citations
-                      (setq citations-strs
-                            (let ((index 0))
-                              (concat "Citations:\n"
-                                      (mapconcat (lambda (citation)
-                                                   (setq index (1+ index))
-                                                   (format "[%d] %s \n" index citation))
-                                                 citations)
-                                      "\n")))
-                      (plist-put _info :citations-strs citations-strs)  ;; 更新 info 中的 citations-strs
-                      (plist-put _info :citations-added t)  ;; 更新 info 中的 citations-added
-                      ))
-                  ))))
-        (error
-         (goto-char (match-beginning 0))))
-      (apply #'concat (append (unless citations-added
-                                (list citations-strs))
-                              (nreverse content-strs)
-                              ))))
-  )
+;; (after! gptel
+;;   ;;--------------------------------------------------------------------------------
+;;   ;; Workaround: show citations
+;;   ;;--------------------------------------------------------------------------------
+;;   (cl-defmethod gptel-curl--parse-stream ((_backend gptel-openai) _info)
+;;     (let* ((content-strs)
+;;            (citations-strs (or (plist-get _info :citations-strs) '()))  ;; 从 info 中获取 citations-strs
+;;            (citations-added (plist-get _info :citations-added)))  ;; 从 info 中获取 citations-added
+;;       (condition-case nil
+;;           (while (re-search-forward "^data:" nil t)
+;;             (save-match-data
+;;               (unless (looking-at " *\\[DONE\\]")
+;;                 (let* ((response (gptel--json-read))
+;;                        (delta (map-nested-elt
+;;                                response '(:choices 0 :delta)))
+;;                        (content (plist-get delta :content))
+;;                        (citations (plist-get response :citations)))
+;;                   (push content content-strs)
+;;                   (unless citations-added
+;;                     (when citations
+;;                       (setq citations-strs
+;;                             (let ((index 0))
+;;                               (concat "Citations:\n"
+;;                                       (mapconcat (lambda (citation)
+;;                                                    (setq index (1+ index))
+;;                                                    (format "[%d] %s \n" index citation))
+;;                                                  citations)
+;;                                       "\n")))
+;;                       (plist-put _info :citations-strs citations-strs)  ;; 更新 info 中的 citations-strs
+;;                       (plist-put _info :citations-added t)  ;; 更新 info 中的 citations-added
+;;                       ))
+;;                   ))))
+;;         (error
+;;          (goto-char (match-beginning 0))))
+;;       (apply #'concat (append (unless citations-added
+;;                                 (list citations-strs))
+;;                               (nreverse content-strs)
+;;                               ))))
+;;   )
 
 ;;;; DONT DALL-E
 
@@ -5083,46 +5083,44 @@ Suitable for `imenu-create-index-function'."
 
 ;;;;; nov
 
-;; (use-package! nov
-;;   :mode ("\\.epub\\'" . nov-mode)
-;;   :hook (nov-mode . visual-line-mode)
-;;   ;; :hook (nov-mode . visual-fill-column-mode)
-;;   :init
-;;   (require 'shr)
-;;   (require 'shr-color)
-;;   :config
-;;   (map! :map nov-mode-map
-;;         :n "RET" #'nov-scroll-up)
+;; evil-collection/modes/nov/evil-collection-nov.el
+(use-package! nov
+  :mode ("\\.epub\\'" . nov-mode)
+  :commands (nov-org-link-follow nov-org-link-store)
+  :init
+  (with-eval-after-load 'org
+    (org-link-set-parameters "nov"
+                             :follow 'nov-org-link-follow
+                             :store 'nov-org-link-store))
+  :config
+  (map! :map nov-mode-map
+        :n "RET" #'nov-scroll-up
+        :n "d" 'nov-scroll-up
+        :n "u" 'nov-scroll-down)
 
-;;   ;; (advice-add 'nov-render-title :override #'ignore)
+  (defun +nov-mode-setup ()
+    "Tweak nov-mode to our liking."
+    (face-remap-add-relative 'variable-pitch
+                             :family "Pretendard Variable"
+                             :height 1.2
+                             :width 'semi-expanded)
+    (face-remap-add-relative 'default :height 1.0)
+    (variable-pitch-mode 1)
+    (setq-local line-spacing 0.2
+                ;; next-screen-context-lines 4
+                shr-use-colors nil)
+    (when (featurep 'hl-line-mode)
+      (hl-line-mode -1))
+    (when (featurep 'font-lock-mode)
+      (font-lock-mode -1))
+    ;; Re-render with new display settings
+    (nov-render-document)
+    ;; Look up words with the dictionary.
+    (add-to-list '+lookup-definition-functions #'+lookup/dictionary-definition))
+  (add-hook 'nov-mode-hook #'+nov-mode-setup 80)
 
-;;   ;; (defun +nov-mode-setup ()
-;;   ;;   "Tweak nov-mode to our liking."
-;;   ;;   (face-remap-add-relative 'variable-pitch
-;;   ;;                            :family "Pretendard Variable"; "Merriweather"
-;;   ;;                            :height 1.1 ; 1.4
-;;   ;;                            :width 'semi-expanded)
-;;   ;;   (face-remap-add-relative 'default :height 1.0) ; 1.3
-;;   ;;   (variable-pitch-mode 1)
-;;   ;;   (setq-local ;; line-spacing 0.2
-;;   ;;    next-screen-context-lines 4
-;;   ;;    shr-use-colors nil)
-
-;;   ;;   (when (require 'visual-fill-column nil t)
-;;   ;;     (setq-local visual-fill-column-center-text t
-;;   ;;                 visual-fill-column-width 64
-;;   ;;                 nov-text-width 106)
-;;   ;;     (visual-fill-column-mode 1))
-
-;;   ;;   (when (featurep 'hl-line-mode)
-;;   ;;     (hl-line-mode -1))
-
-;;   ;;   ;; Re-render with new display settings
-;;   ;;   (nov-render-document)
-;;   ;;   ;; Look up words with the dictionary.
-;;   ;;   (add-to-list '+lookup-definition-functions #'+lookup/dictionary-definition))
-;;   ;; (add-hook 'nov-mode-hook #'+nov-mode-setup)
-;;   )
+  (setq font-lock-global-modes '(not nov-mode))
+  )
 
 ;;;; :app anddo for todo
 

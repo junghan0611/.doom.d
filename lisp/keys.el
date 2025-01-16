@@ -558,19 +558,6 @@
     (define-key map (kbd "C-c C-d R") #'denote-dired-rename-marked-files-using-front-matter))
   )
 
-;;;; nov for epub
-
-(when (locate-library "nov")
-  (with-eval-after-load 'nov
-    (evil-define-key 'normal nov-mode-map (kbd "H") 'nov-previous-document)
-    (evil-define-key 'normal nov-mode-map (kbd "L") 'nov-next-document)
-    (evil-define-key 'normal nov-mode-map (kbd "[") 'nov-previous-document)
-    (evil-define-key 'normal nov-mode-map (kbd "]") 'nov-next-document)
-    (evil-define-key 'normal nov-mode-map (kbd "d") 'nov-scroll-up)
-    (evil-define-key 'normal nov-mode-map (kbd "u") 'nov-scroll-down)
-    (evil-define-key 'normal nov-mode-map (kbd "J") 'nov-scroll-up)
-    (evil-define-key 'normal nov-mode-map (kbd "K") 'nov-scroll-down)))
-
 ;;;; outli
 
 (when (locate-library "outli")
