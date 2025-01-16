@@ -13,6 +13,35 @@
 ;;              ;; (eval . (org-hugo-auto-export-mode))
 ;;              ))
 
+;;;; org-export
+
+;; localauthor-dotfiles-zk/my-lisp/gr-org-extras.el
+;; org-export-before-processing-hook는 매크로, Babel 코드, 및 include 키워드의 확장이 이루어지기 전에 호출됩니다.
+;; org-export-before-parsing-hook는 버퍼가 파싱되기 전에 호출됩니다.
+
+;; (add-hook 'org-export-before-processing-functions (lambda (backend) (org-update-all-dblocks)))
+;; (add-hook 'org-export-before-parsing-functions (lambda (backend) (org-update-all-dblocks)))
+
+;;;; my/org-update-all-dblocks
+
+(progn
+  (defun my/org-update-all-dblocks ()
+    (interactive)
+    (save-excursion
+      (goto-char 0)
+      (org-update-all-dblocks)
+      ))
+
+  (defun my/org-update-all-dblocks-on-directory (directory)
+    "Export all Org files in the specified DIRECTORY to Markdown using `org-hugo-export-to-md`."
+    (interactive "DSelect directory: ")
+    (let ((org-files (directory-files-recursively directory "\\.org\\'")))
+      (dolist (org-file org-files)
+        (with-current-buffer (find-file-noselect org-file)
+          (my/org-update-all-dblocks)
+          ))))
+  )
+
 ;;;; my/denote-link-export
 
 ;; (require 'ox)

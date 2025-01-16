@@ -1501,22 +1501,26 @@ window."
   :doc "Bibliograpic functions keymap."
 
   "b" #'org-cite-insert
-  "c" #'citar-open
-  "d" #'citar-dwim
-  "e" #'citar-open-entry
 
-  "a" #'citar-denote-add-citekey
+  "c" #'citar-open
+
+  "d" #'citar-denote-dwim
+  ;; "e" #'citar-open-entry
+  "e" #'citar-denote-open-reference-entry
+
+  "a" #'citar-denote-add-reference
   "1" #'citar-denote-find-citation ;; grep [cite @xxx]
 
   "i" #'citar-insert-citation
   "n" #'citar-create-note
-  "o" #'citar-open-note
+  "o" #'citar-denote-open-note
   "O" #'citar-open-links
 
   "f" #'citar-denote-find-reference
   "l" #'citar-denote-link-reference
-  ;; "e" #'citar-denote-open-reference-entry
-  ;; "k" #'citar-denote-remove-citekey
+
+  "s" #'citar-denote-create-silo-note
+  "k" #'citar-denote-remove-reference
   )
 
 (defvar-keymap ews-annotate-map
@@ -1561,6 +1565,8 @@ window."
   "l" #'my/insert-hugo-lastmod-time-stamp
   "o" #'my/org-open-exported-markdown-in-hugo-content
   "E" #'my/org-hugo-export-directory
+  "u" #'my/org-update-all-dblocks
+  "U" #'my/org-update-all-dblocks-on-directory
   "c" #'my/denote-convert-note-to-blog-draft
   "p" #'my/denote-convert-blog-ready-to-hugo
 
