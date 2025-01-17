@@ -4275,7 +4275,7 @@ ${content}"))
 (unless IS-TERMUX
   (add-hook 'after-setting-font-hook #'my/emoji-set-font))
 
-;;;; DONT Fontaine
+;;;; Fontaine
 
 ;; Read the manual: <https://protesilaos.com/emacs/fontaine>
 
@@ -4296,7 +4296,7 @@ ${content}"))
   :if window-system
   :init
   ;; This is defined in Emacs C code: it belongs to font settings.
-  (setq x-underline-at-descent-line t)
+  ;; (setq x-underline-at-descent-line nil)
   ;; And this is for Emacs28.
   (setq-default text-scale-remap-header-line t)
 
@@ -4392,6 +4392,27 @@ ${content}"))
   ;;   (my/load-font-cjk))
   ;; (add-hook 'doom-load-theme-hook 'my/fontaine-apply-current-preset 80)
   )
+
+;;;; Show Font (preview fonts)
+
+;; Read the manual: <https://protesilaos.com/emacs/show-font>
+(use-package! show-font
+  :if (display-graphic-p)
+  :commands (show-font-select-preview show-font-list)
+  :config
+  ;; These are the defaults, but I keep them here for easier access.
+  (setq show-font-pangram 'prot)
+  (setq show-font-character-sample
+        "
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+abcdefghijklmnopqrstuvwxyz
+0123456789   !@#$¢%^&*~|
+`'\"‘’“”.,;:  ()[]{}—-_+=<>
+
+()[]{}<>«»‹› 6bB8&0ODdoa 1tiIlL|\/
+!ij c¢ 5$Ss 7Z2z 9gqp nmMNNMW uvvwWuuw
+x×X .,·°;:¡!¿?`'‘’   ÄAÃÀ TODO
+"))
 
 ;;;; doom-modeline
 
@@ -4810,7 +4831,11 @@ Suitable for `imenu-create-index-function'."
   :init
   (global-hl-line-mode +1)
   :config
-  (setq lin-face 'lin-blue)
+  ;; You can use this to live update the face:
+  ;; (customize-set-variable 'lin-face 'lin-green)
+  ;; Or `setopt' on Emacs 29: (setopt lin-face 'lin-yellow)
+  ;; I still prefer `setq' for consistency.
+  (setq lin-face 'lin-cyan);; blue
   (lin-global-mode 1))
 
 ;;;; DONT my/switch-themes-toggle

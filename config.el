@@ -512,18 +512,23 @@
   ;; :if window-system
   :hook (server-after-make-frame . spacious-padding-mode)
   :init
-  ;; (setq spacious-padding-subtle-mode-line t)
+  ;; Read the doc string of `spacious-padding-subtle-mode-line' as it is very
+  ;; flexible.
+  (setq spacious-padding-subtle-mode-line
+        '( :mode-line-active spacious-padding-subtle-mode-line-active
+           :mode-line-inactive spacious-padding-subtle-mode-line-inactive))
   (setq spacious-padding-widths
-        '(:internal-border-width 15 ; 15
+        '(:internal-border-width 15 ; 30
           :header-line-width 4
-          :mode-line-width 4 ; 6
+          :mode-line-width 6
           :tab-width 4
-          :right-divider-width 15 ; 30
+          :right-divider-width 30
           :scroll-bar-width 8
-          :fringe-width 10)) ; 8
+          :left-fringe-width 20
+          :right-fringe-width 20))
   (add-hook 'doom-load-theme-hook #'spacious-padding-mode)
   :config
-  (remove-hook 'doom-init-ui-hook #'window-divider-mode)
+  ;; (remove-hook 'doom-init-ui-hook #'window-divider-mode)
   ;; (blink-cursor-mode t)
   ;; (when (fboundp 'tooltip-mode) (tooltip-mode 1))
   ;; (when (fboundp 'tool-bar-mode) (tool-bar-mode 1))

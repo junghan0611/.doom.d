@@ -133,8 +133,7 @@
 
 (package! ef-themes)
 (package! modus-themes)
-;; (package! show-font :recipe (:host github :repo "protesilaos/show-font" :branch "main"))
-
+(package! show-font)
 ;; (package! hammy)
 
 (package! info+)
