@@ -99,7 +99,17 @@ org-mode
 (shell "#+begin_src bash :results scalar replace :exports both :tangle yes" n> q n> "#+end_src" n>)
 (rpgs "[[abbr-plural:20221009T115226][RPGs]]")
 (rpg "[[abbr:20221009T115226][RPGs]]")
-(dtoday "[[denote:" (format-time-string "%Y%m%dT000000") "][" (format-time-string "%Y-%m-%d") "]]")
+
+;; (dtoday "[[denote:" (format-time-string "%Y%m%dT000000") "][" (format-time-string "%Y-%m-%d") "]]") ; for daily journal
+
+(dtoday "[[denote:"
+        (format-time-string "%Y%m%dT000000"
+                            (org-journal--convert-time-to-file-type-time
+                             (time-subtract (current-time)
+                                            (* 3600 org-extend-today-until))))
+        "]["
+        (format-time-string "%Y-%m-%d W%W") "]]") ; for weekly journal
+
 (Today "[[date:" (format-time-string "%Y-%m-%d") "][Today]]")
 (did (format-time-string "%Y%m%dT"))
 ;; (tor "[[https://takeonrules.com][Take on Rules]]")
