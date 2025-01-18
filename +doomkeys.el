@@ -1253,6 +1253,59 @@
 ;;                 :desc "Runner Warnings" "w" #'kaocha-runner-show-warnings
 ;;                 :desc "Kaocha Runner" "h" #'kaocha-runner-hide-windows)))
 
+;;;; global map
+
+(map!
+ (:after
+  consult
+  ;; C-c bindings (mode-specific-map
+  "C-c m" #'consult-mode-command
+  "C-c b" #'consult-bookmark
+  "C-c k" #'consult-kmacro
+  ;; C-x bindings (ctl-x-map
+  "C-x M-:" #'consult-complex-command ;; orig#'repeat-complex-command
+  "C-x b" #'consult-buffer ;; orig#'switch-to-buffer
+  "C-x 4 b" #'consult-buffer-other-window ;; orig#'switch-to-buffer-other-window
+  "C-x 5 b" #'consult-buffer-other-frame ;; orig#'switch-to-buffer-other-frame
+  ;; Custom M-# bindings for fast register access
+  "M-#" #'consult-register-load
+  "M-'" #'consult-register-store ;; orig#'abbrev-prefix-mark (unrelated
+  ;; ("C-M-#" #'consult-register ; ugly
+  "M-`" #'consult-register ; default tmm-menubar
+  ;; Other custom bindings
+  "M-y" #'consult-yank-pop ;; orig#'yank-pop
+  ;; M-g bindings (goto-map
+  "M-g E" #'consult-compile-error
+  "M-g f" #'consult-flymake ;; Alternative: consult-flycheck
+  "M-g g" #'consult-goto-line ;; orig#'goto-line
+  ;; ("M-g M-g" #'consult-goto-line           ;; orig#'goto-line
+  "M-g o" #'consult-outline ;; Alternative: consult-org-heading
+  "M-g m" #'consult-mark
+  "M-g k" #'consult-global-mark
+  "M-g i" #'consult-imenu
+  "M-g I" #'consult-imenu-multi
+  ;; M-s bindings (search-map
+  "M-s b" #'consult-buffer
+  "M-s f" #'consult-find
+  "M-s F" #'my/consult-fd
+  "M-s L" #'consult-locate
+  "M-s g" #'consult-grep
+  "M-s G" #'consult-git-grep
+  "M-s K" #'consult-git-log-grep
+  "M-s r" #'consult-ripgrep
+  "M-s l" #'consult-line
+  "M-s m" #'consult-line-multi
+  "M-s k" #'consult-keep-lines
+  "M-s u" #'consult-focus-lines
+  ;; Isearch integration
+  "M-s e" #'consult-isearch-history
+  ;; :map minibuffer-local-map ("M-r" #''consult-history ; doom's default C-s
+  ;; :map read-expression-map ("M-r" #''consult-history
+  (:map isearch-mode-map
+        "M-e" #'consult-isearch-history ;; orig#'isearch-edit-string
+        "M-s e" #'consult-isearch-history ;; orig#'isearch-edit-string
+        "M-s l" #'consult-line))
+ )
 
 ;;;; smartparens-mode-map
 
@@ -1502,14 +1555,36 @@
 
 ;;;; vertico-map
 
+;; (setq consult--customize-alist nil)
+
+(consult-customize
+ +default/search-project +default/search-other-project
+ +default/search-project-for-symbol-at-point
+ +default/search-cwd +default/search-other-cwd
+ +default/search-notes-for-symbol-at-point
+ +default/search-emacsd
+ :preview-key '("C-SPC" :debounce 0.3 "<up>" "<down>" "M-j" "M-k"))
+
+(consult-customize
+ consult-ripgrep consult-git-grep consult-grep
+ consult-bookmark consult-recent-file
+ consult--source-recent-file consult--source-project-recent-file consult--source-bookmark
+ :preview-key '("C-SPC"
+                :debounce 0.3 "<up>" "<down>" "M-j" "M-k"))
+
 (map! :map vertico-map
       ;; "C-'" #'vertico-quick-insert
       ;; "C-h" #'vertico-directory-delete-word
       ;; "C-c C-g" #'vertico-grid-mode
       ;; "M-h" #'vertico-grid-left
       ;; "M-l" #'vertico-grid-right
-      ;; "M-j" #'vertico-next
-      ;; "M-k" #'vertico-previous
+
+      "M-j" #'vertico-next
+      "M-k" #'vertico-previous
+
+      ;; "M-S-j" #'vertico-scroll-up
+      ;; "M-S-k" #'vertico-scroll-down
+
       ;; "C-e" #'vertico-scroll-up
       ;; "C-y" #'vertico-scroll-down
       ;; "]" #'vertico-next-group
@@ -1518,7 +1593,7 @@
       ;; "C-/" #'vertico-jump-root
       ;; "C-?" #'vertico-jump-sudo
       ;; "M-m" #'embark-select
-      "C-S-SPC" #'embark-preview+
+      ;; "C-S-SPC" #'embark-preview+
       )
 
 ;;;; DONT gptel - pbalille

@@ -321,11 +321,12 @@
       (custom-set-faces
        `(consult-separator ((,c :inherit default :foreground ,yellow-intense)))
        `(consult-notes-time ((,c :inherit default :foreground ,cyan-intense)))
-       `(ekg-notes-mode-title ((,c :inherit outline-1 :weight bold :height 1.0)))
-       `(ekg-title ((,c :inherit outline-2 :weight semibold :height 1.0 :underline t)))
-       `(ekg-tag ((,c :background ,bg-yellow-nuanced :box (:line-width 1 :color ,fg-dim) :foreground ,fg-main :style nil))) ; prose-tag
-       `(ekg-resource ((,c :inherit outline-7 :weight regular :height 1.0 :underline t)))
-       `(ekg-metadata ((,c :inherit outline-1 :weight regular :height 1.0)))
+
+       ;; `(ekg-notes-mode-title ((,c :inherit outline-1 :weight bold :height 1.0)))
+       ;; `(ekg-title ((,c :inherit outline-2 :weight semibold :height 1.0 :underline t)))
+       ;; `(ekg-tag ((,c :background ,bg-yellow-nuanced :box (:line-width 1 :color ,fg-dim) :foreground ,fg-main :style nil))) ; prose-tag
+       ;; `(ekg-resource ((,c :inherit outline-7 :weight regular :height 1.0 :underline t)))
+       ;; `(ekg-metadata ((,c :inherit outline-1 :weight regular :height 1.0)))
 
        `(org-list-dt ((,c :foreground ,fg-main :weight bold))) ;; 2025-01-14
 
@@ -443,57 +444,58 @@
     (interactive)
     ;; (message "ef-themes-post-load-hook : my-ef-themes-custom-faces")
     (ef-themes-with-colors
-     (custom-set-faces
-      `(consult-separator ((,c :inherit default :foreground ,yellow)))
-      `(consult-notes-time ((,c :inherit default :foreground ,cyan)))
-      `(ekg-notes-mode-title ((,c :inherit outline-1 :weight bold :height 1.0)))
-      `(ekg-title ((,c :inherit outline-2 :weight semibold :height 1.0 :underline t)))
-      `(ekg-tag ((,c :background ,bg-yellow-subtle :box (:line-width 1 :color ,fg-dim) :foreground ,fg-main :style nil))) ; prose-tag
-      `(ekg-resource ((,c :inherit outline-7 :weight regular :height 1.0 :underline t)))
-      `(ekg-metadata ((,c :inherit outline-1 :weight regular :height 1.0)))
+      (custom-set-faces
+       `(consult-separator ((,c :inherit default :foreground ,yellow)))
+       `(consult-notes-time ((,c :inherit default :foreground ,cyan)))
 
-      ;; `(org-link ((,c :inherit link :weight bold)))
-      ;; `(denote-faces-link ((,c :inherit link :weight bold :slant italic)))
-      ;; `(org-agenda-diary ((,c :inherit org-agenda-calendar-sexp :foreground ,fg-main :weight semibold)))
+       ;; `(ekg-notes-mode-title ((,c :inherit outline-1 :weight bold :height 1.0)))
+       ;; `(ekg-title ((,c :inherit outline-2 :weight semibold :height 1.0 :underline t)))
+       ;; `(ekg-tag ((,c :background ,bg-yellow-subtle :box (:line-width 1 :color ,fg-dim) :foreground ,fg-main :style nil))) ; prose-tag
+       ;; `(ekg-resource ((,c :inherit outline-7 :weight regular :height 1.0 :underline t)))
+       ;; `(ekg-metadata ((,c :inherit outline-1 :weight regular :height 1.0)))
 
-      `(org-list-dt ((,c :foreground ,fg-main :weight bold))) ;; 2025-01-14
-      `(org-tag ((,c :background ,bg-yellow-subtle :box (:line-width 1 :color ,fg-dim) :foreground ,fg-main :style nil))) ; prose-tag
-      `(diredp-file-name ((,c :foreground ,fg-main)))
+       ;; `(org-link ((,c :inherit link :weight bold)))
+       ;; `(denote-faces-link ((,c :inherit link :weight bold :slant italic)))
+       ;; `(org-agenda-diary ((,c :inherit org-agenda-calendar-sexp :foreground ,fg-main :weight semibold)))
 
-      `(tab-bar ((,c :background ,bg-tab-bar)))
-      `(tab-bar-tab-group-current ((,c :inherit bold :background ,bg-tab-current :box (:line-width -2 :color ,bg-tab-current) :foreground ,fg-alt)))
-      `(tab-bar-tab-group-inactive ((,c :background ,bg-tab-bar :box (:line-width -2 :color ,bg-tab-bar) :foreground ,fg-alt)))
-      `(tab-bar-tab ((,c :inherit bold :box (:line-width -2 :color ,bg-tab-current) :background ,bg-tab-current)))
-      `(tab-bar-tab-inactive ((,c :box (:line-width -2 :color ,bg-tab-other) :background ,bg-tab-other)))
-      `(tab-bar-tab-ungrouped ((,c :inherit tab-bar-tab-inactive)))
+       `(org-list-dt ((,c :foreground ,fg-main :weight bold))) ;; 2025-01-14
+       `(org-tag ((,c :background ,bg-yellow-subtle :box (:line-width 1 :color ,fg-dim) :foreground ,fg-main :style nil))) ; prose-tag
+       `(diredp-file-name ((,c :foreground ,fg-main)))
 
-      ;; `(keycast-command ((,c :inherit ef-themes-ui-variable-pitch :background ,bg-main :foreground ,fg-main :weight semibold)))
-      ;; `(keycast-command ((,c :inherit default :height 0.9)))
-      `(fringe ((,c :background ,bg-dim)))
-      `(org-mode-line-clock ((,c :inherit bold :foreground ,modeline-info)))
-      `(org-mode-line-clock-overrun ((,c :inherit bold :foreground ,modeline-err)))
-      `(jinx-misspelled ((,c :underline (:style wave :color ,magenta-cooler))))
-      ;; `(ten-id-face ((,c :inherit font-lock-keyword-face :underline (:style double-line :color ,cyan))))
-      )
-     (setq hl-todo-keyword-faces
-           `(("HOLD" . ,yellow)
-             ("TODO" . ,red)
-             ("NEXT" . ,blue)
-             ("THEM" . ,magenta)
-             ("PROG" . ,cyan-warmer)
-             ("OKAY" . ,green-warmer)
-             ("DONT" . ,yellow-warmer)
-             ("FAIL" . ,red-warmer)
-             ("BUG" . ,red-warmer)
-             ("DONE" . ,green)
-             ("NOTE" . ,blue-warmer)
-             ("KLUDGE" . ,cyan)
-             ("HACK" . ,cyan)
-             ("TEMP" . ,red)
-             ("FIXME" . ,red-warmer)
-             ("XXX+" . ,red-warmer)
-             ("REVIEW" . ,red)
-             ("DEPRECATED" . ,yellow))))
+       `(tab-bar ((,c :background ,bg-tab-bar)))
+       `(tab-bar-tab-group-current ((,c :inherit bold :background ,bg-tab-current :box (:line-width -2 :color ,bg-tab-current) :foreground ,fg-alt)))
+       `(tab-bar-tab-group-inactive ((,c :background ,bg-tab-bar :box (:line-width -2 :color ,bg-tab-bar) :foreground ,fg-alt)))
+       `(tab-bar-tab ((,c :inherit bold :box (:line-width -2 :color ,bg-tab-current) :background ,bg-tab-current)))
+       `(tab-bar-tab-inactive ((,c :box (:line-width -2 :color ,bg-tab-other) :background ,bg-tab-other)))
+       `(tab-bar-tab-ungrouped ((,c :inherit tab-bar-tab-inactive)))
+
+       ;; `(keycast-command ((,c :inherit ef-themes-ui-variable-pitch :background ,bg-main :foreground ,fg-main :weight semibold)))
+       ;; `(keycast-command ((,c :inherit default :height 0.9)))
+       `(fringe ((,c :background ,bg-dim)))
+       `(org-mode-line-clock ((,c :inherit bold :foreground ,modeline-info)))
+       `(org-mode-line-clock-overrun ((,c :inherit bold :foreground ,modeline-err)))
+       `(jinx-misspelled ((,c :underline (:style wave :color ,magenta-cooler))))
+       ;; `(ten-id-face ((,c :inherit font-lock-keyword-face :underline (:style double-line :color ,cyan))))
+       )
+      (setq hl-todo-keyword-faces
+            `(("HOLD" . ,yellow)
+              ("TODO" . ,red)
+              ("NEXT" . ,blue)
+              ("THEM" . ,magenta)
+              ("PROG" . ,cyan-warmer)
+              ("OKAY" . ,green-warmer)
+              ("DONT" . ,yellow-warmer)
+              ("FAIL" . ,red-warmer)
+              ("BUG" . ,red-warmer)
+              ("DONE" . ,green)
+              ("NOTE" . ,blue-warmer)
+              ("KLUDGE" . ,cyan)
+              ("HACK" . ,cyan)
+              ("TEMP" . ,red)
+              ("FIXME" . ,red-warmer)
+              ("XXX+" . ,red-warmer)
+              ("REVIEW" . ,red)
+              ("DEPRECATED" . ,yellow))))
     (when (locate-library "spacious-padding")
       (spacious-padding-mode +1))
     ;; (setq ring-bell-function 'jf/pulse)
@@ -518,14 +520,14 @@
         '( :mode-line-active spacious-padding-subtle-mode-line-active
            :mode-line-inactive spacious-padding-subtle-mode-line-inactive))
   (setq spacious-padding-widths
-        '(:internal-border-width 15 ; 30
+        '(:internal-border-width 15
           :header-line-width 4
           :mode-line-width 6
-          :tab-width 4
-          :right-divider-width 30
+          :tab-width 6 ; sync mode-line-width for keycast-tab-bar
+          :right-divider-width 20 ; 30
           :scroll-bar-width 8
-          :left-fringe-width 20
-          :right-fringe-width 20))
+          :fringe-width 20 ;; 8
+          ))
   (add-hook 'doom-load-theme-hook #'spacious-padding-mode)
   :config
   ;; (remove-hook 'doom-init-ui-hook #'window-divider-mode)
@@ -1812,7 +1814,7 @@ INFO is a plist used as a communication channel."
   :commands (consult-omni-transient consult-omni-multi)
   :custom
   (consult-omni-show-preview t) ;;; show previews
-  (consult-omni-preview-key '("M-." "C-SPC")) ;;; set the preview key to C-SPC
+  ;; (consult-omni-preview-key '("M-." "C-SPC")) ;;; set the preview key to C-SPC
   (consult-omni-default-page 0) ;;; set the default page (default is 0 for the first page)
   :bind
   (("M-g w" . consult-omni)
@@ -2291,6 +2293,8 @@ the next chapter, open Dired so you can find it manually."
 ;;;; ccmenu: context-menu with casual
 
 (when (display-graphic-p) ;; gui
+
+  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup)
   (require 'ccmenu))
 
 ;;;; Terminal Mode

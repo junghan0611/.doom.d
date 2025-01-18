@@ -112,12 +112,6 @@
   (define-key vertico-map (kbd "DEL")   'vertico-directory-delete-char)
   (define-key vertico-map (kbd "M-DEL") 'vertico-directory-delete-word)
 
-  ;; added 2025-01-10
-  (define-key vertico-map (kbd "M-j") #'vertico-next)
-  (define-key vertico-map (kbd "M-k") #'vertico-previous)
-  (define-key vertico-map (kbd "M-S-j") #'vertico-scroll-up)
-  (define-key vertico-map (kbd "M-S-k") #'vertico-scroll-down)
-
   ;; default map
   (define-key vertico-map (kbd "C-j") #'vertico-next)
   (define-key vertico-map (kbd "C-k") #'vertico-previous)
@@ -126,8 +120,6 @@
   (define-key vertico-map (kbd "C-M-j") #'vertico-next-group)
   (define-key vertico-map (kbd "C-M-k") #'vertico-previous-group)
 
-  ;; (define-key vertico-map (kbd "C-n") #'spacemacs/next-candidate-preview)
-  ;; (define-key vertico-map (kbd "C-p") #'spacemacs/previous-candidate-preview)
 
   (unless (display-graphic-p) ; terminal
     (define-key vertico-map (kbd "M-<return>") #'vertico-exit-input))

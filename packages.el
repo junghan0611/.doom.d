@@ -153,6 +153,8 @@
 (package! celestial-mode-line)
 (package! lin)
 (package! nerd-icons-dired)
+(package! nerd-icons-completion) ; vertico +icons
+
 (package! dired-preview)
 
 (package! dired+)

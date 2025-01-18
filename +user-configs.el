@@ -776,55 +776,55 @@
 
 ;;; :completion corfu vertico
 
-;;;; vertico
+;;;; DONT vertico
 
-(after! vertico
-  (require 'vertico)
-  ;; (setq vertico-resize 'grow-only) ; doom nil
+;; (after! vertico
+;;   (require 'vertico)
+;;   ;; (setq vertico-resize 'grow-only) ; doom nil
 
-  (defun spacemacs/embark-preview ()
-    "Previews candidate in vertico buffer, unless it's a consult command"
-    (interactive)
-    (unless (bound-and-true-p consult--preview-function)
-      (save-selected-window
-        (let ((embark-quit-after-action nil))
-          (embark-dwim)))))
+;;   (defun spacemacs/embark-preview ()
+;;     "Previews candidate in vertico buffer, unless it's a consult command"
+;;     (interactive)
+;;     (unless (bound-and-true-p consult--preview-function)
+;;       (save-selected-window
+;;         (let ((embark-quit-after-action nil))
+;;           (embark-dwim)))))
 
-;;;###autoload
-  (defun spacemacs/next-candidate-preview (&optional n)
-    "Go forward N candidates and preview"
-    (interactive)
-    (vertico-next (or n 1))
-    ;; (+vertico/embark-preview)
-    (spacemacs/embark-preview)
-    )
+;; ;;;###autoload
+;;   (defun spacemacs/next-candidate-preview (&optional n)
+;;     "Go forward N candidates and preview"
+;;     (interactive)
+;;     (vertico-next (or n 1))
+;;     (+vertico/embark-preview)
+;;     ;; (spacemacs/embark-preview)
+;;     )
 
-;;;###autoload
-  (defun spacemacs/previous-candidate-preview (&optional n)
-    "Go backward N candidates and preview"
-    (interactive)
-    (vertico-previous (or n 1))
-    ;; (+vertico/embark-preview)
-    (spacemacs/embark-preview)
-    )
-  )
+;; ;;;###autoload
+;;   (defun spacemacs/previous-candidate-preview (&optional n)
+;;     "Go backward N candidates and preview"
+;;     (interactive)
+;;     (vertico-previous (or n 1))
+;;     (+vertico/embark-preview)
+;;     ;; (spacemacs/embark-preview)
+;;     )
+;;   )
 
-(unless IS-TERMUX
-  (require 'vertico-buffer)
+;; (unless IS-TERMUX
+;;   (require 'vertico-buffer)
 
-  ;; vertico on Top
-  (setq vertico-buffer-display-action
-        `(display-buffer-in-side-window
-          (window-height . ,(+ 3 vertico-count)) (side . top)))
-  (vertico-mode +1)
-  (vertico-buffer-mode +1)
+;;   ;; vertico on Top
+;;   (setq vertico-buffer-display-action
+;;         `(display-buffer-in-side-window
+;;           (window-height . ,(+ 3 vertico-count)) (side . top)))
+;;   (vertico-mode +1)
+;;   (vertico-buffer-mode +1)
 
-  ;; sachac-dotfiles/Sacha.org
-  (with-eval-after-load 'vertico-multiform
-    (add-to-list 'vertico-multiform-categories '(embark-keybinding grid)))
-  )
+;;   ;; sachac-dotfiles/Sacha.org
+;;   (with-eval-after-load 'vertico-multiform
+;;     (add-to-list 'vertico-multiform-categories '(embark-keybinding grid)))
+;;   )
 
-;;;; TODO vertico hangul
+;;;; DONT vertico hangul
 
 ;; from ohyecloudy
 ;; vertico는 =post-command-hook= 을 사용해서 증분 완성(incremental completion)을
@@ -832,96 +832,38 @@
 ;; 한글은 =post-command-hook= 이 호출되지 않는다. helm 동작 방법을 참고해
 ;; timer를 돌려서 해결했다.
 
-(after! vertico
-  (defun my/vertico-setup-then-remove-post-command-hook (&rest args)
-    "vertico--setup 함수에서 추가하는 post-command-hook을 제거한다.
+;; (after! vertico
+;;   (defun my/vertico-setup-then-remove-post-command-hook (&rest args)
+;;     "vertico--setup 함수에서 추가하는 post-command-hook을 제거한다.
 
-     입력 조합으로 표현하는 한글 입력시 post-command-hook이 입력되지 않는다.
-     한글 증분 완성을 위해 timer로 호출하기 때문에 제거한다"
-    (remove-hook 'post-command-hook #'vertico--exhibit 'local))
+;;      입력 조합으로 표현하는 한글 입력시 post-command-hook이 입력되지 않는다.
+;;      한글 증분 완성을 위해 timer로 호출하기 때문에 제거한다"
+;;     (remove-hook 'post-command-hook #'vertico--exhibit 'local))
 
-  (defun my/vertico-exhibit-with-timer (&rest args)
-    "타이머를 넣어 타이머 이벤트 발생시 vertico--exhibit을 호출해 미니버퍼 완성(completion) 후보 리스트를 갱신한다
+;;   (defun my/vertico-exhibit-with-timer (&rest args)
+;;     "타이머를 넣어 타이머 이벤트 발생시 vertico--exhibit을 호출해 미니버퍼 완성(completion) 후보 리스트를 갱신한다
 
-     post-command-hook이 발동하지 않는 한글 입력시에도 한글 증분 완성을 하기 위해 timer를 사용한다"
-    (let (timer)
-      (unwind-protect
-          (progn
-            (setq timer
-                  (run-with-idle-timer
-                   0.01 'repeat
-                   (lambda ()
-                     (with-selected-window (or (active-minibuffer-window)
-                                               (minibuffer-window))
-                       (vertico--exhibit)))))
-            (apply args))
-        (when timer
-          (cancel-timer timer)))))
+;;      post-command-hook이 발동하지 않는 한글 입력시에도 한글 증분 완성을 하기 위해 timer를 사용한다"
+;;     (let (timer)
+;;       (unwind-protect
+;;           (progn
+;;             (setq timer
+;;                   (run-with-idle-timer
+;;                    0.01 'repeat
+;;                    (lambda ()
+;;                      (with-selected-window (or (active-minibuffer-window)
+;;                                                (minibuffer-window))
+;;                        (vertico--exhibit)))))
+;;             (apply args))
+;;         (when timer
+;;           (cancel-timer timer)))))
 
-  (advice-add
-   #'vertico--setup
-   :after #'my/vertico-setup-then-remove-post-command-hook)
-  (advice-add #'vertico--advice :around #'my/vertico-exhibit-with-timer))
+;;   (advice-add
+;;    #'vertico--setup
+;;    :after #'my/vertico-setup-then-remove-post-command-hook)
+;;   (advice-add #'vertico--advice :around #'my/vertico-exhibit-with-timer))
 
 ;;;; custom consult
-
-;; from spacemacs
-(use-package! consult
-  ;; Replace bindings. Lazily loaded due by `use-package'.
-  ;; :init
-  ;; disable automatic preview by default,
-  ;; selectively enable it for some prompts below.
-  ;; (setq consult-preview-key '("M-." "C-SPC")) ; default any
-  :bind
-  ( ;; C-c bindings (mode-specific-map)
-   ("C-c m" . consult-mode-command)
-   ("C-c b" . consult-bookmark)
-   ("C-c k" . consult-kmacro)
-   ;; C-x bindings (ctl-x-map)
-   ("C-x M-:" . consult-complex-command) ;; orig. repeat-complex-command
-   ("C-x b" . consult-buffer) ;; orig. switch-to-buffer
-   ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
-   ("C-x 5 b" . consult-buffer-other-frame) ;; orig. switch-to-buffer-other-frame
-   ;; Custom M-# bindings for fast register access
-   ("M-#" . consult-register-load)
-   ("M-'" . consult-register-store) ;; orig. abbrev-prefix-mark (unrelated)
-   ;; ("C-M-#" . consult-register) ; ugly
-   ("M-`" . consult-register) ; default tmm-menubar
-   ;; Other custom bindings
-   ("M-y" . consult-yank-pop) ;; orig. yank-pop
-   ;; M-g bindings (goto-map)
-   ("M-g E" . consult-compile-error)
-   ("M-g f" . consult-flymake) ;; Alternative: consult-flycheck
-   ("M-g g" . consult-goto-line) ;; orig. goto-line
-   ;; ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
-   ("M-g o" . consult-outline) ;; Alternative: consult-org-heading
-   ("M-g m" . consult-mark)
-   ("M-g k" . consult-global-mark)
-   ("M-g i" . consult-imenu)
-   ("M-g I" . consult-imenu-multi)
-   ;; M-s bindings (search-map)
-   ("M-s b" . consult-buffer)
-   ("M-s f" . consult-find)
-   ("M-s F" . my/consult-fd)
-   ("M-s L" . consult-locate)
-   ("M-s g" . consult-grep)
-   ("M-s G" . consult-git-grep)
-   ("M-s K" . consult-git-log-grep)
-   ("M-s r" . consult-ripgrep)
-   ("M-s l" . consult-line)
-   ("M-s m" . consult-line-multi)
-   ("M-s k" . consult-keep-lines)
-   ("M-s u" . consult-focus-lines)
-   ;; Isearch integration
-   ("M-s e" . consult-isearch-history)
-   ;; :map minibuffer-local-map ("M-r" . 'consult-history) ; doom's default C-s
-   ;; :map read-expression-map ("M-r" . 'consult-history)
-   :map
-   isearch-mode-map
-   ("M-e" . consult-isearch-history) ;; orig. isearch-edit-string
-   ("M-s e" . consult-isearch-history) ;; orig. isearch-edit-string
-   ("M-s l" . consult-line)) ;; needed by consult-line to detect isearch
-  ) ;; end-of use-package!
 
 (after! consult
   ;; replace "." search with consul-line in Evil normal state
@@ -933,6 +875,8 @@
   ;; (map! :leader
   ;;       :g "j i" #'consult-line
   ;;       :g "j I" #'consult-buffer)
+
+  ;; +default/search-cwd
 
   (defun my/consult-find ()
     (interactive)
@@ -964,9 +908,10 @@
     (interactive)
     (my/compleseus-search t default-directory))
 
-  (consult-customize
-   +default/search-cwd-symbol-at-point
-   :preview-key '("M-." "C-SPC"))
+  ;; /home/junghan/sync/man/dotsamples/doom/lemon-dot-doom/config.el
+  ;; (consult-customize
+  ;;  +default/search-cwd-symbol-at-point
+  ;;  :preview-key '("M-." "C-SPC"))
 
   ;; (consult-customize
   ;;  consult-theme
@@ -4490,7 +4435,8 @@ x×X .,·°;:¡!¿?`'‘’   ÄAÃÀ TODO
 
 (use-package! doom-themes
   ;; improve integration w/ org-mode
-  :hook (doom-load-theme . doom-themes-org-config)
+  :hook ((doom-load-theme . doom-themes-org-config)
+         (doom-load-theme . doom-themes-visual-bell-config))
   :init
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic nil) ; if nil, italics is universally disabled

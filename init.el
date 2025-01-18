@@ -75,8 +75,8 @@
 ;; :input
 (doom! :completion
        (corfu +orderless +icons +dabbrev)
-       ;; (vertico +icons) ; search engine of the future
-       vertico
+       ;; (vertico +icons)
+       vertico ;; search engine of the future
 
        :ui
        doom              ; what makes DOOM look the way it does

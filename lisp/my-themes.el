@@ -46,16 +46,15 @@
   (interactive)
 
   (when (my/doom-p)
-    (message "load-custom-set-faces->doom-themes")
-
     (custom-set-faces
-     ;; `(internal-border ((t (:background ,(doom-color 'bg-alt) ))))
+     ;; `(ekg-notes-mode-title ((t :inherit outline-1 :weight bold :height 1.0)))
+     ;; `(ekg-title ((t :inherit outline-2 :weight semibold :height 1.0 :underline t)))
+     ;; `(ekg-tag ((t :background ,(doom-blend 'yellow 'bg 0.1) :box (:line-width 1 :color ,(doom-color 'bg-alt)) :foreground ,(doom-color 'fg) :style nil))) ; prose-tag
+     ;; `(ekg-resource ((t :inherit outline-7 :weight regular :height 1.0 :underline t)))
+     ;; `(ekg-metadata ((t :inherit outline-1 :weight regular :height 1.0)))
 
-     `(ekg-notes-mode-title ((t :inherit outline-1 :weight bold :height 1.0)))
-     `(ekg-title ((t :inherit outline-2 :weight semibold :height 1.0 :underline t)))
-     `(ekg-tag ((t :background ,(doom-blend 'yellow 'bg 0.1) :box (:line-width 1 :color ,(doom-color 'bg-alt)) :foreground ,(doom-color 'fg) :style nil))) ; prose-tag
-     `(ekg-resource ((t :inherit outline-7 :weight regular :height 1.0 :underline t)))
-     `(ekg-metadata ((t :inherit outline-1 :weight regular :height 1.0)))
+     `(corfu-default ((t (:inherit tooltip))))
+     `(corfu-current ((t (:background ,(doom-color 'bg) :foreground ,(doom-color 'fg)))))
 
      `(tab-bar ((t (:background ,(doom-color 'bg-alt) :foreground ,(doom-color 'fg) :weight semibold))))
      `(tab-bar-tab ((t (:inherit tab-bar-tab :background ,(doom-color 'bg) :box (:color ,(doom-color 'bg-alt)) :foreground ,(doom-color 'yellow) :underline ,(doom-color 'yellow) :weight bold))))
@@ -91,8 +90,6 @@
 
     (when (locate-library "spacious-padding")
       (spacious-padding-mode +1))
-
-    ;; (doom-themes-visual-bell-config)
     ) ; end-of doom-themes
 
   ;; useless
@@ -202,20 +199,19 @@
 (defvar my/light-themes
   '(
     doom-homage-white
+    doom-flatwhite
     ;; doom-acario-light
     ;; doom-opera-light
-    doom-flatwhite
-    doom-tomorrow-day
-    doom-gruvbox-light
+    ;; doom-tomorrow-day
+    ;; doom-gruvbox-light
     ))
 
 (defvar my/dark-themes
   '(
     ;; doom-one ;; Grayish theme with great colors.
-    ;; doom-Iosvkem ;; Nice dark theme with good contrast.
     doom-dracula
-    doom-gruvbox
-    ;; doom-zenburn
+    doom-zenburn
+    ;; doom-gruvbox
     ))
 
 ;;; provide
