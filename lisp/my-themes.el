@@ -53,8 +53,8 @@
      ;; `(ekg-resource ((t :inherit outline-7 :weight regular :height 1.0 :underline t)))
      ;; `(ekg-metadata ((t :inherit outline-1 :weight regular :height 1.0)))
 
-     `(corfu-default ((t (:inherit tooltip))))
-     `(corfu-current ((t (:background ,(doom-color 'bg) :foreground ,(doom-color 'fg)))))
+     ;; `(corfu-default ((t (:inherit tooltip))))
+     ;; `(corfu-current ((t (:background ,(doom-color 'bg) :foreground ,(doom-color 'fg)))))
 
      `(tab-bar ((t (:background ,(doom-color 'bg-alt) :foreground ,(doom-color 'fg) :weight semibold))))
      `(tab-bar-tab ((t (:inherit tab-bar-tab :background ,(doom-color 'bg) :box (:color ,(doom-color 'bg-alt)) :foreground ,(doom-color 'yellow) :underline ,(doom-color 'yellow) :weight bold))))

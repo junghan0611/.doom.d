@@ -226,7 +226,6 @@
 ;;;; modus-themes
 
 (use-package! modus-themes
-  :defer 3
   :commands (modus-themes-toggle)
   :init
   (setq modus-themes-to-toggle '(modus-operandi modus-vivendi-tinted))
@@ -411,23 +410,20 @@
   :config
   (setq ef-themes-light-themes
         '(
-          ef-reverie ; pink and spacemacs-light
           ef-maris-light ; blue
-          ef-elea-light ; green
           ef-eagle ; yellow
-          ;; Basics:
-          ;; ef-summer ef-cyprus ef-kassio ef-spring ef-day ef-light ef-duo-light ef-frost ef-trio-light ef-arbutus ef-melissa-light
+          ef-kassio ; pink
+          ef-frost ; green
+          ef-spring
           ))
   (setq ef-themes-dark-themes
         '(;; new style
           ef-melissa-dark ;; Like solarized but much nicer colors.
-          ef-cherie ;; like ef-summer but dark. Black and purple.
           ef-dream ; 보라 - 드라큘라
           ef-rosa ; 자주
           ef-maris-dark
           ef-elea-dark
           ef-owl ; 2024-08-19 new
-          ;; Basics:
           ;; ef-bio ef-trio-dark ef-autumn ef-dark ef-duo-dark ef-night ef-winter ef-symbiosis
           ))
 
@@ -991,7 +987,7 @@
   (defun my/load-global-mode-string ()
     (interactive)
 
-    (message "my/load-global-mode-string")
+    ;; (message "my/load-global-mode-string")
     (when (not (bound-and-true-p display-time-mode))
       (display-time-mode t))
 
@@ -1006,6 +1002,8 @@
     (when (string= (system-name) "jhnuc")
       (keycast-tab-bar-mode +1))
 
+    ;; load modus-themes
+    (modus-themes-toggle)
     )
 
   (add-hook 'doom-after-init-hook #'my/load-global-mode-string 80)
@@ -1018,7 +1016,7 @@
 (defun my/open-workspaces ()
   (interactive)
 
-  (message "my/open-workspaces")
+  ;; (message "my/open-workspaces")
   (+workspace/new-named "git")
   (find-file user-project-directory)
 
@@ -1030,8 +1028,8 @@
   ;; (bh/switch-to-scratch)
 
   (+workspace/switch-to-0) ;; main
-  (find-file (concat denote-directory "notes")) ; for denote-dired excerpt
-  (evil-window-vsplit)
+  ;; (find-file (concat denote-directory "notes")) ; for denote-dired excerpt
+  ;; (evil-window-vsplit)
   (my/denote-random-note-from-directory (concat denote-directory "notes"))
 
   (setq org-agenda-file org-user-agenda-files) ; reset
@@ -1045,7 +1043,7 @@
   ;; (tab-bar-select-tab 1)
   )
 
-;; (add-hook 'doom-first-input-hook #'my/open-workspaces)
+(add-hook 'doom-first-input-hook #'my/open-workspaces)
 
 ;;; tab-line-mode on emacs-30
 
@@ -2127,19 +2125,6 @@ INFO is a plist used as a communication channel."
     ;;  )
     )
 
-;;;;; cloure-essential-ref-nov
-
-  (use-package! clojure-essential-ref-nov
-    :after cider
-    :init
-    (setq clojure-essential-ref-default-browse-fn #'clojure-essential-ref-nov-browse)
-    (setq clojure-essential-ref-nov-epub-path "~/Documents/Book/Clojure_The_Essential_Reference_v31.epub")
-    ;; :config
-    ;; (with-eval-after-load 'cider
-    ;;   (evil-define-key '(insert normal) cider-mode-map (kbd "C-0") 'clojure-essential-ref)
-    ;;   (evil-define-key '(insert normal) cider-repl-mode-map (kbd "C-0") 'clojure-essential-ref))
-    )
-
 ;;;;; clj-deps-new
 
   (use-package! clj-deps-new
@@ -2162,6 +2147,20 @@ INFO is a plist used as a communication channel."
   ;;   :config
   ;;   ;; enable Kaocha test runner
   ;;   (setq clojure-enable-kaocha-runner t))
+
+;;;;; DONT cloure-essential-ref-nov
+
+  ;; (use-package! clojure-essential-ref-nov
+  ;;   :after cider
+  ;;   :init
+  ;;   (setq clojure-essential-ref-default-browse-fn #'clojure-essential-ref-nov-browse)
+  ;;   (setq clojure-essential-ref-nov-epub-path "~/Documents/Book/Clojure_The_Essential_Reference_v31.epub")
+  ;;   ;; :config
+  ;;   ;; (with-eval-after-load 'cider
+  ;;   ;;   (evil-define-key '(insert normal) cider-mode-map (kbd "C-0") 'clojure-essential-ref)
+  ;;   ;;   (evil-define-key '(insert normal) cider-repl-mode-map (kbd "C-0") 'clojure-essential-ref))
+  ;;   )
+
 
 ;;;;; DONT Clojure helper functions
 

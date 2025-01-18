@@ -183,18 +183,19 @@ append to it, while separating multiple outputs with
 ;;      ))
 ;;   (find-file filename))
 
+;;;###autoload
 (defun my/denote-find-file ()
   "Open a denote file. Interactively ask which file to open with completion."
   (interactive)
   ;; 한글 입력을 위한 input method 설정
   ;; (set-input-method 'korean-hangul)
-
   ;; 파일명 입력받기
   (let ((filename (denote-file-prompt)))
     (find-file filename)))
 
 ;;;; my/denote-grep
 
+;;;###autoload
 (defun my/denote-grep ()
   "Search within my notes."
   (interactive)

@@ -75,12 +75,12 @@
    doom-big-font (font-spec :family "Monoplex KR Nerd" :size 23.0))
   (setq doom-variable-pitch-font (font-spec :family "Pretendard Variable" :size 14.0))
   (setq doom-unicode-font (font-spec :family "Symbola" :size 14.0))
-  ;; (setq doom-font (font-spec :family "Sarasa Term K" :size 15.1)
-  ;;       doom-big-font (font-spec :family "Sarasa Term K" :size 24.0))
+  ;; (setq doom-font (font-spec :family "Sarasa Term K Nerd Font" :size 15.1)
+  ;;       doom-big-font (font-spec :family "Sarasa Term K Nerd Font" :size 21.1))
   )
 
 (unless (display-graphic-p) ; terminal
-  (setq doom-font (font-spec :family "Monoplex KR Nerd" :size 14.0)))
+  (setq doom-font (font-spec :family "Sarasa Term K Nerd Font" :size 15.1)))
 
 ;;;; Hangul Korean
 
@@ -116,10 +116,12 @@
  input-method-verbose-flag nil
  input-method-highlight-flag nil)
 
-(global-set-key (kbd "<S-SPC>") 'toggle-input-method)
+;; (global-set-key (kbd "<S-SPC>") 'toggle-input-method)
 ;; (global-set-key (kbd "<Alt_R>") 'toggle-input-method)
 (global-set-key (kbd "<Hangul>") 'toggle-input-method)
-;; (global-unset-key (kbd "S-SPC"))
+(global-set-key (kbd "<menu>") 'toggle-input-method) ;; caps lock as <menu>
+(add-hook 'context-menu-mode-hook '(lambda () (define-key context-menu-mode-map (kbd "<menu>") #'toggle-input-method)))
+(global-unset-key (kbd "S-SPC"))
 
 ;; +------------+------------+
 ;; | 일이삼사오 | 일이삼사오 |
@@ -362,10 +364,9 @@
   (mapc
    (lambda (mode)
      (let ((keymap (intern (format "evil-%s-state-map" mode))))
-       (define-key
-        (symbol-value keymap) (kbd "<Hangul>") #'block-toggle-input-method)
-       (define-key
-        (symbol-value keymap) (kbd "S-SPC") #'block-toggle-input-method)))
+       (define-key (symbol-value keymap) (kbd "<Hangul>") #'block-toggle-input-method)
+       ;; (define-key (symbol-value keymap) (kbd "S-SPC") #'block-toggle-input-method)
+       (define-key (symbol-value keymap) (kbd "<menu>") #'block-toggle-input-method)))
    '(motion normal visual))
 
   ;; ;;;###autoload
@@ -902,20 +903,25 @@
                 (read-directory-name "Start from directory: "))))
       (consult-ripgrep default-directory initial-input)))
 
-;;;###autoload
-  (defun +default/search-cwd-symbol-at-point ()
+  (defun my/search-cwd-symbol-at-point ()
     "Search current folder."
     (interactive)
     (my/compleseus-search t default-directory))
 
-  ;; /home/junghan/sync/man/dotsamples/doom/lemon-dot-doom/config.el
-  ;; (consult-customize
-  ;;  +default/search-cwd-symbol-at-point
-  ;;  :preview-key '("M-." "C-SPC"))
+  ;; (setq consult--customize-alist nil)
+  (consult-customize
+   +default/search-project +default/search-other-project
+   +default/search-project-for-symbol-at-point
+   +default/search-cwd +default/search-other-cwd
+   +default/search-notes-for-symbol-at-point
+   +default/search-emacsd
 
-  ;; (consult-customize
-  ;;  consult-theme
-  ;;  :preview-key '("M-." "C-SPC" :debounce 3.0 any))
+   my/search-cwd-symbol-at-point
+
+   consult-ripgrep consult-git-grep ;; consult-grep
+   consult-bookmark consult-recent-file
+   consult--source-recent-file consult--source-project-recent-file consult--source-bookmark
+   :preview-key '("C-SPC" :debounce 0.3 "<up>" "<down>" "M-j" "M-k"))
   )
 
 ;;;; corfu
@@ -3024,6 +3030,7 @@ ${content}"))
   (add-hook 'org-mode-hook (lambda ()
                              ;; (setq denote-rename-buffer-backlinks-indicator " @")
                              (setq denote-rename-buffer-format "%t%b")
+                             (setq denote-rename-buffer-backlinks-indicator "")
                              (denote-rename-buffer-mode +1)))
   :config
   (set-register ?n (cons 'file (concat org-directory "notes")))
@@ -3099,7 +3106,14 @@ ${content}"))
 ;;;;; consult-denote
 
   (use-package! consult-denote
-    :defer 5)
+    :after denote
+    :hook (org-mode . consult-denote-mode)
+    :config
+    ;; Prefer `ripgrep' and `fd' variants when available
+    (when (executable-find "fd")
+      (setopt consult-denote-find-command #'consult-fd))
+    (when (executable-find "rg")
+      (setopt consult-denote-grep-command #'consult-ripgrep)))
 
 ;;;;; consult-notes
 
@@ -3171,6 +3185,7 @@ ${content}"))
 
   ;; 읽어볼 것 https://github.com/pprevos/denote-explore
   (use-package! denote-explore
+    :defer 5
     ;; :custom
     ;; Location of graph files
     ;; (denote-explore-network-directory "~/documents/notes/graphs/")
@@ -3181,16 +3196,6 @@ ${content}"))
     ;; Exlude keywords or regex
     ;; (denote-explore-network-keywords-ignore '("bib"))
     )
-
-;;;; DONT denote-fz
-
-  ;;   (add-to-list 'load-path "~/sync/emacs/git/junghan0611/denote-folgezettel/")
-  ;;   (require 'denote-fz)
-  ;;   (denote-fz-mode +1)
-  ;; (use-package! denote-fz
-  ;;   :config
-  ;;   (define-key denote-fz-mode-map (kbd "C-c z") denote-fz-command-map)
-  ;;   )
 
 ;;;;; citar-denote
 
@@ -4252,7 +4257,7 @@ ${content}"))
   :config
   (setq
    fontaine-presets
-   ;; 80 120, 136, 151, 180, 211 ; sarasa mono
+   ;; 80 120, 136, 151, 180, 211 ; sarasa mono / term
    ;; 120, 140, 170, 190, 210, 230 ; monoplex kr nerd
    '(
      (small12 :default-height 120)
@@ -4268,22 +4273,19 @@ ${content}"))
      (t
       ;; Following Prot’s example, keeping these for for didactic purposes.
       :line-spacing 3
-      ;; :default-family "Sarasa Term K"
+      ;; :default-family "Sarasa Term K Nerd Font"
       ;; :default-height 151
       :default-family "Monoplex KR Nerd"
-      ;; :default-height 140
+      :default-height 140
       :default-weight regular
-      :fixed-pitch-family nil
-      :fixed-pitch-weight nil
-      :fixed-pitch-height nil
-      ;; :fixed-pitch-serif-family "Sarasa Term Slab K" ; nil falls back to :default-family
-      :fixed-piath-serif-family nil
-      :fixed-pitch-serif-weight nil
-      :fixed-pitch-serif-height nil
+      ;; :fixed-pitch-family "Sarasa Term K Nerd Font"
+      ;; :fixed-pitch-height 151
+      ;; :fixed-pitch-weight nil
+      ;; :fixed-piath-serif-family nil
+      ;; :fixed-pitch-serif-weight nil
+      ;; :fixed-pitch-serif-height nil
       :variable-pitch-family "Pretendard Variable"
       ;; :variable-pitch-height 1.0
-      ;; "IBM Plex Sans KR"
-      ;; "Noto Sans KR"
       ;; :variable-pitch-family nil
       ;; :variable-pitch-weight nil
       :bold-family nil
@@ -4345,8 +4347,7 @@ ${content}"))
   :if (display-graphic-p)
   :commands (show-font-select-preview show-font-list)
   :config
-  ;; These are the defaults, but I keep them here for easier access.
-  (setq show-font-pangram 'prot)
+  ;; (setq show-font-pangram 'fox)
   (setq show-font-character-sample
         "
 ABCDEFGHIJKLMNOPQRSTUVWXYZ
@@ -4450,8 +4451,7 @@ x×X .,·°;:¡!¿?`'‘’   ÄAÃÀ TODO
 
   (defun my/doom-themes-toggle ()
     (interactive) (load-theme doom-theme t))
-
-  (add-hook 'doom-after-reload-hook #'my/doom-themes-toggle)
+  ;; (add-hook 'doom-after-reload-hook #'my/doom-themes-toggle)
   )
 
 ;;;; celestial-mode-line
@@ -4797,7 +4797,6 @@ Suitable for `imenu-create-index-function'."
 
 ;; (add-hook 'doom-after-init-hook #'my/switch-themes-toggle)
 ;; (add-hook 'doom-after-reload-hook #'my/switch-themes-toggle)
-
 
 ;;;; DONT auto-highlight-symbol
 

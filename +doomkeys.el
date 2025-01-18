@@ -22,11 +22,12 @@
       "." nil
       "," nil
       :desc "M-x" "SPC" #'execute-extended-command
+      ;; :desc "한/영" "SPC" #'toggle-input-method
       :desc "Find file in project" "." #'projectile-find-file
       :desc "Find file in cwd" "," #'my/consult-fd
       :desc "consult-buffer" "`" #'consult-buffer
       :desc "Eval expression" "M-;" #'pp-eval-expression
-      :desc "Search for symbol in cwd" "(" #'+default/search-cwd-symbol-at-point
+      :desc "Search for symbol in cwd" "(" #'my/search-cwd-symbol-at-point
       )
 
 ;;;; SPC
@@ -123,7 +124,7 @@
       :desc "consult-locate" "s M-l" #'consult-locate
       ;; :desc "Search project" "/" #'+default/search-project
       ;; :desc "Search cwd" "/" #'+default/search-cwd
-      :desc "Search for symbol in cwd" "s SPC" #'+default/search-cwd-symbol-at-point)
+      :desc "Search for symbol in cwd" "s SPC" #'my/search-cwd-symbol-at-point)
 
 ;;;; 'v' er/expand-region
 
@@ -1555,23 +1556,6 @@
 
 ;;;; vertico-map
 
-;; (setq consult--customize-alist nil)
-
-(consult-customize
- +default/search-project +default/search-other-project
- +default/search-project-for-symbol-at-point
- +default/search-cwd +default/search-other-cwd
- +default/search-notes-for-symbol-at-point
- +default/search-emacsd
- :preview-key '("C-SPC" :debounce 0.3 "<up>" "<down>" "M-j" "M-k"))
-
-(consult-customize
- consult-ripgrep consult-git-grep consult-grep
- consult-bookmark consult-recent-file
- consult--source-recent-file consult--source-project-recent-file consult--source-bookmark
- :preview-key '("C-SPC"
-                :debounce 0.3 "<up>" "<down>" "M-j" "M-k"))
-
 (map! :map vertico-map
       ;; "C-'" #'vertico-quick-insert
       ;; "C-h" #'vertico-directory-delete-word
@@ -1581,6 +1565,8 @@
 
       "M-j" #'vertico-next
       "M-k" #'vertico-previous
+      "M-v" #'toggle-input-method
+      "M-g" #'toggle-input-method
 
       ;; "M-S-j" #'vertico-scroll-up
       ;; "M-S-k" #'vertico-scroll-down

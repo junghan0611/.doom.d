@@ -337,9 +337,10 @@
 (when (modulep! :lang clojure)
   ;; (package! kaocha-runner) ; Koacha test runner in Emacs
   (package! vega-view)
-  (package! clojure-essential-ref-nov)
   (package! clj-deps-new)
-  (package! clay))
+  (package! clay)
+  ;; (package! clojure-essential-ref-nov)
+  )
 
 (unpin! elisp-demos)
 (package! elisp-demos :recipe (:host github :repo "junghan0611/elisp-demos" :branch "ko"))
@@ -397,8 +398,6 @@
 
 (package! org-supertag :recipe (:host github :repo "yibie/org-supertag"))
 (package! docsim)
-
-;; (package! denote-fz :recipe (:host github :repo "MirkoHernandez/denote-folgezettel"))
 
 ;;;; Workspace
 

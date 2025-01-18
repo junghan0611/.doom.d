@@ -1051,66 +1051,6 @@
       ("q" "Quit" transient-quit-one)]])
   )
 
-;;;; DONT transient : denote-fz
-
-;; (when (locate-library "denote-fz")
-
-;;   ;; (global-set-key (kbd "<f11>") #'my/note-menu)
-;;   (transient-define-prefix my/note-menu ()
-;;     "Note"
-;;     ;; [[("s-n" " Consult Notes" consult-notes :transient nil)]
-;;     ;;  [("SPC" "OCR" my/ocr :transient nil)]]
-;;     [["New Note"
-;;       ;; ("s" "With Signature" denote-signature :transient nil)
-;;       ;; ("S" "Sub Directory" denote-subdirectory :transient nil)
-;;       ("n" "Denote" denote :transient nil)
-;;       ;; ("b" "Blog" my/new-blog :transient nil)
-;;       ;; ("m" "Meeting" my/new-meeting :transient nil)
-;;       ;; ("l" "Literature" my/literature-save :transient nil)
-;;       ("N" "Reference" citar-create-note :transient nil)]
-;;      ["Folgezettel"
-;;       ("I" "insert" denote-fz-insert :transient nil)
-;;       ("i" "insert-dwim" denote-fz-insert-dwim :transient nil)
-;;       ("L" "insert-at-level" denote-fz-insert-at-level :transient nil)
-;;       ("l" "insert-at-level-dwim" denote-fz-insert-at-level-dwim :transient nil)
-;;       ("Q" "quit" kill-buffer-and-window)
-;;       ;; ("l" "insert-at-level-dwim" denote-fz-insert-at-level-dwim :transient nil)
-;;       ]
-;;      ;; ["Goto"
-;;      ;;  ("<down>" "Child" denote-fz-goto-child :transient t)
-;;      ;;  ("<up>" "Parent" denote-fz-goto-parent :transient t)
-;;      ;;  ("<right>" "Next Sibling" denote-fz-goto-next-sibling :transient t)
-;;      ;;  ("<left>" "Previous Sibling" denote-fz-goto-previous-sibling :transient t)]
-;;      ;; ["Denote Meta"
-;;      ;;  ("r" "Rename Note" denote-rename-file-using-front-matter :transient nil)
-;;      ;; ;; ("R" "Rename Keywords" denote-explore-rename-keyword :transient nil)
-;;      ;;  ("k" "Add/remove Keyword" denote-rename-file-keywords :transient nil)]
-;;      ;; ["Denote Sort"
-;;      ;;  ("/s" "Siblings" my/denote-sort-siblings :transient nil)
-;;      ;;  ("/c" "Children" my/denote-sort-children :transient nil)
-;;      ;;  ("/r" "REGEXP" my/denote-sort-regexp :transient nil)
-;;      ;;  ("/i" "With Identifier" my/denote-sort-with-identifer :transient nil)
-;;      ;;  ("/k" "With Keywords" my/denote-sort-with-keywords :transient nil)
-;;      ;;  ("/d" "Week Ago" my/denote-sort-with-days :transient nil)
-;;      ;;  ]
-;;      ;; ["Denote Explore"
-;;      ;;  ("i" "Info" my/denote-info :transient nil)
-;;      ;;  ("t" "BarChart" denote-explore-keywords-barchart :transient t)
-;;      ;;  ("d" "Duplicate Identifier" denote-explore-identify-duplicate-identifiers :transient nil)
-;;      ;;  ("e" "Extract Subtree" denote-org-extras-extract-org-subtree :transient nil)
-;;      ;;  ("a" "Extract iBooks Annotation" ibooks-annot/extract-annotations-to-note :transient nil)]
-;;      ;; ["Export To"
-;;      ;;  ;; ("M" "MindMap" plantuml-org-to-mindmap-open :transient nil)
-;;      ;;  ;; ("w" "WBS" plantuml-org-to-mindmap-open :transient nil)
-;;      ;;  ;; ("W" "Docx" org-export-docx :transient nil)
-;;      ;;  ("W" "Docx" gr/convert-pandoc-docx-org :transient nil)
-;;      ;;  ;; ("t" "Drawio Add" org-drawio-add :transient nil)
-;;      ;;  ;; ("o" "Drawio Open" org-drawio-open :transient nil)
-;;      ;;  ]
-;;      ]
-;;     )
-;;   )
-
 ;;;; DONT move to ccmenu : transient : casual-suite
 
 ;; (when (locate-library "casual-suite")
@@ -1315,128 +1255,12 @@
      ("h" "backward-char" evil-backward-char :transient t)
      ("l" "forward-char" evil-forward-char :transient t)
      ;; ("%" "jump-items" evilmi-jump-items :transient t) ; evil-matchit
-     ("%" "jump-items" evil-jump-items :transient t) ; evil-matchit
+     ("%" "evil-jump-item" evil-jump-item :transient t)
      ("M-o" "embark-action" embark-act)
      (">" "indent-rigidly" indent-rigidly)
      ("~" "invert-char" evil-invert-char)
      ("SPC" "SPC" (lambda () (interactive) (funcall (general-simulate-key "SPC"))))])
   )
-
-;;;; transient : transient-window
-
-(progn
-
-;;;###autoload
-  (transient-define-suffix transient-window--enlarge-v ()
-    :transient t
-    :key "k"
-    :description "enlarge vertically"
-    (interactive)
-    (call-interactively #'enlarge-window))
-
-;;;###autoload
-  (transient-define-suffix transient-window--shrink-v ()
-    :transient t
-    :key "j"
-    :description "shrink vertically"
-    (interactive)
-    (call-interactively #'shrink-window))
-
-;;;###autoload
-  (transient-define-suffix transient-window--enlarge-h ()
-    :transient t
-    :key "l"
-    :description "enlarge horizontally"
-    (interactive)
-    (call-interactively #'enlarge-window-horizontally))
-
-;;;###autoload
-  (transient-define-suffix transient-window--shrink-h ()
-    :transient t
-    :key "h"
-    :description "shrink horizontally"
-    (interactive)
-    (call-interactively #'shrink-window-horizontally))
-
-;;;###autoload
-  (transient-define-suffix transient-window--balance ()
-    :key "="
-    :description "balance"
-    (interactive)
-    (call-interactively #'balance-windows))
-
-;;;###autoload
-  (transient-define-suffix transient-window--golden-ratio ()
-    :key "g"
-    :description "golden-ratio"
-    (interactive)
-    (call-interactively #'golden-ratio))
-
-;;;###autoload
-  (transient-define-prefix window-transient ()
-    "Window manipulations"
-    ["Window"
-     [(transient-window--enlarge-v)
-      (transient-window--shrink-v)
-      (transient-window--enlarge-h)
-      (transient-window--shrink-h)
-      (transient-window--balance)
-      (transient-window--golden-ratio)]])
-
-;;;###autoload
-  (defun window-cleanup+ ()
-    "Deletes duplicate windows. Leaves single window per buffer, removing all duplicates."
-    (interactive)
-    (when (->>
-           (window-list)
-           (seq-group-by (lambda (win) (window-buffer win)))
-           (seq-filter (lambda (group) (length> (cdr group) 1)))
-           (seq-do (lambda (group) (seq-do #'delete-window (cddr group)))))
-      (balance-windows-area)))
-
-  (defun delete-other-windows-horizontally ()
-    "Delete all windows to the left and right of the current
-window."
-    (interactive)
-    (require 'windmove)
-    (save-excursion
-      (while (condition-case nil (windmove-left) (error nil))
-        (delete-window))
-      (while (condition-case nil (windmove-right) (error nil))
-        (delete-window))))
-
-  (defun toggle-window-divider ()
-    (interactive)
-    (setf right-divider-width (if window-divider-mode 1 6))
-    (setf left-divider-width (if window-divider-mode 1 6))
-    (window-divider-mode 'toggle))
-
-  )
-
-;; ;;;###autoload
-;; (defun +scroll-line-down-other-window (&optional count)
-;;   "Scrolls in the window COUNT lines downwards."
-;;   (interactive "P")
-;;   (with-selected-window (other-window-for-scrolling)
-;;     (funcall (doom-lookup-key (kbd "C-e")) (or count 1))))
-
-;; ;;;###autoload
-;; (defun +scroll-line-up-other-window (&optional count)
-;;   "Scrolls in the window COUNT lines downwards."
-;;   (interactive "P")
-;;   (with-selected-window (other-window-for-scrolling)
-;;     (funcall (doom-lookup-key (kbd "C-y")) (or count 1))))
-
-;; ;;;###autoload
-;; (defun display-buffer-window-equal-width (buffer alist)
-;;   "Keep buffer window width proportional to other windows."
-;;   (let* ((win (display-buffer-in-direction buffer alist)))
-;;     (window-resize
-;;      win
-;;      (- (/ (frame-width) (length (window-list)))
-;;         (window-width win))
-;;      t t)
-;;     win))
 
 ;;;; transient : casual-anddo
 
@@ -1460,9 +1284,10 @@ window."
      ]
     )
   (keymap-set anddo-mode-map "C-;" #'casual-anddo-tmenu)
+  (keymap-set anddo-mode-map "<f2>" #'casual-anddo-tmenu)
   )
 
-;;; EWS Map : 'C-c n' and 'SPC RET'
+;;; EWS Map : 'M-c n', 'C-c n' and 'SPC RET'
 
 ;; org-mode
 (defvar-keymap ews-org-noter-map
@@ -1598,7 +1423,11 @@ window."
   "B" #'denote-org-extras-backlinks-for-heading 
   "d" #'denote-create-note
 
-  "f" #'my/denote-find-file
+  "f" #'my/denote-find-file ; find org files
+  "g" #'my/denote-grep
+  "." #'consult-denote-find ; find all types of files
+  "SPC" #'consult-denote-grep
+
   "F" #'+default/find-in-notes ; find-files
   ;;   "F" #'+default/browse-notes
 
@@ -1623,7 +1452,6 @@ window."
 
   "n" #'consult-notes
 
-  "g" #'my/denote-grep
   "!" #'my/consult-org-screenshot
   "G" #'consult-notes-search-in-all-notes
 
@@ -1658,9 +1486,6 @@ window."
 
   "M-f" #'denote-find-link
   "M-b" #'denote-find-backlink
-
-  ;; "f" #'consult-denote-find
-  ;; "d" #'consult-denote-grep
   )
 
 (defvar-keymap ews-modus-themes-map
@@ -1746,9 +1571,10 @@ window."
 ;; (global-set-key (kbd "C-c A") #'consult-org-agenda)
 ;; (global-set-key (kbd "C-c N") #'my/consult-org-all)
 
-(global-set-key (kbd "<f11>") ews-map)
+(global-set-key (kbd "<f12>") ews-map)
 
 (keymap-set global-map "C-c n" ews-denote-map)
+(keymap-set global-map "M-c n" ews-denote-map)
 (keymap-set global-map "M-e" ews-denote-map) ; ews-denote-map
 
 ;; Org mode keymap modifications
