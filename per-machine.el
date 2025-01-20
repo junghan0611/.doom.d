@@ -122,7 +122,7 @@
 (defun my/org-reading-file () (my/expand-org-file-name "20240329T154123--reading__lists.org"))
 
 ;; meta
-(defun my/org-kdc-file () (my/expand-org-file-name "meta/20240312T142358--한국십진분류-kdc__classification_meta.org"))
+(defun my/org-kdc-file () (my/expand-org-file-name "meta/20240312T142358--한국십진분류__classification_kdc_meta.org"))
 (defun my/org-tags-file () (my/expand-org-file-name "meta/20231005T133900--tags__meta.org"))
 (defun my/org-glossary-file () (my/expand-org-file-name "dict/ithink.org"))
 

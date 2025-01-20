@@ -101,6 +101,32 @@
 
   )
 
+;;;; DONT org-modern
+
+;; (after! org
+
+;;   (message "after org - org-modern")
+;;   (require 'org-modern)
+;;   (setq
+;;    ;; Edit settings
+;;    org-auto-align-tags nil ; t
+;;    org-tags-column 0
+;;    org-catch-invisible-edits 'show-and-error
+;;    org-special-ctrl-a/e t
+;;    org-insert-heading-respect-content t
+
+;;    ;; Org styling, hide markup etc.
+;;    org-hide-emphasis-markers t ; nil
+;;    org-pretty-entities t ; nil
+;;    org-agenda-tags-column 0)
+
+;;   (add-hook 'org-mode-hook #'org-modern-mode)
+;;   (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+
+;;   (require 'org-modern-indent)
+;;   (add-hook 'org-mode-hook #'org-modern-indent-mode 90)
+;;   )
+
 ;;;; TODO org-src-mode-map
 
 ;; (with-eval-after-load 'org-src
@@ -516,10 +542,10 @@
         '( :mode-line-active spacious-padding-subtle-mode-line-active
            :mode-line-inactive spacious-padding-subtle-mode-line-inactive))
   (setq spacious-padding-widths
-        '(:internal-border-width 15
-          :header-line-width 4
+        '(:header-line-width 4
           :mode-line-width 6
           :tab-width 6 ; sync mode-line-width for keycast-tab-bar
+          :internal-border-width 20 ; 15
           :right-divider-width 20 ; 30
           :scroll-bar-width 8
           :fringe-width 20 ;; 8
@@ -2311,11 +2337,5 @@ the next chapter, open Dired so you can find it manually."
   (remove-hook 'dired-mode-hook 'nerd-icons-dired-mode)
   ;; (remove-hook 'marginalia-mode-hook 'nerd-icons-completion-marginalia-setup)
   )
-
-;;;; display-fill-column
-
-;; 라인 컬럼 보여주는 검은 세로선
-;; (when (display-graphic-p) ; gui
-;;   (global-display-fill-column-indicator-mode))
 
 ;;; left blank on purpose

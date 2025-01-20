@@ -376,6 +376,7 @@
       org-num-skip-commented t
       org-num-skip-footnotes t
       org-num-max-level 3)
+
 ;; org-num-skip-tags '("nonum" "noexport") ; doom default
 ;; (add-hook 'org-mode-hook #'org-num-mode)
 
@@ -395,7 +396,7 @@
 (setq org-indent-mode-turns-off-org-adapt-indentation t) ; must t, default t
 
 ;; org-indent-mode 사용하면 org-hide-leading-stars 자동 on
-(setq org-hide-leading-stars nil) ; doom t
+;; (setq org-hide-leading-stars nil) ; doom t
 
 ;;;; DONT custom indentation
 

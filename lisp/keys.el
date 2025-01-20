@@ -171,9 +171,13 @@
     ;;   ;; (evil-define-key '(insert) corfu-map (kbd "<return>") 'corfu-insert)
     ;;   ;; (evil-define-key '(insert) prog-mode-map (kbd "<return>") 'newline-and-indent) ;; <return>
     )
+  )
 
+;;;; cape-map
+
+(progn
   (define-prefix-command 'my-cape-map)
-  (define-key global-map (kbd "M-c") 'my-cape-map)
+  (define-key global-map (kbd "C-c SPC") 'my-cape-map)
   (let ((map my-cape-map))
     (define-key map (kbd "a") 'cape-abbrev)
     (define-key map (kbd "SPC") 'cape-dabbrev)
@@ -192,6 +196,19 @@
     (define-key map (kbd "_") 'cape-tex)
     )
   )
+
+;;;; Remap all C-c prefix keys to M-c?
+
+;; static map
+(define-key key-translation-map (kbd "M-c") (kbd "C-c"))
+
+;; dynamic map - copying
+;; (progn
+;;   (defun my-generate-c-c-map ()
+;;     (let ((map (make-sparse-keymap)))
+;;       (set-keymap-parent map (lookup-key global-map (kbd "C-c")))
+;;       map))
+;;   (global-set-key (kbd "M-c") (my-generate-c-c-map)))
 
 ;;;; embark - doom vs. spacemacs style
 

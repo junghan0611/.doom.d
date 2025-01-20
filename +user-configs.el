@@ -641,13 +641,13 @@
 (setq save-abbrevs t)
 (setq-default abbrev-mode t)
 
-;;;; DONT fill-column-indicator-mode
+;;;; fill-column-indicator-mode
 
 ;; 2023-04-16 Learn how-to use menu-bar for beginner on GUI mode
-;; (when (display-graphic-p) ; gui
-;;   (add-hook 'org-mode-hook 'display-fill-column-indicator-mode)
-;;   (add-hook 'markdown-mode-hook 'display-fill-column-indicator-mode)
-;;   )
+(when (display-graphic-p) ; gui
+  (add-hook 'org-mode-hook 'display-fill-column-indicator-mode)
+  ;; (add-hook 'markdown-mode-hook 'display-fill-column-indicator-mode)
+  )
 
 ;;;; dabbrev
 
@@ -2481,51 +2481,41 @@ ${content}"))
 ;;         ("NO"   :inverse-video t :inherit +org-todo-cancel)))
 ;; (custom-set-faces! '(org-modern-statistics :inherit org-checkbox-statistics-todo))
 
-(use-package! org-modern
-  :after org
-  ;; :custom
-  ;; (org-modern-table nil)
-  ;; (org-modern-keyword nil)
-  ;; (org-modern-timestamp nil)
-  ;; (org-modern-priority nil)
-  ;; (org-modern-checkbox nil)
-  ;; (org-modern-tag nil)
-  ;; (org-modern-block-name nil)
-  ;; (org-modern-footnote nil)
-  ;; (org-modern-internal-target nil)
-  ;; (org-modern-radio-target nil)
-  ;; (org-modern-statistics nil)
-  ;; (org-modern-progress nil)
-  :config
-  (setq
-   ;; Edit settings
-   org-auto-align-tags nil ; t
-   org-tags-column 0
-   org-catch-invisible-edits 'show-and-error
-   org-special-ctrl-a/e t
-   org-insert-heading-respect-content t
+;; (use-package! org-modern
+;;   :after org
+;;   ;; :custom
+;;   ;; (org-modern-table nil)
+;;   ;; (org-modern-keyword nil)
+;;   ;; (org-modern-timestamp nil)
+;;   ;; (org-modern-priority nil)
+;;   ;; (org-modern-checkbox nil)
+;;   ;; (org-modern-tag nil)
+;;   ;; (org-modern-block-name nil)
+;;   ;; (org-modern-footnote nil)
+;;   ;; (org-modern-internal-target nil)
+;;   ;; (org-modern-radio-target nil)
+;;   ;; (org-modern-statistics nil)
+;;   ;; (org-modern-progress nil)
+;;   :config
+;;   (setq
+;;    ;; Edit settings
+;;    org-auto-align-tags nil ; t
+;;    org-tags-column 0
+;;    org-catch-invisible-edits 'show-and-error
+;;    org-special-ctrl-a/e t
+;;    org-insert-heading-respect-content t
 
-   ;; Org styling, hide markup etc.
-   org-hide-emphasis-markers t ; nil
-   org-pretty-entities t ; nil
-   org-agenda-tags-column 0)
+;;    ;; Org styling, hide markup etc.
+;;    org-hide-emphasis-markers t ; nil
+;;    org-pretty-entities t ; nil
+;;    org-agenda-tags-column 0)
 
-  ;; Ellipsis styling
-  ;; (setq org-ellipsis "…")
-  ;; (set-face-attribute 'org-ellipsis nil :inherit 'default :box nil)
-  ;; (set-face-attribute 'org-modern-symbol nil :family "Iosevka")
+;;   (add-hook 'org-mode-hook #'org-modern-mode)
+;;   (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
 
-  (add-hook 'org-mode-hook #'org-modern-mode)
-  (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
-
-  (require 'org-modern-indent)
-  (add-hook 'org-mode-hook #'org-modern-indent-mode 90)
-  )
-
-;; (use-package! org-modern-indent
-;;   :after org-modern
-;;   :config ; add late to hook
-;;   (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
+;;   (require 'org-modern-indent)
+;;   (add-hook 'org-mode-hook #'org-modern-indent-mode 90)
+;;   )
 
 
 ;;;;; org-download
