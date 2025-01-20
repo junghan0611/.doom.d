@@ -2312,4 +2312,10 @@ the next chapter, open Dired so you can find it manually."
   ;; (remove-hook 'marginalia-mode-hook 'nerd-icons-completion-marginalia-setup)
   )
 
+;;;; display-fill-column
+
+;; 라인 컬럼 보여주는 검은 세로선
+;; (when (display-graphic-p) ; gui
+;;   (global-display-fill-column-indicator-mode))
+
 ;;; left blank on purpose

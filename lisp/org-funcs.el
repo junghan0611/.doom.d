@@ -1046,22 +1046,22 @@ active call comment-or-uncomment-region, otherwise just insert the given char."
 
 ;;;; org-indent-src-block
 
-(defun my/org-modern-indent-src-block ()
-  (interactive)
-  (org-edit-special)
-  (my/indent-buffer)
-  (org-edit-src-exit))
+;; (defun my/org-modern-indent-src-block ()
+;;   (interactive)
+;;   (org-edit-special)
+;;   (my/indent-buffer)
+;;   (org-edit-src-exit))
 
 ;;;; org-sort-by-priority
 
-(defun my/org-modern-sort-by-priority ()
-  "Sort entries in level=2 by priority."
-  (interactive)
-  (org-map-entries (lambda () (condition-case nil
-                                  (org-sort-entries nil ?p)
-                                (error nil)))
-                   "LEVEL=1")
-  (org-set-startup-visibility))
+;; (defun my/org-modern-sort-by-priority ()
+;;   "Sort entries in level=2 by priority."
+;;   (interactive)
+;;   (org-map-entries (lambda () (condition-case nil
+;;                               (org-sort-entries nil ?p)
+;;                             (error nil)))
+;;                    "LEVEL=1")
+;;   (org-set-startup-visibility))
 
 ;;;; org-delete-link
 

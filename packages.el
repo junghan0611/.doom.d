@@ -214,6 +214,7 @@
 (package! org-kanban)
 
 (package! org-modern)
+(package! org-modern-indent :recipe (:host github :repo "jdtsmith/org-modern-indent"))
 
 ;; (package! parse-csv :recipe (:host github :repo "junghan0611/el-csv")) ; for om-dash
 ;; (package! om-dash :recipe (:host github :repo "gavv/om-dash" :files ("*.el" "*.org"))) ; org-based dashboards

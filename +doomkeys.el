@@ -1567,6 +1567,8 @@
       "M-k" #'vertico-previous
       "M-v" #'toggle-input-method
       "M-g" #'toggle-input-method
+      "M-8" #'tempel-insert
+      "M-*" #'tempel-insert
 
       ;; "M-S-j" #'vertico-scroll-up
       ;; "M-S-k" #'vertico-scroll-down

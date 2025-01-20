@@ -947,6 +947,11 @@
   (when (eq emacs-major-version 30)
     (setq text-mode-ispell-word-completion nil))
 
+  ;; cape-dict-file
+  (add-hook! '(org-mode-hook markdown-mode-hook)
+    (defun +corfu-add-cape-dict-h ()
+      (add-hook 'completion-at-point-functions #'cape-dict 0 t)))
+
   ;; IMO, modern editors have trained a bad habit into us all: a burning need for
   ;; completion all the time -- as we type, as we breathe, as we pray to the
   ;; ancient ones -- but how often do you *really* need that information? I say
@@ -980,10 +985,6 @@
   (setq cape-dabbrev-min-length 5) ; default 4
   (setq cape-dabbrev-check-other-buffers #'cape--buffers-major-mode) ; 'some
   )
-
-(defun my/add-cape-dict-completion-at-point ()
-  (interactive)
-  (add-to-list 'completion-at-point-functions #'cape-dict))
 
 ;; ;; 2023-07-08 순서 때문에 따로 확실하게 점검한다.
 ;; (defun cape-markdown-mode-setup ()
@@ -2454,40 +2455,78 @@ ${content}"))
 
 ;;;;; org-modern
 
+;; (org-modern-tag t)
+;; (org-modern-todo nil)
+;; (org-modern-table nil)
+;; (org-modern-keyword nil)
+;; (org-modern-timestamp nil)
+;; (org-modern-priority nil)
+;; (org-modern-checkbox nil)
+;; (org-modern-block-name nil)
+;; (org-modern-keyword nil)
+;; (org-modern-footnote nil)
+;; (org-modern-internal-target nil)
+;; (org-modern-radio-target nil)
+;; (org-modern-progress nil)
+;; :config
+;; (setq org-modern-todo-faces
+;;       '(("TODO" :inverse-video t :inherit org-todo)
+;;         ("PROJ" :inverse-video t :inherit +org-todo-project)
+;;         ("STRT" :inverse-video t :inherit +org-todo-active)
+;;         ("[-]"  :inverse-video t :inherit +org-todo-active)
+;;         ("HOLD" :inverse-video t :inherit +org-todo-onhold)
+;;         ("WAIT" :inverse-video t :inherit +org-todo-onhold)
+;;         ("[?]"  :inverse-video t :inherit +org-todo-onhold)
+;;         ("KILL" :inverse-video t :inherit +org-todo-cancel)
+;;         ("NO"   :inverse-video t :inherit +org-todo-cancel)))
+;; (custom-set-faces! '(org-modern-statistics :inherit org-checkbox-statistics-todo))
+
 (use-package! org-modern
-  ;; :init
-  ;; (after! org
-  ;;   (require 'org-modern)
-  ;;   ;; Option 1: Per buffer
-  ;;   (add-hook 'org-mode-hook #'org-modern-mode)
-  ;;   (add-hook 'org-agenda-finalize-hook #'org-modern-agenda))
-  :custom
-  (org-modern-tag t)
-  (org-modern-todo nil)
-  (org-modern-table nil)
-  (org-modern-keyword nil)
-  (org-modern-timestamp nil)
-  (org-modern-priority nil)
-  (org-modern-checkbox nil)
-  (org-modern-block-name nil)
-  (org-modern-keyword nil)
-  (org-modern-footnote nil)
-  (org-modern-internal-target nil)
-  (org-modern-radio-target nil)
-  (org-modern-progress nil)
-  ;; :config
-  ;; (setq org-modern-todo-faces
-  ;;       '(("TODO" :inverse-video t :inherit org-todo)
-  ;;         ("PROJ" :inverse-video t :inherit +org-todo-project)
-  ;;         ("STRT" :inverse-video t :inherit +org-todo-active)
-  ;;         ("[-]"  :inverse-video t :inherit +org-todo-active)
-  ;;         ("HOLD" :inverse-video t :inherit +org-todo-onhold)
-  ;;         ("WAIT" :inverse-video t :inherit +org-todo-onhold)
-  ;;         ("[?]"  :inverse-video t :inherit +org-todo-onhold)
-  ;;         ("KILL" :inverse-video t :inherit +org-todo-cancel)
-  ;;         ("NO"   :inverse-video t :inherit +org-todo-cancel)))
-  ;; (custom-set-faces! '(org-modern-statistics :inherit org-checkbox-statistics-todo))
+  :after org
+  ;; :custom
+  ;; (org-modern-table nil)
+  ;; (org-modern-keyword nil)
+  ;; (org-modern-timestamp nil)
+  ;; (org-modern-priority nil)
+  ;; (org-modern-checkbox nil)
+  ;; (org-modern-tag nil)
+  ;; (org-modern-block-name nil)
+  ;; (org-modern-footnote nil)
+  ;; (org-modern-internal-target nil)
+  ;; (org-modern-radio-target nil)
+  ;; (org-modern-statistics nil)
+  ;; (org-modern-progress nil)
+  :config
+  (setq
+   ;; Edit settings
+   org-auto-align-tags nil ; t
+   org-tags-column 0
+   org-catch-invisible-edits 'show-and-error
+   org-special-ctrl-a/e t
+   org-insert-heading-respect-content t
+
+   ;; Org styling, hide markup etc.
+   org-hide-emphasis-markers t ; nil
+   org-pretty-entities t ; nil
+   org-agenda-tags-column 0)
+
+  ;; Ellipsis styling
+  ;; (setq org-ellipsis "…")
+  ;; (set-face-attribute 'org-ellipsis nil :inherit 'default :box nil)
+  ;; (set-face-attribute 'org-modern-symbol nil :family "Iosevka")
+
+  (add-hook 'org-mode-hook #'org-modern-mode)
+  (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+
+  (require 'org-modern-indent)
+  (add-hook 'org-mode-hook #'org-modern-indent-mode 90)
   )
+
+;; (use-package! org-modern-indent
+;;   :after org-modern
+;;   :config ; add late to hook
+;;   (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
+
 
 ;;;;; org-download
 
