@@ -4461,27 +4461,27 @@ x×X .,·°;:¡!¿?`'‘’   ÄAÃÀ TODO
   (remove-hook 'display-time-mode-hook #'doom-modeline-override-time)
   (remove-hook 'doom-modeline-mode-hook #'doom-modeline-override-time))
 
-;;;; doom-themes
+;;;; DONT doom-themes
 
-(use-package! doom-themes
-  ;; improve integration w/ org-mode
-  :hook ((doom-load-theme . doom-themes-org-config)
-         (doom-load-theme . doom-themes-visual-bell-config))
-  :init
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic nil) ; if nil, italics is universally disabled
-  (setq doom-themes-to-toggle
-        (let ((hr (nth 2 (decode-time))))
-          (if (or (< hr 6) (< 19 hr)) ; between 8 PM and 7 AM
-              '(doom-one doom-homage-white) ; load dark theme first
-            '(doom-homage-white doom-one))))
-  (setq doom-theme (car doom-themes-to-toggle))
-  ;; (load-theme doom-theme t)
+;; (use-package! doom-themes
+;;   ;; improve integration w/ org-mode
+;;   :hook ((doom-load-theme . doom-themes-org-config)
+;;          (doom-load-theme . doom-themes-visual-bell-config))
+;;   :init
+;;   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+;;         doom-themes-enable-italic nil) ; if nil, italics is universally disabled
+;;   (setq doom-themes-to-toggle
+;;         (let ((hr (nth 2 (decode-time))))
+;;           (if (or (< hr 6) (< 19 hr)) ; between 8 PM and 7 AM
+;;               '(doom-one doom-homage-white) ; load dark theme first
+;;             '(doom-homage-white doom-one))))
+;;   (setq doom-theme (car doom-themes-to-toggle))
+;;   ;; (load-theme doom-theme t)
 
-  (defun my/doom-themes-toggle ()
-    (interactive) (load-theme doom-theme t))
-  ;; (add-hook 'doom-after-reload-hook #'my/doom-themes-toggle)
-  )
+;;   (defun my/doom-themes-toggle ()
+;;     (interactive) (load-theme doom-theme t))
+;;   ;; (add-hook 'doom-after-reload-hook #'my/doom-themes-toggle)
+;;   )
 
 ;;;; celestial-mode-line
 

@@ -1515,9 +1515,10 @@
   "E" #'ef-themes-select
   "," #'ef-themes-load-random-light
   "." #'ef-themes-load-random-dark
-  "t" #'my/doom-themes-toggle
-  "d" #'my/doom-themes-random-light
-  "D" #'my/doom-themes-random-dark
+
+  ;; "t" #'my/doom-themes-toggle
+  ;; "d" #'my/doom-themes-random-light
+  ;; "D" #'my/doom-themes-random-dark
   )
 
 (defvar-keymap ews-emms-map
