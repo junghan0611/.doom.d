@@ -66,7 +66,7 @@
 (package! solaire-mode :disable t)
 (package! ace-window :disable t)
 
-;; (package! lsp-mode :disable t)
+(package! lsp-mode :disable t)
 (package! flycheck-popup-tip :disable t) ; conflict
 ;; (package! flycheck-plantuml :disable t)
 
@@ -361,7 +361,7 @@
 ;; (package! bats-mode) ; shell-scripts
 ;; (package! code-cells)
 
-(package! hy-mode :recipe (:host github :repo "jethack23/hy-mode"))
+;; (package! hy-mode :recipe (:host github :repo "jethack23/hy-mode"))
 ;; (package! geiser)
 ;; (package! geiser-mit :recipe (:host github :repo "emacsmirror/geiser-mit"))
 
@@ -387,7 +387,7 @@
 (package! elfeed-tube-mpv)
 ;; (package! elfeed-webkit) ; not working on ubuntu
 
-(package! browser-hist :recipe (:host github :repo "agzam/browser-hist.el"))
+;; (package! browser-hist :recipe (:host github :repo "agzam/browser-hist.el"))
 
 (package! subed :recipe (:host github :repo "sachac/subed" :files ("subed/*.el")))
 ;; (package! dwim-shell-command)

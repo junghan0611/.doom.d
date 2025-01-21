@@ -613,30 +613,6 @@
 
 ;;; Waiting
 
-;;;; browse-hist
-
-(use-package! browser-hist
-  :init
-  (require 'embark) ; load Embark before the command (if you're using it)
-  :config
-  (setq browser-hist-db-paths
-        '((edge . "/home/junghan/.config/microsoft-edge/Default/History")
-          (whale . "/home/junghan/.config/naver-whale/Default/History")
-          (chrome . "$HOME/.config/google-chrome/Default/History")
-          (brave . "$HOME/.config/BraveSoftware/Brave-Browser/Default/History")
-          (firefox . "$HOME/.mozilla/firefox/*.default-release-*/places.sqlite")
-          (qutebrowser . "$HOME/.local/share/qutebrowser/history.sqlite")))
-  (setq browser-hist--db-fields
-        '((chrome      "title"    "url"    "urls"          "ORDER BY last_visit_time desc")
-          (edge    "title"    "url"    "urls"          "ORDER BY last_visit_time desc")
-          (whale    "title"    "url"    "urls"          "ORDER BY last_visit_time desc")
-          (qutebrowser "title"    "url"    "History"       "ORDER BY atime           desc")
-          (brave       "title"    "url"    "urls"          "ORDER BY last_visit_time desc")
-          (firefox     "title"    "url"    "moz_places"    "ORDER BY last_visit_date desc")
-          ))
-  (setq browser-hist-default-browser 'edge)
-  :commands (browser-hist-search))
-
 ;;;; atomic-chrome
 
 (use-package! atomic-chrome
@@ -774,8 +750,8 @@
   (gt-default-translator
    (gt-translator
     :taker (gt-taker :langs '(en ko) :text (lambda () (replace-regexp-in-string
-                                                   "\\([^\n]\\)\n\\([^\n]\\)" "\\1 \\2"
-                                                   (thing-at-point 'paragraph)))
+                                                       "\\([^\n]\\)\n\\([^\n]\\)" "\\1 \\2"
+                                                       (thing-at-point 'paragraph)))
                      :prompt t
                      )
     :engines (gt-google-engine)
@@ -850,9 +826,35 @@
 ;;                      :engines (gt-chatgpt-engine :stream t)
 ;;                      :render (gt-insert-render)))
 
-;;;; IDE Layout with Side Windows
+;;;; TODO IDE Layout with Side Windows
 
 ;; https://whhone.com/emacs-config/#ide-layout-with-side-windows
+
+;;;; DONT browse-hist
+
+;; (use-package! browser-hist
+;;   :defer t
+;;   :init
+;;   (require 'embark) ; load Embark before the command (if you're using it)
+;;   :config
+;;   (setq browser-hist-db-paths
+;;         '((edge . "/home/junghan/.config/microsoft-edge/Default/History")
+;;           (whale . "/home/junghan/.config/naver-whale/Default/History")
+;;           (chrome . "$HOME/.config/google-chrome/Default/History")
+;;           (brave . "$HOME/.config/BraveSoftware/Brave-Browser/Default/History")
+;;           (firefox . "$HOME/.mozilla/firefox/*.default-release-*/places.sqlite")
+;;           (qutebrowser . "$HOME/.local/share/qutebrowser/history.sqlite")))
+;;   (setq browser-hist--db-fields
+;;         '((chrome      "title"    "url"    "urls"          "ORDER BY last_visit_time desc")
+;;           (edge    "title"    "url"    "urls"          "ORDER BY last_visit_time desc")
+;;           (whale    "title"    "url"    "urls"          "ORDER BY last_visit_time desc")
+;;           (qutebrowser "title"    "url"    "History"       "ORDER BY atime           desc")
+;;           (brave       "title"    "url"    "urls"          "ORDER BY last_visit_time desc")
+;;           (firefox     "title"    "url"    "moz_places"    "ORDER BY last_visit_date desc")
+;;           ))
+;;   (setq browser-hist-default-browser 'edge)
+;;   :commands (browser-hist-search))
+
 
 ;;;; DONT dictionary-overlay
 
@@ -860,14 +862,7 @@
 ;; https://github.com/ginqi7/dictionary-overlay
 ;; (use-package! dictionary-overlay)
 
-;;;; DONT eglot for markdown - marksman
-
-;; (after! eglot
-;;   (add-to-list 'eglot-server-programs '(markdown-mode . ("marksman")))
-;;   ;; (add-hook 'markdown-mode-hook #'eglot-ensure)
-;;   )
-
-;;;; TODO my-open-calendar
+;;;; TODO cfw: my-open-calendar
 
 ;; init.el :app calendar
 ;; (defun my-open-calendar ()
@@ -892,7 +887,7 @@
 ;; (set-popup-rules! '(("^\\*paw-view-note*" :size 0.35 :side right :quit t :modeline t :select nil :ttl nil :vslot 2 :slot 1)
 ;;                     ("^\\*paw-sub-note*" :height 0.5 :side right :quit t :modeline t :select t :ttl nil :vslot 2 :slot 2)))
 
-;;;; TODO dslide and moc
+;;;; TODO presentation - dslide and moc
 
 (use-package! dslide :defer t)
 (use-package! default-text-scale :defer t)
@@ -906,26 +901,10 @@
 (use-package! elot
   :defer t)
 
-;;;; DONT eev : literate for all
-
-;; (add-to-list 'load-path "~/sync/emacs/git/junghan0611/eev/")
-;; (use-package! eev
-;;   ;; :straight (:host github :repo \"edrx/eev\")
-;;   :defer t
-;;   :commands (eev-beginner)
-;;   :config (progn
-;;             ;; See: (find-eev \"eev-load.el\" \"autoloads\")
-;;             ;; http://anggtwu.net/eev-current/eev-load.el.html#autoloads
-;;             (require 'eev-load)
-;;             ;; (eev-mode 1)     ; optional
-;;             ;; (eev-beginner)   ; optional
-;;             ))
-
 ;;;; TODO emacs-bluesky
 
 ;; (add-to-list 'load-path "~/sync/emacs/git/junghan0611/emacs-bluesky/")
 ;; (load-file "~/sync/emacs/git/junghan0611/emacs-bluesky/bluesky.el")
-
 
 ;;;; pylookup
 
@@ -946,27 +925,6 @@
 ;;;; prot-dired-grep-marked-files
 
 (require 'prot-dired)
-
-;;;; DONT org-zettel-ref-mode
-
-;; (progn
-;;   (add-to-list 'load-path "~/sync/emacs/git/junghan0611/org-zettel-ref-mode")
-;;   (require 'org-zettel-ref-mode)
-;;   (setq org-zettel-ref-overview-directory (concat org-directory "temp/"))
-;;   (setq org-zettel-ref-mode-type 'denote) ; Options: 'normal, 'denote, 'org-roam
-;;   (setq org-zettel-ref-quick-markup-key "C-c z")
-;;   ;; (org-zettel-ref-enable-auto-sync)
-
-;;   (setq org-zettel-ref-python-environment 'system)  ; 'conda 'system, 'venv
-;;   ;; (setq org-zettel-ref-python-env-name "your-env-name")  ; If using Conda or venv
-;;   (setq org-zettel-ref-python-file "~/sync/emacs/git/junghan0611/org-zettel-ref-mode/convert_to_org.py")
-;;   (setq org-zettel-ref-temp-folder "~/temp/convert/")
-;;   (setq org-zettel-ref-reference-folder "~/sync/markdown/reference/")
-;;   (setq org-zettel-ref-archive-folder "~/sync/markdown/archives/")
-;;   ;; PyPDF2, pdf2image,pytesseract
-;;   ;; sudo apt-get install python3-pypdf2 poppler-utils
-;;   ;; pipx install pytesseract
-;;   )
 
 ;;; Load Unified Configuration
 
@@ -2272,20 +2230,20 @@ the next chapter, open Dired so you can find it manually."
 
   ) ;; end-of clojure
 
-;;;; racket-review with flycheck
+;;;; DONT racket-review with flycheck
 
-(when (modulep! :lang racket)
-  (require 'flycheck)
-  ;; https://github.com/Bogdanp/racket-review
-  (flycheck-define-checker racket-review
-    "check racket source code using racket-review"
-    :command ("raco" "review" source)
-    :error-patterns
-    ((error line-start (file-name) ":" line ":" column ":error:" (message) line-end)
-     (warning line-start (file-name) ":" line ":" column ":warning:" (message) line-end))
-    :modes racket-mode)
-  (add-to-list 'flycheck-checkers 'racket-review)
-  )
+;; (when (modulep! :lang racket)
+;;   (require 'flycheck)
+;;   ;; https://github.com/Bogdanp/racket-review
+;;   (flycheck-define-checker racket-review
+;;     "check racket source code using racket-review"
+;;     :command ("raco" "review" source)
+;;     :error-patterns
+;;     ((error line-start (file-name) ":" line ":" column ":error:" (message) line-end)
+;;      (warning line-start (file-name) ":" line ":" column ":warning:" (message) line-end))
+;;     :modes racket-mode)
+;;   (add-to-list 'flycheck-checkers 'racket-review)
+;;   )
 
 ;;; treesit-auto
 
@@ -2337,5 +2295,9 @@ the next chapter, open Dired so you can find it manually."
   (remove-hook 'dired-mode-hook 'nerd-icons-dired-mode)
   ;; (remove-hook 'marginalia-mode-hook 'nerd-icons-completion-marginalia-setup)
   )
+
+;;;; jupyter - repl
+
+;; (setq jupyter-repl-echo-eval-p t)
 
 ;;; left blank on purpose

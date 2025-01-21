@@ -1461,8 +1461,9 @@
   "h" #'my/denote-org-store-link-to-heading
   "H" #'denote-org-extras-link-to-heading
 
-  "i" #'denote-org-extras-dblock-insert-links
-  "I" #'denote-org-extras-dblock-insert-backlinks
+  "i" #'my/denote-org-extras-dblock-insert-links
+  "I" #'my/denote-org-extras-dblock-insert-backlinks
+  "M-i" #'my/denote-org-extras-dblock-insert-meta-links
 
   "l" #'denote-link-or-create
   "L" #'denote-link-after-creating-with-command

@@ -1018,42 +1018,42 @@
 
 ;;; :checkers
 
-;;;; NOTE flycheck
+;;;; DONT flycheck
 
-(progn
-  (setq flycheck-help-echo-function nil
-        flycheck-display-errors-function nil)
+;; (progn
+;;   (setq flycheck-help-echo-function nil
+;;         flycheck-display-errors-function nil)
 
-  (after! flycheck
-    (ignore-errors
-      (define-key flycheck-mode-map flycheck-keymap-prefix nil))
-    (setq flycheck-keymap-prefix nil)
+;;   (after! flycheck
+;;     (ignore-errors
+;;       (define-key flycheck-mode-map flycheck-keymap-prefix nil))
+;;     (setq flycheck-keymap-prefix nil)
 
-    ;; =M-x eldoc-doc-buffer= 함수 호출로 표시하는 buffer 크기 조절
-    ;; (set-popup-rule! "^\\*eldoc for" :size 0.2 :vslot -1)
+;;     ;; =M-x eldoc-doc-buffer= 함수 호출로 표시하는 buffer 크기 조절
+;;     ;; (set-popup-rule! "^\\*eldoc for" :size 0.2 :vslot -1)
 
-    (setq eldoc-echo-area-use-multiline-p nil) ;  important
-    ;; eldoc-echo-area-prefer-doc-buffer t ; default nil - alway show echo-area
-    ;; ;; eldoc-display-functions '(eldoc-display-in-echo-area eldoc-display-in-buffer)
+;;     (setq eldoc-echo-area-use-multiline-p nil) ;  important
+;;     ;; eldoc-echo-area-prefer-doc-buffer t ; default nil - alway show echo-area
+;;     ;; ;; eldoc-display-functions '(eldoc-display-in-echo-area eldoc-display-in-buffer)
 
-    (add-hook! flycheck-mode
-      (defun disable-flycheck-popup-buffer ()
-        (setq flycheck-display-errors-function #'ignore)))
-    (add-to-list 'flycheck-disabled-checkers 'emacs-lisp-package)
+;;     (add-hook! flycheck-mode
+;;       (defun disable-flycheck-popup-buffer ()
+;;         (setq flycheck-display-errors-function #'ignore)))
+;;     (add-to-list 'flycheck-disabled-checkers 'emacs-lisp-package)
 
-    (setq flycheck-checker-error-threshold 1000) ; need more than default of 400
-    (setq flycheck-global-modes '(not emacs-lisp-mode org-mode markdown-mode gfm-mode))
-    )
+;;     (setq flycheck-checker-error-threshold 1000) ; need more than default of 400
+;;     (setq flycheck-global-modes '(not emacs-lisp-mode org-mode markdown-mode gfm-mode))
+;;     )
 
-  (after! elisp-mode
-    (add-hook! 'doom-scratch-buffer-created-hook
-      (defun flycheck-off ()
-        (flycheck-mode -1))))
-  )
+;;   (after! elisp-mode
+;;     (add-hook! 'doom-scratch-buffer-created-hook
+;;       (defun flycheck-off ()
+;;         (flycheck-mode -1))))
+;;   )
 
-;;;; DONT disable flymake-mode default
+;;;; disable flymake-mode default
 
-;; (remove-hook! (prog-mode text-mode) #'flymake-mode)
+(remove-hook! (prog-mode text-mode) #'flymake-mode)
 
 ;;;; DONT flymake-vale
 
@@ -3833,43 +3833,43 @@ ${content}"))
 
 ;;; :lang coding
 
-;;;; lsp-mode - lsp-ui-mode - lsp-treemacs
+;;;; DONT lsp-mode - lsp-ui-mode - lsp-treemacs
 
-(progn
-  (after! lsp-mode
-    ;; lsp 관련 설정 메뉴들. 느리게 만드는 범인중 십중팔구 LSP가 관련되어져 있다고 함.
-    ;; 해당 튜닝도 구글링을 통해서 찾았다.
-    (setq lsp-file-watch-threshold (* 1024 1024))
-    (setq read-process-output-max (* 1024 1024))
+;; (progn
+;;   (after! lsp-mode
+;;     ;; lsp 관련 설정 메뉴들. 느리게 만드는 범인중 십중팔구 LSP가 관련되어져 있다고 함.
+;;     ;; 해당 튜닝도 구글링을 통해서 찾았다.
+;;     (setq lsp-file-watch-threshold (* 1024 1024))
+;;     (setq read-process-output-max (* 1024 1024))
 
-    (setq
-     ;; lsp-keymap-prefix "M-c l"
-     lsp-headerline-breadcrumb-enable t ; Breadcrumb trail
-     lsp-headerline-breadcrumb-icons-enable nil
-     ;; lsp-headerline-breadcrumb-segments '(symbols) ; namespace & symbols, no file path
+;;     (setq
+;;      ;; lsp-keymap-prefix "M-c l"
+;;      lsp-headerline-breadcrumb-enable t ; Breadcrumb trail
+;;      lsp-headerline-breadcrumb-icons-enable nil
+;;      ;; lsp-headerline-breadcrumb-segments '(symbols) ; namespace & symbols, no file path
 
-     ;; lsp-lens-enable nil ; default t
-     ;; lsp-semantic-tokens-enable t ; enhance syntax highlight
+;;      ;; lsp-lens-enable nil ; default t
+;;      ;; lsp-semantic-tokens-enable t ; enhance syntax highlight
 
-     ;; lsp-idle-delay 0.2  ; smooth LSP features response
-     lsp-eldoc-enable-hover nil ; disable all hover actions
-     ;; lsp-modeline-code-actions-segments '(count icon)
-     ;; lsp-navigation 'both ; default 'both ; 'simple or 'peek
-     ;; lsp-modeline-diagnostics-enable nil
-     ;; lsp-modeline-code-actions-enable nil
-     )
-    ;; (add-hook 'lsp-after-apply-edits-hook (lambda (&rest _) (save-buffer)))
-    )
+;;      ;; lsp-idle-delay 0.2  ; smooth LSP features response
+;;      lsp-eldoc-enable-hover nil ; disable all hover actions
+;;      ;; lsp-modeline-code-actions-segments '(count icon)
+;;      ;; lsp-navigation 'both ; default 'both ; 'simple or 'peek
+;;      ;; lsp-modeline-diagnostics-enable nil
+;;      ;; lsp-modeline-code-actions-enable nil
+;;      )
+;;     ;; (add-hook 'lsp-after-apply-edits-hook (lambda (&rest _) (save-buffer)))
+;;     )
 
-  (after! lsp-ui
-    (setq lsp-ui-doc-enable nil       ;; disable all doc popups
-          lsp-ui-sideline-enable nil  ;; disable sideline bar for less distraction
-          treemacs-space-between-root-nodes nil  ;; no spacing in treemacs views
-          lsp-ui-peek-enable t))
+;;   (after! lsp-ui
+;;     (setq lsp-ui-doc-enable nil       ;; disable all doc popups
+;;           lsp-ui-sideline-enable nil  ;; disable sideline bar for less distraction
+;;           treemacs-space-between-root-nodes nil  ;; no spacing in treemacs views
+;;           lsp-ui-peek-enable t))
 
-  (after! lsp-treemacs
-    (setq lsp-treemacs-error-list-current-project-only t))
-  )
+;;   (after! lsp-treemacs
+;;     (setq lsp-treemacs-error-list-current-project-only t))
+;;   )
 
 ;;;; goto-addr
 
@@ -4046,15 +4046,15 @@ ${content}"))
 
 ;;;; hy : hylang
 
-(use-package! hy-mode
-  :mode "\\.hy\\'"
-  :interpreter "hy"
-  ;; :hook ((hy-mode . eglot-ensure))
-  :config
-  (set-repl-handler! 'hy-mode #'hy-shell-start-or-switch-to-shell)
-  (set-formatter! 'lisp-indent #'apheleia-indent-lisp-buffer :modes '(hy-mode))
-  (when (executable-find "hyuga") ; it's works!
-    (set-eglot-client! 'hy-mode '("hyuga"))))
+;; (use-package! hy-mode
+;;   :mode "\\.hy\\'"
+;;   :interpreter "hy"
+;;   ;; :hook ((hy-mode . eglot-ensure))
+;;   :config
+;;   (set-repl-handler! 'hy-mode #'hy-shell-start-or-switch-to-shell)
+;;   (set-formatter! 'lisp-indent #'apheleia-indent-lisp-buffer :modes '(hy-mode))
+;;   (when (executable-find "hyuga") ; it's works!
+;;     (set-eglot-client! 'hy-mode '("hyuga"))))
 
 ;;; :format
 

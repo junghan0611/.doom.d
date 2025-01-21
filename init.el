@@ -90,7 +90,7 @@
        ophints           ; highlight the region an operation acts on
        popup    ; tame sudden yet inevitable temporary windows
 
-       (treemacs +lsp); a project drawer, like neotree but cooler
+       treemacs;  a project drawer, like neotree but cooler
        vc-gutter ;; +pretty
        (window-select +numbers) ; visually switch windows
        workspaces        ; tab emulation, persistence & separate workspaces
@@ -119,7 +119,7 @@
        (:if (not (memq system-type '(cygwin windows-nt ms-dos))) vterm) ; the best terminal emulation in Emacs
 
        :checkers
-       syntax ; +flymake ; tasing you for every semicolon you forget
+       (syntax +flymake) ; tasing you for every semicolon you forget
        (:unless IS-TERMUX (spell +flyspell)) ; +hunspell - tasing you for misspelling mispelling
        ;; grammar           ; tasing grammar mistake every you make
 
@@ -131,11 +131,10 @@
 
        ;; (docker +lsp)
        ;; editorconfig      ; let someone else argue about tabs vs spaces
-       ;; (:unless IS-TERMUX (ein)) ; tame Jupyter notebooks with emacs
 
        (eval +overlay)     ; run code, run (also, repls)
        lookup ; only dumb-jump
-       (lsp +peek) ;; +eglot)
+       (lsp +eglot)
 
        (magit +forge) ; a git porcelain for Emacs
 
@@ -213,7 +212,7 @@
         )                     ; wander around notes
 
        ;;php               ; perl's insecure younger brother
-       plantuml ; diagrams for confusing people more
+       ;; plantuml ; diagrams for confusing people more
        graphviz
        ;;purescript        ; javascript, but functional
        (python +lsp) ; +conda beautiful is better than ugly

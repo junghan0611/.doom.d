@@ -676,6 +676,11 @@
       ;; SPC g [ / ]
       :n "[ g" #'+vc-gutter/previous-hunk ; remap diff-hl-previous-hunk
       :n "] g" #'+vc-gutter/next-hunk ; remap diff-hl-next-hunk
+
+      :m "8" #'evil-ex-search-word-forward ; default *
+      :m "3" #'evil-ex-search-word-backward ; default #
+      :m "4" #'evil-end-of-line ; default $
+      :m "0" #'evil-beginning-of-line
       )
 
 (map! (:map minibuffer-mode-map
@@ -724,6 +729,7 @@
         ;; that, and should probably be PRed to org.
         ;; [tab]        #'org-cycle
 
+        "M-8" #'tempel-insert
         "<f12>" #'org-transclusion-mode
         "C-M-y" #'org-rich-yank
         ;; "C-M-Y" #'cae-org-rich-yank

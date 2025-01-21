@@ -1,6 +1,57 @@
 ;;; lisp/denote-funcs.el -*- lexical-binding: t; -*-
 
+;;; TODO my/denote-org-extras-dblock-insert
 
+;; 2025-01-21 include-date t and keybindings
+
+(defun my/denote-org-extras-dblock-insert-backlinks ()
+  "Create Org dynamic block to insert Denote backlinks to current file."
+  (interactive nil org-mode)
+  (org-create-dblock (list :name "denote-backlinks"
+                           :excluded-dirs-regexp nil
+                           :sort-by-component nil
+                           :reverse-sort nil
+                           :id-only nil
+                           :this-heading-only nil
+                           :include-date t))
+  (org-update-dblock))
+
+(defun my/denote-org-extras-dblock-insert-links (regexp)
+  "Create Org dynamic block to insert Denote links matching REGEXP."
+  (interactive
+   (list
+    (denote-files-matching-regexp-prompt))
+   org-mode)
+  (org-create-dblock (list :name "denote-links"
+                           :regexp regexp
+                           :not-regexp nil
+                           :excluded-dirs-regexp nil
+                           :sort-by-component nil
+                           :reverse-sort nil
+                           :id-only nil
+                           :include-date t))
+  (org-update-dblock))
+
+;; my/denote-insert-meta-links ()
+(defun my/denote-org-extras-dblock-insert-meta-links  ()
+  (interactive)
+  (let* ((topics (mapcar (lambda (file)
+                           (denote-retrieve-front-matter-title-value file 'org))
+                         (denote-directory-files "_meta")))
+         (selected (completing-read-multiple "Select meta: " topics nil t)))
+
+    (org-create-dblock (list :name "denote-links"
+                             :regexp
+                             (mapconcat 'identity (mapcar (lambda (s) (replace-regexp-in-string "#" "" s)) selected) "\\|")
+                             :not-regexp nil
+                             :excluded-dirs-regexp
+                             "\\(meta\\|private\\|ekg\\)"
+                             :sort-by-component nil
+                             :reverse-sort nil
+                             :id-only nil
+                             :include-date t))
+    (org-update-dblock)
+    ))
 
 ;;; store link to heading
 
