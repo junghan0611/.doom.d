@@ -3390,20 +3390,22 @@ ${content}"))
   (gptel-make-gemini "Gemini" :key user-gemini-api-key :stream t)
   (gptel-make-anthropic "Claude" :stream t :key user-claude-api-key)
 
+  ;; Model	Context Length	Model Type
+  ;; sonar-pro	200k	Chat Completion
+  ;; sonar	127k	Chat Completion
   ;; https://perplexity.mintlify.app/guides/pricing
   (setq
-   gptel-model 'llama-3.1-sonar-large-128k-online
+   gptel-model 'sonar
    gptel-backend
    (gptel-make-openai "Perplexity"
      :host "api.perplexity.ai"
      :key user-perplexity-api-key
      :endpoint "/chat/completions"
      :stream t
-     :request-params '(:temperature 0.1)
+     :request-params '(:temperature 0.2)
      :models '(
-               "llama-3.1-sonar-large-128k-online"
-               "llama-3.1-sonar-small-128k-online"
-               "llama-3.1-sonar-huge-128k-online"
+               sonar
+               sonar-pro
                )))
 
   ;; Kagi’s FastGPT model and the Universal Summarizer are both supported. A couple of notes:

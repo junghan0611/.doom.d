@@ -241,15 +241,15 @@
 ;;;; imenu ellipsis bookmark
 
 (setq org-capture-bookmark nil)
-(setq org-imenu-depth 3) ; doom 6
+(setq org-imenu-depth 2) ; doom 6, default 2
 
 ;; Search on https://www.compart.com/en/unicode/U+25BF
 ;; Unicode Character “◉” (U+25C9)
 ;; 0x00262F ☯ YIN YANG
 ;; 0x0029BE ⦼ CIRCLED ANTICLOCKWISE-ROTATED DIVISION SIGN
 ;; § ◉ ⚡, ▼, ↴, † ‡ № ¶
-(when (display-graphic-p) ; gui
-  (setq org-ellipsis " ◉"))
+;; (when (display-graphic-p) ; gui
+;;   (setq org-ellipsis " ◉"))
 
 ;;;; pretty-entities / bullet lists / image-width
 
