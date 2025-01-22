@@ -208,7 +208,7 @@
 
 (global-set-key (kbd "<f10> f") 'my/logos-focus-editing-toggle)
 
-(global-set-key (kbd "<f10> p") 'org-pomodoro)
+;; (global-set-key (kbd "<f10> p") 'org-pomodoro)
 
 (global-set-key (kbd "<f10> I") 'org-clock-in-last)
 
@@ -892,18 +892,21 @@
    "+LEVEL<=3"
    (list (my/org-reading-file))))
 
-;;;; org-pomodoro
+;;;; DONT org-pomodoro
 
-(require 'org-pomodoro)
+;; (require 'org-pomodoro)
 
-(setq org-pomodoro-manual-break t)
-(setq org-pomodoro-format "⌛ %s")
+;; Clock break time in pomodoro
+;; (setq org-pomodoro-clock-break t)
 
-(defun ash/org-pomodoro-til-meeting ()
-  "Run a pomodoro until the next 30 minute boundary."
-  (interactive)
-  (let ((org-pomodoro-length (mod (- 30 (cadr (decode-time (current-time)))) 30)))
-    (org-pomodoro)))
+;; (setq org-pomodoro-manual-break t)
+;; (setq org-pomodoro-format "⌛ %s")
+
+;; (defun ash/org-pomodoro-til-meeting ()
+;;   "Run a pomodoro until the next 30 minute boundary."
+;;   (interactive)
+;;   (let ((org-pomodoro-length (mod (- 30 (cadr (decode-time (current-time)))) 30)))
+;;     (org-pomodoro)))
 
 ;; from gopar
 ;; (org-pomodoro-started . gopar/load-window-config-and-close-home-agenda)
@@ -959,9 +962,6 @@
 ;;   (interactive)
 ;;   (org-insert-heading)
 ;;   (org-insert-time-stamp (current-time) t t))
-
-;; Clock break time in pomodoro
-(setq org-pomodoro-clock-break t)
 
 ;; Get a timestamp for tomorrow
 (defun my/tomorrow ()

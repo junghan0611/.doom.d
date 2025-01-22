@@ -120,6 +120,7 @@
 
        :checkers
        (syntax +flymake) ; tasing you for every semicolon you forget
+
        (:unless IS-TERMUX (spell +flyspell)) ; +hunspell - tasing you for misspelling mispelling
        ;; grammar           ; tasing grammar mistake every you make
 
@@ -204,11 +205,11 @@
         +jupyter                    ; ipython/jupyter support for babel
         +pandoc                     ; export-with-pandoc support
         +gnuplot                    ; who doesn't like pretty pictures
-        +pomodoro                 ; be fruitful with the tomato technique
         +present                    ; using org-mode for presentations
         +contacts
         +journal
         ;; +passwords
+        ;; +pomodoro                 ; be fruitful with the tomato technique
         )                     ; wander around notes
 
        ;;php               ; perl's insecure younger brother

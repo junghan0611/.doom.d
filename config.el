@@ -1350,169 +1350,67 @@
 
 ;;; Math and Latex
 
+
+;;;; DONT org-fragtog
+
+;; Automatically toggle Org mode LaTeX fragment previews as the cursor enters and exits them
+;; (use-package! org-fragtog
+;;   :after org
+;;   :hook (org-mode . org-fragtog-mode)
+;;   :init
+;;   (setq org-fragtog-preview-delay 0.2)
+;;   ;; (setq org-startup-with-latex-preview t) ; doom nil
+;;   (setq org-highlight-latex-and-related '(native script entities)) ; doom org +pretty
+;;   ;; (setq org-highlight-latex-and-related '(native)) ; doom nil
+;;   )
+
 ;;;; DONT org-latex-preview
 
 ;; /home/junghan/sync/man/dotsamples/doom/tecosaur-dot-doom/config.org
-;; (use-package! org-latex-preview
-;;   :config
-;;   (setq org-startup-with-latex-preview t) ; doom nil
-;;   (setq org-highlight-latex-and-related '(native script entities)) ; doom org +pretty
-;;   ;; (setq org-highlight-latex-and-related '(native)) ; doom nil
-;;   ;; Increase preview width
-;;   (plist-put org-latex-preview-appearance-options
-;;              :page-width 0.8)
 
-;;   ;; Use dvisvgm to generate previews
-;;   ;; You don't need this, it's the default:
-;;   (setq org-latex-preview-process-default 'dvisvgm)
+;; Setup LaTeX previews in =org-mode=.
+;; See https://abode.karthinks.com/org-latex-preview/ for configuration.
 
-;;   ;; Turn on auto-mode, it's built into Org and much faster/more featured than org-fragtog.
-;;   ;; (Remember to turn off/uninstall org-fragtog.)
-;;   (add-hook 'org-mode-hook 'org-latex-preview-auto-mode)
+;; (after! org
+;;   (add-to-list 'org-latex-packages-alist '("" "amsmath" t))
+;;   (add-to-list 'org-latex-packages-alist '("" "amssymb" t))
+;;   (add-to-list 'org-latex-packages-alist '("" "mathtools" t))
+;;   (add-to-list 'org-latex-packages-alist '("" "mathrsfs" t)))
 
-;;   ;; Block C-n and C-p from opening up previews when using auto-mode
-;;   ;; (add-hook 'org-latex-preview-auto-ignored-commands 'next-line)
-;;   ;; (add-hook 'org-latex-preview-auto-ignored-commands 'previous-line)
+(use-package! org-latex-preview
+  :after org
+  :config
+  (setq org-startup-with-latex-preview t) ; doom nil
+  (setq org-highlight-latex-and-related '(native script entities)) ; doom org +pretty
+  ;; (setq org-highlight-latex-and-related '(native)) ; doom nil
+  ;; Increase preview width
+  (plist-put org-latex-preview-appearance-options
+             :page-width 0.8)
 
-;;   ;; Enable consistent equation numbering
-;;   ;; (setq org-latex-preview-numbered t)
+  ;; Use dvisvgm to generate previews
+  ;; You don't need this, it's the default:
+  ;; (setq org-latex-preview-process-default 'dvisvgm)
 
-;;   ;; Bonus: Turn on live previews.  This shows you a live preview of a LaTeX
-;;   ;; fragment and updates the preview in real-time as you edit it.
-;;   ;; To preview only environments, set it to '(block edit-special) instead
-;;   (setq org-latex-preview-live t)
+  ;; Turn on auto-mode, it's built into Org and much faster/more featured than org-fragtog.
+  ;; (Remember to turn off/uninstall org-fragtog.)
+  (add-hook 'org-mode-hook 'org-latex-preview-auto-mode)
 
-;;   ;; More immediate live-previews -- the default delay is 1 second
-;;   ;; (setq org-latex-preview-live-debounce 0.25)
+  ;; Block C-n and C-p from opening up previews when using auto-mode
+  (setq org-latex-preview-auto-ignored-commands
+        '(next-line previous-line mwheel-scroll
+          scroll-up-command scroll-down-command))
 
-;;   ;; FIXME work with ox-hugo
-;;   (progn
-;;     (require 'ox-html)
-;;     (require 'ox-hugo)
+  ;; Enable consistent equation numbering
+  (setq org-latex-preview-numbered t)
 
-;;     ;; (setq org-export-with-LaTeX-fragments t)
-;;     (plist-put org-html-latex-image-options :inline '(svg svg-embed))
-;;     (advice-add 'org-blackfriday--update-ltximg-path
-;;                 :around
-;;                 (lambda (orig-fn html-string)
-;;                   (if (plist-get org-html-latex-image-options :inline)
-;;                       html-string
-;;                     (funcall orig-fn html-string)))
-;;                 '((name . inline-image-workaround)))
+  ;; Bonus: Turn on live previews.  This shows you a live preview of a LaTeX
+  ;; fragment and updates the preview in real-time as you edit it.
+  ;; To preview only environments, set it to '(block edit-special) instead
+  (setq org-latex-preview-live t)
 
-;;     ;; glossary
-;;     ;; (after! org-glossary
-;;     ;;     (setq org-glossary-toplevel-only nil)
-;;     ;;     (org-glossary-set-export-spec 'hugo t
-;;     ;;       :use "<a class=\"org-gls\" href=\"#gls-%K\">%t</a>"
-;;     ;;       :definition "<a name=\"gls-%K\">%t</a>"
-;;     ;;       :definition-structure "%d\n\\colon{} %v [%n uses]\n")
-;;     ;;     (org-glossary-set-export-spec 'hugo 'glossary
-;;     ;;       :heading "*** Glossary")
-;;     ;;     (defun org-glossary--expand-print-keyword (backend terms keyword)
-;;     ;;       "Call `org-glossary--expand-print' with paramaters and terms based on KEYWORD.
-;;     ;; BACKEND is passed through unmodified, but TERMS may be modified depending on
-;;     ;; the :consume parameter extracted from KEYWORD."
-;;     ;;       (let ((heading (org-element-lineage keyword '(headline org-data)))
-;;     ;;             (parameters (org-combine-plists
-;;     ;;                          org-glossary-default-print-parameters
-;;     ;;                          (org-glossary--parse-print-keyword-value
-;;     ;;                           (org-element-property :value keyword)))))
-;;     ;;         (while (and heading
-;;     ;;                     (not (eq (org-element-type heading) 'org-data))
-;;     ;;                     (> (org-element-property :level heading)
-;;     ;;                        (plist-get parameters :level)))
-;;     ;;           (setq heading (org-element-lineage heading '(headline org-data))))
-;;     ;;         (org-glossary--expand-print
-;;     ;;          backend
-;;     ;;          (org-glossary--extract-uses-in-region
-;;     ;;           terms
-;;     ;;           (if heading (org-element-property :begin heading) (point-min))
-;;     ;;           (if heading (org-element-property :end heading) (point-max))
-;;     ;;           (plist-get parameters :type)
-;;     ;;           (plist-get parameters :consume))
-;;     ;;          parameters))))
-
-;;     ;; (add-to-list 'org-hugo-special-block-type-properties
-;;     ;;              '("sidenote" . (:trim-pre t :trim-post t)))
-;;     ;; (setq org-hugo-paired-shortcodes "%sidenote")
-;;     ;; (define-minor-mode my/org-hugo-mode
-;;     ;;   "Helper mode for org-hugo previews."
-;;     ;;   :keymap (make-sparse-keymap)
-;;     ;;   :init-value nil)
-;;     ;; (defun my/org-hugo-preview (&optional arg)
-;;     ;;   (interactive "P")
-;;     ;;   (pcase-let* ((sec nil)
-;;     ;;                (`(,sec . ,title)
-;;     ;;                 (save-excursion
-;;     ;;                   (org-previous-visible-heading 1)
-;;     ;;                   (let ((title (org-element-property
-;;     ;;                                 :EXPORT_FILE_NAME
-;;     ;;                                 (org-element-at-point))))
-;;     ;;                     (while (and (not sec) (org-up-heading-safe))
-;;     ;;                       (setq sec (org-element-property
-;;     ;;                                  :EXPORT_HUGO_SECTION
-;;     ;;                                  (org-element-at-point))
-;;     ;;                             title (or title
-;;     ;;                                       (org-element-property
-;;     ;;                                        :EXPORT_FILE_NAME
-;;     ;;                                        (org-element-at-point)))))
-;;     ;;                     (cons sec title)))))
-;;     ;;     (if-let ((_ title)
-;;     ;;              (url (concat
-;;     ;;                    "http://localhost:1313/"
-;;     ;;                    (if sec (downcase sec) "software")
-;;     ;;                    "/" title)))
-;;     ;;         (progn (save-buffer)
-;;     ;;                (unless (bound-and-true-p org-hugo-auto-export-mode)
-;;     ;;                  (org-hugo-export-wim-to-md))
-;;     ;;                (if arg
-;;     ;;                    (progn (other-window 1) (eww url) (other-window -1))
-;;     ;;                  (browse-url url)))
-;;     ;;       (message "No preview url found."))))
-
-;;     (require 'org-compat)
-;;     ;; (setq org-html-with-latex t)
-;;     (defun org-html-format-latex (latex-frag processing-type info)
-;;       "Format a LaTeX fragment LATEX-FRAG into HTML.
-;;   PROCESSING-TYPE designates the tool used for conversion.  It can
-;;   be `mathjax', `verbatim', `html', nil, t or symbols in
-;;   `org-preview-latex-process-alist', e.g., `dvipng', `dvisvgm' or
-;;   `imagemagick'.  See `org-html-with-latex' for more information.
-;;   INFO is a plist containing export properties."
-;;       (let ((cache-relpath "") (cache-dir ""))
-;;         (unless (or (eq processing-type 'mathjax)
-;;                     (eq processing-type 'html))
-;;           (let ((bfn (or (buffer-file-name)
-;; 		         (make-temp-name
-;; 		          (expand-file-name "latex" temporary-file-directory))))
-;; 	        (latex-header
-;; 	         (let ((header (plist-get info :latex-header)))
-;; 	           (and header
-;; 		        (concat (mapconcat
-;; 			         (lambda (line) (concat "#+LATEX_HEADER: " line))
-;; 			         (org-split-string header "\n")
-;; 			         "\n")
-;; 			        "\n")))))
-;; 	    (setq cache-relpath
-;; 	          (concat (file-name-as-directory org-preview-latex-image-directory)
-;; 		          (file-name-sans-extension
-;; 		           (file-name-nondirectory bfn)))
-;; 	          cache-dir (file-name-directory bfn))
-;; 	    ;; Re-create LaTeX environment from original buffer in
-;; 	    ;; temporary buffer so that dvipng/imagemagick can properly
-;; 	    ;; turn the fragment into an image.
-;; 	    (setq latex-frag (concat latex-header latex-frag))))
-;;         (org-export-with-buffer-copy
-;;          :to-buffer (get-buffer-create " *Org HTML Export LaTeX*")
-;;          :drop-visibility t :drop-narrowing t :drop-contents t
-;;          (erase-buffer)
-;;          (insert latex-frag)
-;;          (org-format-latex cache-relpath nil nil cache-dir nil
-;; 		           "Creating LaTeX Image..." nil processing-type)
-;;          (buffer-string))))
-;;     )
-;;   )
+  ;; More immediate live-previews -- the default delay is 1 second
+  (setq org-latex-preview-live-debounce 0.25)
+  )
 
 ;;;; DONT cdlatex
 
@@ -1568,19 +1466,6 @@
 ;;     "-." "->"
 ;;     "=." "=>"
 ;;     "j9" "("))
-
-;;;; org-fragtog
-
-;; Automatically toggle Org mode LaTeX fragment previews as the cursor enters and exits them
-(use-package! org-fragtog
-  :after org
-  :hook (org-mode . org-fragtog-mode)
-  :init
-  (setq org-fragtog-preview-delay 0.2)
-  ;; (setq org-startup-with-latex-preview t) ; doom nil
-  (setq org-highlight-latex-and-related '(native script entities)) ; doom org +pretty
-  ;; (setq org-highlight-latex-and-related '(native)) ; doom nil
-  )
 
 ;;;; laas : latex-auto-activating-snippets
 

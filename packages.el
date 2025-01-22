@@ -89,34 +89,34 @@
 ;; cd doom-emacs-dir
 ;; rm -Rf eln-cache
 ;; cd .local/straight
-;; rm -Rf build-30.0.91/org or build-29.4.50/org
+;; rm -Rf build-30.0.93/org or build-29.4.50/org
 ;; rm -Rf repos/org
 ;; doom sync -u
 
-;; (package! org :recipe
-;;   (:host nil :repo "https://git.tecosaur.net/mirrors/org-mode.git" :remote "mirror" :fork
-;;    (:host nil :repo "https://git.tecosaur.net/tec/org-mode.git" :branch "dev" :remote "tecosaur")
-;;    :files
-;;    (:defaults "etc")
-;;    :build t :pre-build
-;;    (with-temp-file "org-version.el"
-;;      (require 'lisp-mnt)
-;;      (let
-;;          ((version
-;;            (with-temp-buffer
-;;              (insert-file-contents "lisp/org.el")
-;;              (lm-header "version")))
-;;           (git-version
-;;            (string-trim
-;;             (with-temp-buffer
-;;               (call-process "git" nil t nil "rev-parse" "--short" "HEAD")
-;;               (buffer-string)))))
-;;        (insert
-;;         (format "(defun org-release () \"The release version of Org.\" %S)\n" version)
-;;         (format "(defun org-git-version () \"The truncate git commit hash of Org mode.\" %S)\n" git-version)
-;;         "(provide 'org-version)\n"))))
-;;   :pin nil)
-;; (unpin! org)
+(package! org :recipe
+  (:host nil :repo "https://git.tecosaur.net/mirrors/org-mode.git" :remote "mirror" :fork
+   (:host nil :repo "https://git.tecosaur.net/tec/org-mode.git" :branch "dev" :remote "tecosaur")
+   :files
+   (:defaults "etc")
+   :build t :pre-build
+   (with-temp-file "org-version.el"
+     (require 'lisp-mnt)
+     (let
+         ((version
+           (with-temp-buffer
+             (insert-file-contents "lisp/org.el")
+             (lm-header "version")))
+          (git-version
+           (string-trim
+            (with-temp-buffer
+              (call-process "git" nil t nil "rev-parse" "--short" "HEAD")
+              (buffer-string)))))
+       (insert
+        (format "(defun org-release () \"The release version of Org.\" %S)\n" version)
+        (format "(defun org-git-version () \"The truncate git commit hash of Org mode.\" %S)\n" git-version)
+        "(provide 'org-version)\n"))))
+  :pin nil)
+(unpin! org)
 
 ;;; additional packages
 
@@ -184,7 +184,7 @@
 
 ;;;; :lang org-mode
 
-(package! org-fragtog)          ;; interactive toggling of inline latex formulas
+;; (package! org-fragtog)          ;; interactive toggling of inline latex formulas
 
 (package! orgabilize :recipe (:host github :repo "akirak/orgabilize.el"))
 (package! org-glossary :recipe (:host github :repo "tecosaur/org-glossary" :files ("*.el" "*.org" "*.texi")))

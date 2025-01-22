@@ -544,8 +544,8 @@
    ;;         ("N" ash/org-roam-node-find-now)
    ;;         )
    "Clock" (
-            ("P" org-pomodoro "Start pomodoro")
-            ("Q" ash/org-pomodoro-til-meeting "Start pomodoro til half hour")
+            ;; ("P" org-pomodoro "Start pomodoro")
+            ;; ("Q" ash/org-pomodoro-til-meeting "Start pomodoro til half hour")
             ("<f2>" org-clock-goto "org-clock-goto" :color blue :exit t)
             ("M-c" nil "Quit" :color red :exit t)
             ("q" nil "Quit" :color red :exit t))
