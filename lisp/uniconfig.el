@@ -252,7 +252,7 @@ Also see `prot-window-delete-popup-frame'." command)
     (gptel "My:AI Chat" gptel-api-key nil)
     (switch-to-buffer "My:AI Chat")
     (delete-other-windows)
-    (tab-line-mode -1)
+    ;; (tab-line-mode -1)
     ))
 
 ;;; Packages with functions

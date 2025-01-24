@@ -1,5 +1,40 @@
 ;;; lisp/denote-funcs.el -*- lexical-binding: t; -*-
 
+
+;;; consult my/denote-find-file, my/denote-grep
+;;;; my/denote-find-file
+
+;; sync/man/dotsamples/vanilla/damiencassou-dotfiles-meow/init.el
+;; (defun my/denote-find-file (filename)
+;;   "Open FILENAME, a denote file.
+;; Interactively ask which file to open with completion."
+;;   (interactive
+;;    (progn
+;;      (toggle-korean-input-method)
+;;      (list (denote-file-prompt))
+;;      ;; (set-input-method 'korean-hangul)
+;;      ))
+;;   (find-file filename))
+
+;;;###autoload
+(defun my/denote-find-file ()
+  "Open a denote file. Interactively ask which file to open with completion."
+  (interactive)
+  ;; 한글 입력을 위한 input method 설정
+  ;; (set-input-method 'korean-hangul)
+  ;; 파일명 입력받기
+  (let ((filename (denote-file-prompt)))
+    (find-file filename)))
+
+;;;; my/denote-grep
+
+;;;###autoload
+(defun my/denote-grep ()
+  "Search within my notes."
+  (interactive)
+  (consult-ripgrep denote-directory))
+;; (consult-ripgrep denote-directory "") ; 무슨 차이?
+
 ;;; TODO my/denote-org-extras-dblock-insert
 
 ;; 2025-01-21 include-date t and keybindings
@@ -103,11 +138,7 @@ Delete the original subtree."
         (insert text))
     (user-error "No subtree to extract; aborting")))
 
-;;; Signature
-;;;; denote-fz
-
-;; check
-
+;;; TODO Signature - denote-sequence
 ;;;; DONT efls/denote-signature-buffer
 
 ;; (defun efls/denote-signature-buffer ()
@@ -219,39 +250,6 @@ append to it, while separating multiple outputs with
   "Open a random denote."
   (interactive)
   (my/denote-random-note-from-directory denote-directory))
-
-;;;; my/denote-find-file
-
-;; sync/man/dotsamples/vanilla/damiencassou-dotfiles-meow/init.el
-;; (defun my/denote-find-file (filename)
-;;   "Open FILENAME, a denote file.
-;; Interactively ask which file to open with completion."
-;;   (interactive
-;;    (progn
-;;      (toggle-korean-input-method)
-;;      (list (denote-file-prompt))
-;;      ;; (set-input-method 'korean-hangul)
-;;      ))
-;;   (find-file filename))
-
-;;;###autoload
-(defun my/denote-find-file ()
-  "Open a denote file. Interactively ask which file to open with completion."
-  (interactive)
-  ;; 한글 입력을 위한 input method 설정
-  ;; (set-input-method 'korean-hangul)
-  ;; 파일명 입력받기
-  (let ((filename (denote-file-prompt)))
-    (find-file filename)))
-
-;;;; my/denote-grep
-
-;;;###autoload
-(defun my/denote-grep ()
-  "Search within my notes."
-  (interactive)
-  (consult-ripgrep denote-directory))
-;; (consult-ripgrep denote-directory "") ; 무슨 차이?
 
 ;;;; my/denote-attach
 

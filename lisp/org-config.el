@@ -232,12 +232,6 @@
 (setq org-support-shift-select nil) ; default nil
 (setq shift-select-mode nil) ; default t
 
-;;;; DONT performance latex-and-related off
-
-;; '(latex script entities))
-;; (setq org-highlight-latex-and-related '(native)) ; doom nil
-;; (setq org-latex-and-related-regexp nil) ; doom nil
-
 ;;;; imenu ellipsis bookmark
 
 (setq org-capture-bookmark nil)
@@ -442,17 +436,6 @@
 ;; vedang's style from org-mode-crate
 (setq org-columns-default-format
       "%50ITEM(Task) %5Effort(Effort){:} %5CLOCKSUM %3PRIORITY %20DEADLINE %20SCHEDULED %20TIMESTAMP %TODO %CATEGORY(Category) %TAGS")
-
-;;;; DONT Disable org-element-cache
-
-;; 2024-06-27 안쓰는게 나은듯
-
-;; The new org-data element provides properties from top-level property drawer,
-;; buffer-global category, and :path property containing file path for file Org buffers.
-;; (setq org-element-use-cache nil) ; default t
-
-;; Element cache persists across Emacs sessions
-;; (setq org-element-cache-persistent nil) ; default t
 
 ;;; org-agenda
 

@@ -411,11 +411,11 @@
 
 ;;;; math-preview
 
-;; (when (locate-library "math-preview")
-;;   (global-set-key (kbd "M-g /") 'math-preview-at-point)
-;;   ;; (global-set-key (kbd "M-g M-/") 'math-preview-all)
-;;   ;; (global-set-key (kbd "M-g C-M-/") 'math-preview-clear-all)
-;;   )
+(when (locate-library "math-preview")
+  (global-set-key (kbd "M-g /") 'math-preview-at-point)
+  (global-set-key (kbd "M-g M-/") 'math-preview-all)
+  (global-set-key (kbd "M-g M-.") 'math-preview-clear-all)
+  )
 
 ;;;; my/backward-delete-word-or-region
 

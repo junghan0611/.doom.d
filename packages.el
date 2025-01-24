@@ -93,30 +93,30 @@
 ;; rm -Rf repos/org
 ;; doom sync -u
 
-(package! org :recipe
-  (:host nil :repo "https://git.tecosaur.net/mirrors/org-mode.git" :remote "mirror" :fork
-   (:host nil :repo "https://git.tecosaur.net/tec/org-mode.git" :branch "dev" :remote "tecosaur")
-   :files
-   (:defaults "etc")
-   :build t :pre-build
-   (with-temp-file "org-version.el"
-     (require 'lisp-mnt)
-     (let
-         ((version
-           (with-temp-buffer
-             (insert-file-contents "lisp/org.el")
-             (lm-header "version")))
-          (git-version
-           (string-trim
-            (with-temp-buffer
-              (call-process "git" nil t nil "rev-parse" "--short" "HEAD")
-              (buffer-string)))))
-       (insert
-        (format "(defun org-release () \"The release version of Org.\" %S)\n" version)
-        (format "(defun org-git-version () \"The truncate git commit hash of Org mode.\" %S)\n" git-version)
-        "(provide 'org-version)\n"))))
-  :pin nil)
-(unpin! org)
+;; (package! org :recipe
+;;   (:host nil :repo "https://git.tecosaur.net/mirrors/org-mode.git" :remote "mirror" :fork
+;;    (:host nil :repo "https://git.tecosaur.net/tec/org-mode.git" :branch "dev" :remote "tecosaur")
+;;    :files
+;;    (:defaults "etc")
+;;    :build t :pre-build
+;;    (with-temp-file "org-version.el"
+;;      (require 'lisp-mnt)
+;;      (let
+;;          ((version
+;;            (with-temp-buffer
+;;              (insert-file-contents "lisp/org.el")
+;;              (lm-header "version")))
+;;           (git-version
+;;            (string-trim
+;;             (with-temp-buffer
+;;               (call-process "git" nil t nil "rev-parse" "--short" "HEAD")
+;;               (buffer-string)))))
+;;        (insert
+;;         (format "(defun org-release () \"The release version of Org.\" %S)\n" version)
+;;         (format "(defun org-git-version () \"The truncate git commit hash of Org mode.\" %S)\n" git-version)
+;;         "(provide 'org-version)\n"))))
+;;   :pin nil)
+;; (unpin! org)
 
 ;;; additional packages
 
@@ -184,7 +184,7 @@
 
 ;;;; :lang org-mode
 
-;; (package! org-fragtog)          ;; interactive toggling of inline latex formulas
+(package! org-fragtog)          ;; interactive toggling of inline latex formulas
 
 (package! orgabilize :recipe (:host github :repo "akirak/orgabilize.el"))
 (package! org-glossary :recipe (:host github :repo "tecosaur/org-glossary" :files ("*.el" "*.org" "*.texi")))
@@ -192,7 +192,8 @@
 (package! org-web-tools)
 (package! org-index) ;; 색인 지원
 (package! corg :recipe (:host github :repo "isamert/corg.el"))
-(package! org-appear)
+;; (package! org-appear)
+
 (package! org-download)
 (package! ox-epub)
 
@@ -251,6 +252,8 @@
 ;; (package! quarto-mode :recipe (:host github :repo "quarto-dev/quarto-emacs" )) ; require polymode
 (package! quarto-mode :pin "a7b974f7d22ef939eaed8b9919434bcf20b1438f")
 (package! ox-quarto :recipe (:host github :repo "jrgant/ox-quarto"))
+
+(package! math-preview)
 
 (package! guess-language :recipe (:host github :repo "junghan0611/guess-language.el" :branch "master" :files ("*.el" "trigrams/*")))
 (package! txl :recipe (:host github :repo "junghan0611/txl.el" :branch "ko"))
@@ -428,8 +431,8 @@
 ;;;; Transient
 
 (package! ccmenu :recipe (:host github :repo "junghan0611/ccmenu"))
-(package! casual-suite)
-;; (package! casual-suite :recipe (:host github :repo "kickingvegas/casual-suite"))
+;; (package! casual-suite)
+(package! casual-suite :recipe (:host github :repo "kickingvegas/casual-suite"))
 (package! git-grep-transient)
 
 ;;;; Forked PKGs

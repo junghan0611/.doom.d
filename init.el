@@ -112,14 +112,14 @@
 
        undo              ; persistent, smarter undo for your inevitable mistakes
        vc                ; version-control and Emacs, sitting in a tree
-       eww
+       eww               ; Emacs' built-in web browser
 
        :term
        (:unless IS-TERMUX (eshell)) ; the elisp shell that works everywhere
        (:if (not (memq system-type '(cygwin windows-nt ms-dos))) vterm) ; the best terminal emulation in Emacs
 
        :checkers
-       (syntax +flymake) ; tasing you for every semicolon you forget
+       (syntax -flymake) ;;  tasing you for every semicolon you forget
 
        (:unless IS-TERMUX (spell +flyspell)) ; +hunspell - tasing you for misspelling mispelling
        ;; grammar           ; tasing grammar mistake every you make
@@ -208,6 +208,7 @@
         +present                    ; using org-mode for presentations
         +contacts
         +journal
+        +pretty
         ;; +passwords
         ;; +pomodoro                 ; be fruitful with the tomato technique
         )                     ; wander around notes

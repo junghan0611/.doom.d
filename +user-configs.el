@@ -455,6 +455,7 @@
       ;; ("^\\*scratch*" :ignore t) ; for TEST
       ("^\\.doom.d/diary" :ignore t) ; for TEST
       ("^\\*Completions" :ignore t)
+      ("*Org Preview LaTeX Output*" :ingnore t) ; 2025-01-24
       ("^\\*Local variables\\*$" :vslot -1 :slot 1 :size +popup-shrink-to-fit)
       ;; ("^\\*\\(?:[Cc]ompil\\(?:ation\\|e-Log\\)\\|Messages\\)" :vslot -2 :size 0.3 :autosave t :quit t :ttl nil) ; +default
       ("^\\*Compil\\(?:ation\\|e-Log\\)" :size 0.3 :ttl 0 :quit t)
@@ -777,53 +778,24 @@
 
 ;;; :completion corfu vertico
 
-;;;; DONT vertico
+;;;; vertico
 
-;; (after! vertico
-;;   (require 'vertico)
-;;   ;; (setq vertico-resize 'grow-only) ; doom nil
+(unless IS-TERMUX
 
-;;   (defun spacemacs/embark-preview ()
-;;     "Previews candidate in vertico buffer, unless it's a consult command"
-;;     (interactive)
-;;     (unless (bound-and-true-p consult--preview-function)
-;;       (save-selected-window
-;;         (let ((embark-quit-after-action nil))
-;;           (embark-dwim)))))
+  (require 'vertico-buffer)
+  ;; (setq vertico-resize 'grow-only) ; doom nil
 
-;; ;;;###autoload
-;;   (defun spacemacs/next-candidate-preview (&optional n)
-;;     "Go forward N candidates and preview"
-;;     (interactive)
-;;     (vertico-next (or n 1))
-;;     (+vertico/embark-preview)
-;;     ;; (spacemacs/embark-preview)
-;;     )
+  ;; vertico on Top
+  (setq vertico-buffer-display-action
+        `(display-buffer-in-side-window
+          (window-height . ,(+ 3 vertico-count)) (side . top)))
+  (vertico-mode +1)
+  (vertico-buffer-mode +1)
 
-;; ;;;###autoload
-;;   (defun spacemacs/previous-candidate-preview (&optional n)
-;;     "Go backward N candidates and preview"
-;;     (interactive)
-;;     (vertico-previous (or n 1))
-;;     (+vertico/embark-preview)
-;;     ;; (spacemacs/embark-preview)
-;;     )
-;;   )
-
-;; (unless IS-TERMUX
-;;   (require 'vertico-buffer)
-
-;;   ;; vertico on Top
-;;   (setq vertico-buffer-display-action
-;;         `(display-buffer-in-side-window
-;;           (window-height . ,(+ 3 vertico-count)) (side . top)))
-;;   (vertico-mode +1)
-;;   (vertico-buffer-mode +1)
-
-;;   ;; sachac-dotfiles/Sacha.org
-;;   (with-eval-after-load 'vertico-multiform
-;;     (add-to-list 'vertico-multiform-categories '(embark-keybinding grid)))
-;;   )
+  ;; sachac-dotfiles/Sacha.org
+  (with-eval-after-load 'vertico-multiform
+    (add-to-list 'vertico-multiform-categories '(embark-keybinding grid)))
+  )
 
 ;;;; DONT vertico hangul
 
@@ -878,12 +850,10 @@
   ;;       :g "j I" #'consult-buffer)
 
   ;; +default/search-cwd
-
   (defun my/consult-find ()
     (interactive)
     (consult-find "."))
 
-  ;;;###autoload
   (defun my/consult-fd ()
     (interactive)
     (consult-fd "."))
@@ -908,6 +878,7 @@
     (interactive)
     (my/compleseus-search t default-directory))
 
+  (setq consult-preview-key "M-m")
   ;; (setq consult--customize-alist nil)
   (consult-customize
    +default/search-project +default/search-other-project
@@ -916,12 +887,15 @@
    +default/search-notes-for-symbol-at-point
    +default/search-emacsd
 
-   my/search-cwd-symbol-at-point
-
-   consult-ripgrep consult-git-grep ;; consult-grep
+   consult-ripgrep consult-git-grep consult-grep
    consult-bookmark consult-recent-file
    consult--source-recent-file consult--source-project-recent-file consult--source-bookmark
-   :preview-key '("C-SPC" :debounce 0.3 "<up>" "<down>" "M-j" "M-k"))
+
+   ;; custom below
+   my/search-cwd-symbol-at-point
+   +lookup/definition
+   +lookup/implementations
+   :preview-key '("M-m" :debounce 0.3 "<up>" "<down>" "C-j" "C-k")) ; M-j,k
   )
 
 ;;;; corfu
@@ -1018,11 +992,18 @@
 
 ;;; :checkers
 
-;;;; DONT flycheck
+;;;; OKAY Flycheck
+
+(after! flycheck
+  (setq flycheck-global-modes '(not emacs-lisp-mode org-mode markdown-mode gfm-mode))
+  ;; (setq flycheck-checker-error-threshold 1000) ; need more than default of 400
+  (global-flycheck-mode +1)
+  )
 
 ;; (progn
-;;   (setq flycheck-help-echo-function nil
-;;         flycheck-display-errors-function nil)
+;;   (setq flycheck-help-echo-function nil ; default 'flycheck-help-echo-all-error-messages
+;;         flycheck-display-errors-function nil ; default 'flycheck-display-error-messages
+;;         )
 
 ;;   (after! flycheck
 ;;     (ignore-errors
@@ -1032,7 +1013,7 @@
 ;;     ;; =M-x eldoc-doc-buffer= 함수 호출로 표시하는 buffer 크기 조절
 ;;     ;; (set-popup-rule! "^\\*eldoc for" :size 0.2 :vslot -1)
 
-;;     (setq eldoc-echo-area-use-multiline-p nil) ;  important
+;;     (setq eldoc-echo-area-use-multiline-p nil) ;  important - default 'truncate-sym-name-if-fit
 ;;     ;; eldoc-echo-area-prefer-doc-buffer t ; default nil - alway show echo-area
 ;;     ;; ;; eldoc-display-functions '(eldoc-display-in-echo-area eldoc-display-in-buffer)
 
@@ -1040,9 +1021,6 @@
 ;;       (defun disable-flycheck-popup-buffer ()
 ;;         (setq flycheck-display-errors-function #'ignore)))
 ;;     (add-to-list 'flycheck-disabled-checkers 'emacs-lisp-package)
-
-;;     (setq flycheck-checker-error-threshold 1000) ; need more than default of 400
-;;     (setq flycheck-global-modes '(not emacs-lisp-mode org-mode markdown-mode gfm-mode))
 ;;     )
 
 ;;   (after! elisp-mode
@@ -1051,11 +1029,13 @@
 ;;         (flycheck-mode -1))))
 ;;   )
 
-;;;; disable flymake-mode default
+;;;; DEPRECATED Flymake
 
-(remove-hook! (prog-mode text-mode) #'flymake-mode)
+;;;;; DONT disable flymake-mode default
 
-;;;; DONT flymake-vale
+;; (remove-hook! (prog-mode text-mode) #'flymake-mode)
+
+;;;;; DONT flymake-vale
 
 ;; flymake-vale-modes defaults to:
 ;;  => (text-mode latex-mode org-mode markdown-mode message-mode)
@@ -1457,11 +1437,13 @@ only those in the selected frame."
 ;;; :tools writing
 
 
-;;;; Markdown
+;;;; markdown-mode
 
 ;; agzam
 (after! (:or markdown-mode chatgpt-shell-mode)
   (load! "+markdown")
+
+  (setq-default markdown-enable-math t)
 
   (after! evil
     ;; (advice-add #'evil-ex-start-word-search :around #'evil-ex-visual-star-search-a)
@@ -1543,7 +1525,6 @@ only those in the selected frame."
     (evil-define-key '(normal visual) markdown-mode-map "zu" 'markdown-up-heading) ;; same with evil-collection outline
     )
   )
-
 
 ;;;; palimpsest
 
@@ -2051,6 +2032,9 @@ only those in the selected frame."
 
 ;;;; Projectile
 
+;; External tools required to make projectile fly! fd, ag, rg
+;; evil-dot-doom/modules/custom/projects/config.el
+
 (after! projectile
   ;; Disable projectile cache - saves requirement to invalidate cache when moving files
   (setq projectile-enable-caching nil)
@@ -2088,6 +2072,10 @@ only those in the selected frame."
         ;; :desc "List todos" "pl" #'magit-todos-list
         :desc "See project root dir" "p-" #'projectile-dired
         :desc "Ripgrep" "pG" #'projectile-ripgrep)
+
+  ;; stop $HOME from being recognizes as a project root
+  (setq projectile-project-root-files-bottom-up
+        (remove ".git" projectile-project-root-files-bottom-up))
   )
 
 ;;;; treemacs
@@ -2323,7 +2311,7 @@ ${content}"))
   (consult-gh-repo-maxnum 30) ;;set max number of repos to 30
   (consult-gh-issues-maxnum 100) ;;set max number of issues to 100
   (consult-gh-show-preview t)
-  ;; (consult-gh-preview-key "C-SPC")
+  (consult-gh-preview-key "M-m")
   (consult-gh-large-file-warning-threshold 2500000)
   (consult-gh-prioritize-local-folder 'suggest)
   (consult-gh-preview-buffer-mode 'org-mode) ;; show previews in org-mode
@@ -3136,13 +3124,18 @@ ${content}"))
 
   (use-package! consult-denote
     :after denote
-    :hook (org-mode . consult-denote-mode)
+    ;; :hook (org-mode . consult-denote-mode)
     :config
     ;; Prefer `ripgrep' and `fd' variants when available
     (when (executable-find "fd")
       (setopt consult-denote-find-command #'consult-fd))
     (when (executable-find "rg")
-      (setopt consult-denote-grep-command #'consult-ripgrep)))
+      (setopt consult-denote-grep-command #'consult-ripgrep))
+    (consult-customize
+     consult-denote-find
+     consult-denote-grep
+     :preview-key '("M-m" :debounce 0.3 "<up>" "<down>" "C-j" "C-k"))
+    )
 
 ;;;;; consult-notes
 
@@ -3154,6 +3147,11 @@ ${content}"))
     (setq consult-notes-denote-dir t)
     (setq consult-notes-denote-title-margin 2) ; 24
     :config
+
+    (consult-customize
+     consult-notes
+     :preview-key '("M-m" :debounce 0.3 "<up>" "<down>" "C-j" "C-k"))
+
     ;; (unless IS-TERMUX
     ;;   (setq consult-notes-file-dir-sources
     ;;         '(("Clone-notes"  ?c  "~/nosync/clone-notes/"))))

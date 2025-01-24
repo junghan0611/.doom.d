@@ -541,12 +541,12 @@
            :mode-line-inactive spacious-padding-subtle-mode-line-inactive))
   (setq spacious-padding-widths
         '(:header-line-width 4
-          :mode-line-width 6
-          :tab-width 6 ; sync mode-line-width for keycast-tab-bar
+          :mode-line-width 4 ; 6
+          :tab-width 4 ; sync mode-line-width for keycast-tab-bar
           :internal-border-width 20 ; 15
-          :right-divider-width 20 ; 30
+          :right-divider-width 30 ; 30
           :scroll-bar-width 8
-          :fringe-width 20 ;; 8
+          :fringe-width 8
           ))
   (add-hook 'doom-load-theme-hook #'spacious-padding-mode)
   :config
@@ -579,6 +579,7 @@
   )
 
 ;;; :lang pkm
+
 ;;;; after denotes : Load custom denote
 
 (after! denote
@@ -589,6 +590,12 @@
   (require 'denote-hugo) ; for publish
   ;; (add-hook 'doom-first-input-hook #'my/refresh-agenda-files)
   )
+
+;;;; check consult-denotes
+
+;; (consult-customize
+;;  my/denote-grep  my/denote-find-file
+;;  :preview-key '("M-m" :debounce 0.3 "<up>" "<down>" "C-j" "C-k"))
 
 ;;;; DONT consult-notes-file-dir-sources
 
@@ -1350,19 +1357,52 @@
 
 ;;; Math and Latex
 
+;;;; math-preview
 
-;;;; DONT org-fragtog
+(use-package! math-preview)
+
+;;;; TODO org-fragtog
 
 ;; Automatically toggle Org mode LaTeX fragment previews as the cursor enters and exits them
-;; (use-package! org-fragtog
-;;   :after org
-;;   :hook (org-mode . org-fragtog-mode)
-;;   :init
-;;   (setq org-fragtog-preview-delay 0.2)
-;;   ;; (setq org-startup-with-latex-preview t) ; doom nil
-;;   (setq org-highlight-latex-and-related '(native script entities)) ; doom org +pretty
-;;   ;; (setq org-highlight-latex-and-related '(native)) ; doom nil
-;;   )
+(use-package! org-fragtog
+  :after org
+  :hook (org-mode . org-fragtog-mode)
+  ;; :hook (markdown-mode . org-fragtog-mode)
+  :init
+  (progn ;; for org-fragtog-mode for markdown-mode
+    ;; 2025-01-24 disable for markdown-mode, 2024-06-27 안쓰는게 나은듯
+    ;; The new org-data element provides properties from top-level property drawer,
+    (setq org-element-use-cache nil) ; default t
+    ;; Element cache persists across Emacs sessions
+    (setq org-element-cache-persistent nil) ; default t
+    (add-to-list 'warning-suppress-types '(org-element))
+    )
+
+  (setq org-fragtog-preview-delay 0.2)
+  ;; (setq org-startup-with-latex-preview t) ; doom nil
+  (setq org-highlight-latex-and-related '(native))
+  ;; (setq org-highlight-latex-and-related '(native script entities)) ; doom org +pretty
+  )
+
+
+;;;; TODO change latex-compiler for xelatex and dvisvgm
+
+;; tshu
+(after! ox-latex
+  (setq org-latex-compiler "xelatex"
+        org-latex-pdf-process '("latexmk -f -pdf -%latex -interaction=nonstopmode -output-directory=%o %f"
+                                "latexmk -c -bibtex")
+        org-latex-prefer-user-labels t
+        org-preview-latex-default-process 'dvisvgm
+        ;; org-preview-latex-image-directory (no-littering-expand-var-file-name "ltximg/")
+        org-preview-latex-process-alist
+        '((dvisvgm :programs ("xelatex" "dvisvgm")
+           :description "xdv > svg"
+           :message "you need to install the programs: xelatex and dvisvgm."
+           :image-input-type "xdv" :image-output-type "svg" :image-size-adjust (1.7 . 1.5)
+           :latex-compiler ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
+           :image-converter ("dvisvgm %f --no-fonts --exact-bbox --scale=%S --output=%O"))))
+  )
 
 ;;;; DONT org-latex-preview
 
@@ -1377,40 +1417,41 @@
 ;;   (add-to-list 'org-latex-packages-alist '("" "mathtools" t))
 ;;   (add-to-list 'org-latex-packages-alist '("" "mathrsfs" t)))
 
-(use-package! org-latex-preview
-  :after org
-  :config
-  (setq org-startup-with-latex-preview t) ; doom nil
-  (setq org-highlight-latex-and-related '(native script entities)) ; doom org +pretty
-  ;; (setq org-highlight-latex-and-related '(native)) ; doom nil
-  ;; Increase preview width
-  (plist-put org-latex-preview-appearance-options
-             :page-width 0.8)
+;; (use-package! org-latex-preview
+;;   :after org
+;;   :config
+;;   (setq org-startup-with-latex-preview t) ; doom nil
+;;   (setq org-highlight-latex-and-related '(native script entities)) ; doom org +pretty
+;;   ;; (setq org-highlight-latex-and-related '(native)) ; doom nil
+;;   ;; Increase preview width
+;;   (plist-put org-latex-preview-appearance-options
+;;              :page-width 0.8)
 
-  ;; Use dvisvgm to generate previews
-  ;; You don't need this, it's the default:
-  ;; (setq org-latex-preview-process-default 'dvisvgm)
+;;   ;; Use dvisvgm to generate previews
+;;   ;; You don't need this, it's the default:
+;;   ;; (setq org-latex-preview-process-default 'dvisvgm)
 
-  ;; Turn on auto-mode, it's built into Org and much faster/more featured than org-fragtog.
-  ;; (Remember to turn off/uninstall org-fragtog.)
-  (add-hook 'org-mode-hook 'org-latex-preview-auto-mode)
+;;   ;; Turn on auto-mode, it's built into Org and much faster/more featured than org-fragtog.
+;;   ;; (Remember to turn off/uninstall org-fragtog.)
+;;   (add-hook 'org-mode-hook 'org-latex-preview-auto-mode)
+;;   (add-hook 'markdown-mode-hook 'org-latex-preview-auto-mode)
 
-  ;; Block C-n and C-p from opening up previews when using auto-mode
-  (setq org-latex-preview-auto-ignored-commands
-        '(next-line previous-line mwheel-scroll
-          scroll-up-command scroll-down-command))
+;;   ;; Block C-n and C-p from opening up previews when using auto-mode
+;;   (setq org-latex-preview-auto-ignored-commands
+;;         '(next-line previous-line mwheel-scroll
+;;           scroll-up-command scroll-down-command))
 
-  ;; Enable consistent equation numbering
-  (setq org-latex-preview-numbered t)
+;;   ;; Enable consistent equation numbering
+;;   (setq org-latex-preview-numbered t)
 
-  ;; Bonus: Turn on live previews.  This shows you a live preview of a LaTeX
-  ;; fragment and updates the preview in real-time as you edit it.
-  ;; To preview only environments, set it to '(block edit-special) instead
-  (setq org-latex-preview-live t)
+;;   ;; Bonus: Turn on live previews.  This shows you a live preview of a LaTeX
+;;   ;; fragment and updates the preview in real-time as you edit it.
+;;   ;; To preview only environments, set it to '(block edit-special) instead
+;;   (setq org-latex-preview-live t)
 
-  ;; More immediate live-previews -- the default delay is 1 second
-  (setq org-latex-preview-live-debounce 0.25)
-  )
+;;   ;; More immediate live-previews -- the default delay is 1 second
+;;   (setq org-latex-preview-live-debounce 0.25)
+;;   )
 
 ;;;; DONT cdlatex
 
@@ -1679,7 +1720,7 @@ INFO is a plist used as a communication channel."
   :commands (consult-omni-transient consult-omni-multi)
   :custom
   (consult-omni-show-preview t) ;;; show previews
-  ;; (consult-omni-preview-key '("M-." "C-SPC")) ;;; set the preview key to C-SPC
+  (consult-omni-preview-key "M-m") ;;; set the preview key to M-m
   (consult-omni-default-page 0) ;;; set the default page (default is 0 for the first page)
   :bind
   (("M-g w" . consult-omni)
