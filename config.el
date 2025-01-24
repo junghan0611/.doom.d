@@ -101,32 +101,6 @@
 
   )
 
-;;;; DONT org-modern
-
-;; (after! org
-
-;;   (message "after org - org-modern")
-;;   (require 'org-modern)
-;;   (setq
-;;    ;; Edit settings
-;;    org-auto-align-tags nil ; t
-;;    org-tags-column 0
-;;    org-catch-invisible-edits 'show-and-error
-;;    org-special-ctrl-a/e t
-;;    org-insert-heading-respect-content t
-
-;;    ;; Org styling, hide markup etc.
-;;    org-hide-emphasis-markers t ; nil
-;;    org-pretty-entities t ; nil
-;;    org-agenda-tags-column 0)
-
-;;   (add-hook 'org-mode-hook #'org-modern-mode)
-;;   (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
-
-;;   (require 'org-modern-indent)
-;;   (add-hook 'org-mode-hook #'org-modern-indent-mode 90)
-;;   )
-
 ;;;; TODO org-src-mode-map
 
 ;; (with-eval-after-load 'org-src

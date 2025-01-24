@@ -185,14 +185,13 @@
 ;;;; :lang org-mode
 
 (package! org-fragtog)          ;; interactive toggling of inline latex formulas
-
+(package! org-appear)
 (package! orgabilize :recipe (:host github :repo "akirak/orgabilize.el"))
 (package! org-glossary :recipe (:host github :repo "tecosaur/org-glossary" :files ("*.el" "*.org" "*.texi")))
 (package! org-pandoc-import :recipe (:host github :repo "tecosaur/org-pandoc-import" :files ("*.el" "*.org" "filters" "preprocessors")))
 (package! org-web-tools)
 (package! org-index) ;; 색인 지원
 (package! corg :recipe (:host github :repo "isamert/corg.el"))
-;; (package! org-appear)
 
 (package! org-download)
 (package! ox-epub)

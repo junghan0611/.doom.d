@@ -37,10 +37,8 @@
 (setq org-enforce-todo-dependencies t)
 (setq org-cycle-separator-lines 0)
 
-(setq org-insert-heading-respect-content nil)
-
 ;; 리버스 순서가 익숙하다.
-(setq org-reverse-note-order t) ; default nil
+;; (setq org-reverse-note-order t) ; default nil
 
 (setq org-show-following-heading t)
 (setq org-show-hierarchy-above t)
@@ -263,43 +261,43 @@
 ;; nicer than nothing. Ideally should use monospace font for spaces
 ;; before bullet item, and use different bullets by list level.
 ;; 2024-05-02 replaced by org-modern
-(font-lock-add-keywords 'org-mode
-                        '(("^ *\\([+]\\) "
-                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-(font-lock-add-keywords 'org-mode
-                        '(("^ *\\([-]\\) "
-                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
+;; (font-lock-add-keywords 'org-mode
+;;                         '(("^ *\\([+]\\) "
+;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+;; (font-lock-add-keywords 'org-mode
+;;                         '(("^ *\\([-]\\) "
+;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
 
-;;;; prettify-symbols with logic
+;;;; DONT prettify-symbols with logic
 
 ;; https://en.wikipedia.org/wiki/Glossary_of_mathematical_symbols
 
 ;; 2024-03-07 기호를 활용하면 관계를 표현할 수 있다.
 ;; M-x list-unicode-display
-(add-hook 'org-mode-hook (lambda ()
-                           (push '("--" . "—") prettify-symbols-alist)
-                           (push '("->" . "→" ) prettify-symbols-alist)
-                           (push '("<-" . "←" ) prettify-symbols-alist)
-                           (push '("<->" . "↔" ) prettify-symbols-alist)
-                           ;; (push '("<->" . "" ) prettify-symbols-alist) ; Action
-                           (push '("=>" . "⇒") prettify-symbols-alist) ; if 조건 ⇒ ⟹
-                           (push '("<=>" . "⟺") prettify-symbols-alist) ; 명제 논리 ; 동치
-                           ;; (push '(":not" . "!") prettify-symbols-alist); ¬
-                           ;; (push '(":and" . "∧") prettify-symbols-alist) ; 논리곱
-                           ;; (push '(":or" . "∨") prettify-symbols-alist) ; 논리합
-                           ;; (push '(":xor" . "⊕") prettify-symbols-alist) ; 베타적 논리합
-                           ;; (push '(":all" . "∀") prettify-symbols-alist)
-                           ;; (push '(":exist" . "∃") prettify-symbols-alist) ; 존재 실존
-                           ;; (push '(":vs" . "🆚") prettify-symbols-alist)
-                           ;; (push '(":ref" . "※") prettify-symbols-alist)
-                           ;; (push '(":prove" . "⊢") prettify-symbols-alist)
-                           ;; (push '(":entail" . "⊨") prettify-symbols-alist)
-                           ;; (push '(":in" . "∈") prettify-symbols-alist)
-                           ;; (push '(":notin" . "∉") prettify-symbols-alist)
-                           ;; (push '(":union" . "∪") prettify-symbols-alist)
-                           ;; (push '(":intersect" . "∩") prettify-symbols-alist)
-                           ;; (push '(":star" . "★") prettify-symbols-alist)
-                           (prettify-symbols-mode)))
+;; (add-hook 'org-mode-hook (lambda ()
+;;                            (push '("--" . "—") prettify-symbols-alist)
+;;                            (push '("->" . "→" ) prettify-symbols-alist)
+;;                            (push '("<-" . "←" ) prettify-symbols-alist)
+;;                            (push '("<->" . "↔" ) prettify-symbols-alist)
+;;                            ;; (push '("<->" . "" ) prettify-symbols-alist) ; Action
+;;                            (push '("=>" . "⇒") prettify-symbols-alist) ; if 조건 ⇒ ⟹
+;;                            (push '("<=>" . "⟺") prettify-symbols-alist) ; 명제 논리 ; 동치
+;;                            ;; (push '(":not" . "!") prettify-symbols-alist); ¬
+;;                            ;; (push '(":and" . "∧") prettify-symbols-alist) ; 논리곱
+;;                            ;; (push '(":or" . "∨") prettify-symbols-alist) ; 논리합
+;;                            ;; (push '(":xor" . "⊕") prettify-symbols-alist) ; 베타적 논리합
+;;                            ;; (push '(":all" . "∀") prettify-symbols-alist)
+;;                            ;; (push '(":exist" . "∃") prettify-symbols-alist) ; 존재 실존
+;;                            ;; (push '(":vs" . "🆚") prettify-symbols-alist)
+;;                            ;; (push '(":ref" . "※") prettify-symbols-alist)
+;;                            ;; (push '(":prove" . "⊢") prettify-symbols-alist)
+;;                            ;; (push '(":entail" . "⊨") prettify-symbols-alist)
+;;                            ;; (push '(":in" . "∈") prettify-symbols-alist)
+;;                            ;; (push '(":notin" . "∉") prettify-symbols-alist)
+;;                            ;; (push '(":union" . "∪") prettify-symbols-alist)
+;;                            ;; (push '(":intersect" . "∩") prettify-symbols-alist)
+;;                            ;; (push '(":star" . "★") prettify-symbols-alist)
+;;                            (prettify-symbols-mode)))
 
 ;;;; visual-line-mode and DONT auto-fill
 
@@ -326,20 +324,30 @@
   (setq org-publish-use-timestamps-flag t) ; default t
   (setq org-export-with-section-numbers t) ; default t
   (setq org-export-with-timestamps t) ; default t
-  (setq org-export-with-drawers t) ; default (not "LOGBOOK")
+  ;; (setq org-export-with-drawers '(not "LOGBOOK")) ; default (not "LOGBOOK")
   (setq org-export-with-todo-keywords t) ; default t
   )
 
 ;; ;; (setq org-export-preserve-breaks t) ; default nil
-;; ;; (setq org-export-with-broken-links t) ; default nil
+(setq org-export-with-broken-links 'mark) ; Do not rise error on broken links, but mark them in the output file - default nil
 (setq org-export-date-timestamp-format "%e %B %Y")
 
 (setq org-export-use-babel nil) ; default t  - 2024-10-11
 (setq org-export-with-tags 'not-in-toc)
 
-;;;; 2024-12-28 from minemacs : smartquotes
+;; 2025-01-24 이게 뭐야?
+;; (setq org-cycle-hide-block-startup t); doom nil
+;; (setq org-edit-src-auto-save-idle-delay auto-save-timeout) ; use the defaults
+;; (setq org-edit-src-turn-on-auto-save t) ; auto-save org-edit-src , doom nil
+;; (setq org-export-in-background t) ; run export processes in external emacs process
 
-;; (setq org-export-with-smart-quotes nil) ; default nil, doom t
+(setq org-export-with-smart-quotes nil) ; convert "this" to « this » ; doom t
+
+;; (setq org-export-with-sub-superscripts '{}) ; Only explicit _{} ^{} are interpreted as sub/superscripts
+;; (setq org-fold-catch-invisible-edits 'smart) ; try not to accidentally do weird stuff in invisible regions - doom 'smart
+
+;;;; DONT 2024-12-28 from zk : smartquotes
+
 ;; /vanilla/localauthor-dotfiles-zk/my-lisp/gr-org-extras.el
 ;; (add-to-list
 ;;  'org-export-smart-quotes-alist
@@ -348,20 +356,6 @@
 ;;    (secondary-opening :utf-8 "‘" :html "&lsquo;" :latex "`" :texinfo "`")
 ;;    (secondary-closing :utf-8 "’" :html "&rsquo;" :latex "'" :texinfo "'")
 ;;    (apostrophe :utf-8 "’" :html "&rsquo;")))
-
-;;;; 2024-12-28 from minemacs
-
-(setq org-cycle-hide-block-startup t); doom nil
-(setq org-edit-src-auto-save-idle-delay auto-save-timeout) ; use the defaults
-;; (setq org-edit-src-content-indentation 0) ; do not indent the content of src blocks
-(setq org-edit-src-turn-on-auto-save t) ; auto-save org-edit-src , doom nil
-;; (setq org-ellipsis " ↩")
-;; (setq org-export-in-background t) ; run export processes in external emacs process
-(setq org-export-with-broken-links 'mark) ; Do not rise error on broken links, but mark them in the output file
-(setq org-export-with-smart-quotes t) ; convert "this" to « this » ; doom t
-
-;; (setq org-export-with-sub-superscripts '{}) ; Only explicit _{} ^{} are interpreted as sub/superscripts
-;; (setq org-fold-catch-invisible-edits 'smart) ; try not to accidentally do weird stuff in invisible regions - doom 'smart
 
 ;;;; org-num
 
@@ -374,9 +368,10 @@
 ;; org-num-skip-tags '("nonum" "noexport") ; doom default
 ;; (add-hook 'org-mode-hook #'org-num-mode)
 
-;;;; org-footnote
+;;;; DONT org-footnote-auto-adjust
 
-(setq org-footnote-auto-adjust t) ;; renumber footnotes
+;; org-footnote-auto-label ; doom t
+;; (setq org-footnote-auto-adjust t) ;; renumber footnotes - default nil
 
 ;;;; org-block and hide leading stars
 
@@ -519,7 +514,7 @@
 ;; (setcdr (assoc 'note org-log-note-headings) "%d")
 ;; Interstitial Journaling: add note to CLOCK entry after clocking out
 ;; https://emacs.stackexchange.com/questions/37526/add-note-to-clock-entry-after-clocking-out
-(setq org-log-note-clock-out t)
+;; (setq org-log-note-clock-out t)
 
 ;; 4 priorities to model Eisenhower's matrix.
 ;; - [#A] means +important +urgent

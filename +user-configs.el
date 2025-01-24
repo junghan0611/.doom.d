@@ -2074,8 +2074,8 @@ only those in the selected frame."
         :desc "Ripgrep" "pG" #'projectile-ripgrep)
 
   ;; stop $HOME from being recognizes as a project root
-  (setq projectile-project-root-files-bottom-up
-        (remove ".git" projectile-project-root-files-bottom-up))
+  ;; (setq projectile-project-root-files-bottom-up
+  ;;       (remove ".git" projectile-project-root-files-bottom-up))
   )
 
 ;;;; treemacs
@@ -2441,7 +2441,7 @@ ${content}"))
 
 ;;;; additional packages
 
-;;;;; org-modern
+;;;;; DONT org-modern
 
 ;; (org-modern-tag t)
 ;; (org-modern-todo nil)
@@ -2471,19 +2471,6 @@ ${content}"))
 
 ;; (use-package! org-modern
 ;;   :after org
-;;   ;; :custom
-;;   ;; (org-modern-table nil)
-;;   ;; (org-modern-keyword nil)
-;;   ;; (org-modern-timestamp nil)
-;;   ;; (org-modern-priority nil)
-;;   ;; (org-modern-checkbox nil)
-;;   ;; (org-modern-tag nil)
-;;   ;; (org-modern-block-name nil)
-;;   ;; (org-modern-footnote nil)
-;;   ;; (org-modern-internal-target nil)
-;;   ;; (org-modern-radio-target nil)
-;;   ;; (org-modern-statistics nil)
-;;   ;; (org-modern-progress nil)
 ;;   :config
 ;;   (setq
 ;;    ;; Edit settings
@@ -2504,7 +2491,6 @@ ${content}"))
 ;;   (require 'org-modern-indent)
 ;;   (add-hook 'org-mode-hook #'org-modern-indent-mode 90)
 ;;   )
-
 
 ;;;;; org-download
 
@@ -2538,25 +2524,25 @@ ${content}"))
   ;; (setq org-download-annotate-function #'kimim/org-download-annotate)
   )
 
-;;;;; DONT org-appear
+;;;;; org-appear
 
-;; (use-package! org-appear
-;;   :after org
-;;   :if window-system
-;;   :init
-;;   (add-hook 'org-mode-hook 'org-appear-mode)
-;;   (setq org-appear-autolinks t ;; nil
-;;         org-appear-autoemphasis t
-;;         org-appear-autosubmarkers t)
-;;   (setq org-appear-trigger 'manual) ;'on-change
-;;   :config
-;;   (when org-appear-trigger 'manual
-;;         (add-hook 'org-mode-hook
-;;                   (lambda ()
-;;                     (add-hook 'evil-insert-state-entry-hook #'org-appear-manual-start nil t)
-;;                     (add-hook 'evil-insert-state-exit-hook #'org-appear-manual-stop nil t)))
-;;         )
-;;   )
+(use-package! org-appear
+  :after org
+  :if window-system
+  :init
+  (add-hook 'org-mode-hook 'org-appear-mode)
+(setq org-appear-autolinks t ;; nil
+      org-appear-autoemphasis t
+      org-appear-autosubmarkers t)
+(setq org-appear-trigger 'manual) ;'on-change
+:config
+(when org-appear-trigger 'manual
+      (add-hook 'org-mode-hook
+                (lambda ()
+                  (add-hook 'evil-insert-state-entry-hook #'org-appear-manual-start nil t)
+                  (add-hook 'evil-insert-state-exit-hook #'org-appear-manual-stop nil t)))
+      )
+)
 
 ;;;;; org-rich-yank
 
