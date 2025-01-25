@@ -4423,6 +4423,7 @@ x×X .,·°;:¡!¿?`'‘’   ÄAÃÀ TODO
   ;; (setq Info-breadcrumbs-in-mode-line-mode nil)
   (setq doom-modeline-support-imenu t)
 
+  (setq doom-modeline-buffer-encoding t)
   (setq doom-modeline-enable-word-count nil)
   ;; (setq doom-modeline-continuous-word-count-modes '(markdown-mode gfm-mod)) ; org-mode
 

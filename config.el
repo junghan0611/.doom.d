@@ -228,7 +228,11 @@
 (use-package! modus-themes
   :commands (modus-themes-toggle)
   :init
-  (setq modus-themes-to-toggle '(modus-operandi modus-vivendi-tinted))
+  (setq modus-themes-to-toggle
+        (let ((hr (nth 2 (decode-time))))
+          (if (or (< hr 6) (< 19 hr)) ; between 8 PM and 7 AM
+              '(modus-vivendi-tinted modus-operandi) ; load dark theme first
+            '(modus-operandi modus-vivendi-tinted))))
   :config
   (setq modus-themes-italic-constructs nil
         modus-themes-bold-constructs t

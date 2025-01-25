@@ -258,6 +258,8 @@ org-mode
 
 (export-html "#+BEGIN_EXPORT HTML" n> r> n> "#+END_EXPORT")
 
+(tagskeywords "#+hugo_front_matter_key_replace: tags>keywords")
+
 ;;;; for org-roam and hugo
 
 (hugovideo "#+attr_html: :preload metadata :style center :width 700 :controls t
