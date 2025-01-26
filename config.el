@@ -813,31 +813,30 @@
 
 ;; https://whhone.com/emacs-config/#ide-layout-with-side-windows
 
-;;;; DONT browse-hist
+;;;; browse-hist
 
-;; (use-package! browser-hist
-;;   :defer t
-;;   :init
-;;   (require 'embark) ; load Embark before the command (if you're using it)
-;;   :config
-;;   (setq browser-hist-db-paths
-;;         '((edge . "/home/junghan/.config/microsoft-edge/Default/History")
-;;           (whale . "/home/junghan/.config/naver-whale/Default/History")
-;;           (chrome . "$HOME/.config/google-chrome/Default/History")
-;;           (brave . "$HOME/.config/BraveSoftware/Brave-Browser/Default/History")
-;;           (firefox . "$HOME/.mozilla/firefox/*.default-release-*/places.sqlite")
-;;           (qutebrowser . "$HOME/.local/share/qutebrowser/history.sqlite")))
-;;   (setq browser-hist--db-fields
-;;         '((chrome      "title"    "url"    "urls"          "ORDER BY last_visit_time desc")
-;;           (edge    "title"    "url"    "urls"          "ORDER BY last_visit_time desc")
-;;           (whale    "title"    "url"    "urls"          "ORDER BY last_visit_time desc")
-;;           (qutebrowser "title"    "url"    "History"       "ORDER BY atime           desc")
-;;           (brave       "title"    "url"    "urls"          "ORDER BY last_visit_time desc")
-;;           (firefox     "title"    "url"    "moz_places"    "ORDER BY last_visit_date desc")
-;;           ))
-;;   (setq browser-hist-default-browser 'edge)
-;;   :commands (browser-hist-search))
-
+(use-package! browser-hist
+  :init
+  (require 'embark) ; load Embark before the command (if you're using it)
+  :config
+  (setq browser-hist-db-paths
+        '((edge . "/home/junghan/.config/microsoft-edge/Default/History")
+          (whale . "/home/junghan/.config/naver-whale/Default/History")
+          (chrome . "$HOME/.config/google-chrome/Default/History")
+          (brave . "$HOME/.config/BraveSoftware/Brave-Browser/Default/History")
+          (firefox . "$HOME/.mozilla/firefox/*.default-release-*/places.sqlite")
+          (qutebrowser . "$HOME/.local/share/qutebrowser/history.sqlite")))
+  (setq browser-hist--db-fields
+        '((chrome      "title"    "url"    "urls"          "ORDER BY last_visit_time desc")
+          (edge    "title"    "url"    "urls"          "ORDER BY last_visit_time desc")
+          (whale    "title"    "url"    "urls"          "ORDER BY last_visit_time desc")
+          (qutebrowser "title"    "url"    "History"       "ORDER BY atime           desc")
+          (brave       "title"    "url"    "urls"          "ORDER BY last_visit_time desc")
+          (firefox     "title"    "url"    "moz_places"    "ORDER BY last_visit_date desc")
+          ))
+  (setq browser-hist-default-browser 'edge)
+  :commands (browser-hist-search)
+  )
 
 ;;;; DONT dictionary-overlay
 
@@ -1713,38 +1712,37 @@ INFO is a plist used as a communication channel."
   :config
   (require 'consult-omni-sources)
   (require 'consult-omni-embark)
-  (require 'my-consult-omni)
 
   (progn
     ;; (require 'consult-omni-apps)
     ;; (require 'consult-omni-bing)
     ;; (require 'consult-omni-brave-autosuggest)
-    ;; (require 'consult-omni-brave)
-    ;; (require 'consult-omni-browser-history)
+    (require 'consult-omni-brave)
+    (require 'consult-omni-browser-history)
     (require 'consult-omni-buffer)
     (require 'consult-omni-calc)
     ;; (require 'consult-omni-chatgpt)
     (require 'consult-omni-consult-notes)
     ;; (require 'consult-omni-dict)
     ;; (require 'consult-omni-doi)
-    ;; (require 'consult-omni-duckduckgo)
+    (require 'consult-omni-duckduckgo)
     (require 'consult-omni-elfeed)
     (require 'consult-omni-fd)
     ;; (require 'consult-omni-find)
     (require 'consult-omni-gh)
     (require 'consult-omni-git-grep)
-    ;; (require 'consult-omni-google)
+    (require 'consult-omni-google)
     ;; (require 'consult-omni-google-autosuggest)
     (require 'consult-omni-gptel)
     ;; (require 'consult-omni-grep)
-    ;; (require 'consult-omni-invidious)
+    (require 'consult-omni-invidious)
     ;; (require 'consult-omni-line-multi)
     ;; (require 'consult-omni-locate)
     ;; (require 'consult-omni-man)
     ;; (require 'consult-omni-mdfind)
     ;; (require 'consult-omni-mu4e)
     (require 'consult-omni-notes)
-    ;; (require 'consult-omni-notmuch)
+    (require 'consult-omni-notmuch)
     ;; (require 'consult-omni-numi)
     ;; (require 'consult-omni-org-agenda)
     ;; (require 'consult-omni-pubmed)
@@ -1756,6 +1754,9 @@ INFO is a plist used as a communication channel."
     (require 'consult-omni-wikipedia)
     (require 'consult-omni-youtube)
     )
+
+  ;; load agzam
+  (require 'my-consult-omni)
 
   (setq consult-omni-multi-sources '(
                                      ;; "DuckDuckGo AP/"

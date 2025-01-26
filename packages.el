@@ -50,7 +50,6 @@
 
 ;;; doom-unpin-packages
 
-(unpin! consult) ; (void-function consult--process-collection)
 (package! consult :pin "93cf368a676da1072f141e298908be05e2968f60") ; 1.9 stable
 
 ;;; doom-disabled-packages
@@ -399,7 +398,7 @@
 (package! elfeed-tube-mpv)
 ;; (package! elfeed-webkit) ; not working on ubuntu
 
-;; (package! browser-hist :recipe (:host github :repo "agzam/browser-hist.el"))
+(package! browser-hist :recipe (:host github :repo "agzam/browser-hist.el"))
 
 (package! subed :recipe (:host github :repo "sachac/subed" :files ("subed/*.el")))
 ;; (package! dwim-shell-command)

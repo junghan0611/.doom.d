@@ -487,10 +487,10 @@
 
 (map! :leader
       (:prefix ("s" . "search/symbol")
-       :desc "search" "/" #'consult-omni-transient
-       :desc "eww search" "1" #'eww-search-words
+       :desc "consult-omni-transient" "/" #'consult-omni-transient
+       :desc "eww-search-words" "1" #'eww-search-words
        :desc "find-name-dired" "2" #'find-name-dired
-       :desc "GitHub" "g" #'+search-github-with-lang
+       :desc "search-github-with-lang" "g" #'+search-github-with-lang
        :desc "imenu" "j" #'imenu)
       )
 
