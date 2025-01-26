@@ -48,23 +48,21 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
-;;; doom-disabled-packages
-
-;; (disable-packages! flyspell
-;;                    ccls                 ; I use clangd.
-;;                    compat               ; I use the latest version of Emacs.
-;;                    ace-window
-;;                    volatile-highlights
-;;                    hl-line
-;;                    elfeed-goodies
-;;                    mu4e-alert)
+;;; doom-unpin-packages
 
 (unpin! consult) ; (void-function consult--process-collection)
+(package! consult :pin "93cf368a676da1072f141e298908be05e2968f60") ; 1.9 stable
+
+;;; doom-disabled-packages
+
+(disable-packages!
+ lsp-mode
+ consult-lsp)
 
 (package! diredfl :disable t) ; conflict with denote
 (package! dirvish :disable t)
 ;; (package! paredit :disable t) ; clojure module
-;; (package! code-review :disable t) ; not working
+(package! code-review :disable t)
 (package! nose :disable t) ; python module
 (package! lsp-python-ms :disable t)
 (package! flyspell-lazy :disable t)
@@ -77,7 +75,6 @@
 (package! solaire-mode :disable t)
 (package! ace-window :disable t)
 
-(package! lsp-mode :disable t)
 (package! flycheck-popup-tip :disable t) ; conflict
 ;; (package! flycheck-plantuml :disable t)
 
@@ -190,8 +187,6 @@
 (package! translate-mode)
 (package! separedit :recipe (:host github :repo "twlz0ne/separedit.el"))
 
-
-(package! consult-omni :recipe (:host github :repo "armindarvish/consult-omni" :files (:defaults "sources/*.el")))
 (package! goto-last-change)
 
 ;;;; :lang org-mode
@@ -382,7 +377,9 @@
 
 ;;;; Git
 
-(package! consult-gh :recipe (:host github :repo "armindarvish/consult-gh" :files ("*.el")))
+(package! consult-omni :recipe (:host github :repo "armindarvish/consult-omni" :files (:defaults "sources/*.el")) :pin "f0c5f07b9ffe25d0deca42b650f6e0c1c85e9759") ;; Jan 4, 2025
+(package! consult-gh :recipe (:host github :repo "armindarvish/consult-gh" :files ("*.el")) :pin "1acaf7b2a5fe8a8be19f83f5b20bb2bc377d1fc8") ; 2.0
+
 (package! git-link :recipe (:host github :repo "sshaw/git-link"))
 
 (package! git-cliff)
@@ -502,8 +499,6 @@
 
 (package! image-slicing :recipe (:host github :repo "ginqi7/image-slicing"))
 (package! org-sliced-images)
-(package! org-linenote)
-
-;; (package! consult-projectile) ; ?!
+;; (package! org-linenote) ; require lsp-mode
 
 ;;; end-of file

@@ -4518,7 +4518,7 @@ x×X .,·°;:¡!¿?`'‘’   ÄAÃÀ TODO
              ;; evil-force-normal-state
 
              ;; 2023-10-02 Added for clojure-dev
-             lsp-ui-doc--handle-mouse-movement
+             ;; lsp-ui-doc--handle-mouse-movement
              ignore-preserving-kill-region
              ;; pdf-view-text-region
              ;; pdf-view-mouse-set-region
