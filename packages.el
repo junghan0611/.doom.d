@@ -50,6 +50,17 @@
 
 ;;; doom-disabled-packages
 
+;; (disable-packages! flyspell
+;;                    ccls                 ; I use clangd.
+;;                    compat               ; I use the latest version of Emacs.
+;;                    ace-window
+;;                    volatile-highlights
+;;                    hl-line
+;;                    elfeed-goodies
+;;                    mu4e-alert)
+
+(unpin! consult) ; (void-function consult--process-collection)
+
 (package! diredfl :disable t) ; conflict with denote
 (package! dirvish :disable t)
 ;; (package! paredit :disable t) ; clojure module
@@ -179,6 +190,7 @@
 (package! translate-mode)
 (package! separedit :recipe (:host github :repo "twlz0ne/separedit.el"))
 
+
 (package! consult-omni :recipe (:host github :repo "armindarvish/consult-omni" :files (:defaults "sources/*.el")))
 (package! goto-last-change)
 
@@ -301,6 +313,7 @@
 (package! pcsv)
 
 (package! gptel)
+;; (package! gptel :recipe (:host github :repo "karthink/gptel" :branch "master"))
 ;; (package! gptel :recipe (:host github :repo "karthink/gptel" :branch "feature-tool-use"))
 (package! gptel-quick :recipe (:host github :repo "karthink/gptel-quick"))
 
@@ -341,9 +354,9 @@
   ;; (package! kaocha-runner) ; Koacha test runner in Emacs
   (package! vega-view)
   (package! clj-deps-new)
-  (package! clay)
+  (package! clay))
   ;; (package! clojure-essential-ref-nov)
-  )
+
 
 (unpin! elisp-demos)
 (package! elisp-demos :recipe (:host github :repo "junghan0611/elisp-demos" :branch "ko"))
@@ -432,6 +445,10 @@
 (package! ccmenu :recipe (:host github :repo "junghan0611/ccmenu"))
 ;; (package! casual-suite)
 (package! casual-suite :recipe (:host github :repo "kickingvegas/casual-suite"))
+(package! recent-rgrep :recipe (:host github :repo "kickingvegas/recent-rgrep"))
+
+(package! p-search :recipe (:host github :repo "zkry/p-search"))
+
 (package! git-grep-transient)
 
 ;;;; Forked PKGs
@@ -444,14 +461,14 @@
   ;; "johanwk/elot"
   (package! elot :recipe (:local-repo "local/elot" :branch "ko" :files("elot-package/*")))
 
-  (package! pylookup :recipe (:local-repo "local/pylookup"))
+  (package! pylookup :recipe (:local-repo "local/pylookup")))
 
   ;; (package! paw :recipe (:local-repo "local/paw" :branch "ko" :files ("*")))
   ;; (package! paw :recipe (:host github :repo "junghan0611/paw" :branch "ko" :files ("*")))
 
   ;; (package! trekker
   ;;   :recipe (:host github :repo "junghan0611/trekker" :branch "ko" :files("*.md" "*.el" "*.py")))
-  )
+
 
 ;;; Applications
 ;;;; Calculator

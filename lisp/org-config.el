@@ -271,33 +271,32 @@
 ;;;; DONT prettify-symbols with logic
 
 ;; https://en.wikipedia.org/wiki/Glossary_of_mathematical_symbols
-
 ;; 2024-03-07 기호를 활용하면 관계를 표현할 수 있다.
 ;; M-x list-unicode-display
-;; (add-hook 'org-mode-hook (lambda ()
-;;                            (push '("--" . "—") prettify-symbols-alist)
-;;                            (push '("->" . "→" ) prettify-symbols-alist)
-;;                            (push '("<-" . "←" ) prettify-symbols-alist)
-;;                            (push '("<->" . "↔" ) prettify-symbols-alist)
-;;                            ;; (push '("<->" . "" ) prettify-symbols-alist) ; Action
-;;                            (push '("=>" . "⇒") prettify-symbols-alist) ; if 조건 ⇒ ⟹
-;;                            (push '("<=>" . "⟺") prettify-symbols-alist) ; 명제 논리 ; 동치
-;;                            ;; (push '(":not" . "!") prettify-symbols-alist); ¬
-;;                            ;; (push '(":and" . "∧") prettify-symbols-alist) ; 논리곱
-;;                            ;; (push '(":or" . "∨") prettify-symbols-alist) ; 논리합
-;;                            ;; (push '(":xor" . "⊕") prettify-symbols-alist) ; 베타적 논리합
-;;                            ;; (push '(":all" . "∀") prettify-symbols-alist)
-;;                            ;; (push '(":exist" . "∃") prettify-symbols-alist) ; 존재 실존
-;;                            ;; (push '(":vs" . "🆚") prettify-symbols-alist)
-;;                            ;; (push '(":ref" . "※") prettify-symbols-alist)
-;;                            ;; (push '(":prove" . "⊢") prettify-symbols-alist)
-;;                            ;; (push '(":entail" . "⊨") prettify-symbols-alist)
-;;                            ;; (push '(":in" . "∈") prettify-symbols-alist)
-;;                            ;; (push '(":notin" . "∉") prettify-symbols-alist)
-;;                            ;; (push '(":union" . "∪") prettify-symbols-alist)
-;;                            ;; (push '(":intersect" . "∩") prettify-symbols-alist)
-;;                            ;; (push '(":star" . "★") prettify-symbols-alist)
-;;                            (prettify-symbols-mode)))
+(add-hook 'org-mode-hook (lambda ()
+                           (push '("--" . "—") prettify-symbols-alist)
+                           (push '("->" . "→" ) prettify-symbols-alist)
+                           (push '("<-" . "←" ) prettify-symbols-alist)
+                           (push '("<->" . "↔" ) prettify-symbols-alist)
+                           ;; (push '("<->" . "" ) prettify-symbols-alist) ; Action
+                           (push '("=>" . "⇒") prettify-symbols-alist) ; if 조건 ⇒ ⟹
+                           (push '("<=>" . "⟺") prettify-symbols-alist) ; 명제 논리 ; 동치
+                           ;; (push '(":not" . "!") prettify-symbols-alist); ¬
+                           ;; (push '(":and" . "∧") prettify-symbols-alist) ; 논리곱
+                           ;; (push '(":or" . "∨") prettify-symbols-alist) ; 논리합
+                           ;; (push '(":xor" . "⊕") prettify-symbols-alist) ; 베타적 논리합
+                           ;; (push '(":all" . "∀") prettify-symbols-alist)
+                           ;; (push '(":exist" . "∃") prettify-symbols-alist) ; 존재 실존
+                           ;; (push '(":vs" . "🆚") prettify-symbols-alist)
+                           ;; (push '(":ref" . "※") prettify-symbols-alist)
+                           ;; (push '(":prove" . "⊢") prettify-symbols-alist)
+                           ;; (push '(":entail" . "⊨") prettify-symbols-alist)
+                           ;; (push '(":in" . "∈") prettify-symbols-alist)
+                           ;; (push '(":notin" . "∉") prettify-symbols-alist)
+                           ;; (push '(":union" . "∪") prettify-symbols-alist)
+                           ;; (push '(":intersect" . "∩") prettify-symbols-alist)
+                           ;; (push '(":star" . "★") prettify-symbols-alist)
+                           (prettify-symbols-mode)))
 
 ;;;; visual-line-mode and DONT auto-fill
 
@@ -549,13 +548,14 @@
 
 ;; Time Clocking
 (setq org-clock-idle-time 30) ; 10
-(setq org-clock-reminder-timer (run-with-timer
-                                t (* org-clock-idle-time 20) ; 60
-                                (lambda ()
-                                  (unless (org-clocking-p)
-                                    (when (fboundp 'alert)
-                                      (alert "Do you forget to clock-in?"
-                                             :title "Org Clock"))))))
+;; (setq org-clock-reminder-timer (run-with-timer
+;;                                 t (* org-clock-idle-time 20) ; 60
+;;                                 (lambda ()
+;;                                   ;; (fboundp 'org-clocking-p)
+;;                                   (unless (org-clocking-p)
+;;                                     (when (fboundp 'alert)
+;;                                       (alert "Do you forget to clock-in?"
+;;                                              :title "Org Clock"))))))
 ;; (org-clock-auto-clockout-insinuate) ; auto-clockout
 ;; modeline 에 보이는 org clock 정보가 너무 길어서 줄임
 (setq org-clock-string-limit 30) ; default 0

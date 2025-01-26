@@ -763,19 +763,25 @@
 
 ;;;; M-s bindings (search-map)
 
-;;;;; M-s consult-omni, rg, deadgrep
+;;;;; M-s consult-omni, rg, deadgrep, recent-rgrep
 
 ; consult-omni
 (when (locate-library "consult-omni")
-  (global-set-key (kbd "M-s M-s") 'consult-omni))
+  (global-set-key (kbd "M-s n") 'consult-omni))
 
 ;; rg
 (when (locate-library "rg")
-  (global-set-key (kbd "M-s M-r") 'rg-menu))
+  (global-set-key (kbd "M-s r") 'rg-menu))
 
 ;; deadgrep
 (when (locate-library "deadgrep")
-  (global-set-key (kbd "M-s v") 'deadgrep) ;; d
+  (global-set-key (kbd "M-s v") 'deadgrep)
+  )
+
+;; recent-rgrep
+(when (locate-library "recent-rgrep")
+  (global-set-key (kbd "M-s g") 'recent-rgrep)
+  (global-set-key (kbd "M-F") 'recent-rgrep)
   )
 
 ;;;;; M-s s my-search-map

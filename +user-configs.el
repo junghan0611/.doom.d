@@ -184,7 +184,7 @@
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 ;; (setq display-line-numbers-type 'relative)
-(remove-hook! (text-mode conf-mode) #'display-line-numbers-mode)
+(remove-hook! text-mode #'display-line-numbers-mode)
 
 ;; 2024-04-01 disable
 ;; (unless IS-TERMUX
@@ -2296,7 +2296,8 @@ ${content}"))
 ;;;; consult-gh
 
 (use-package! consult-gh
-  :after embark-consult
+  :after consult
+  :defer t
   :commands (consult-gh-search-repos
              consult-gh-search-code
              consult-gh-search-prs
@@ -2345,10 +2346,10 @@ ${content}"))
     (consult-gh-embark-mode +1))
 
   ;; Install `consult-gh-forge' for forge actions
-  (use-package consult-gh-forge
-    :config
-    (consult-gh-forge-mode +1)
-    (setq consult-gh-forge-timeout-seconds 20))
+  ;; (use-package consult-gh-forge
+  ;;   :config
+  ;;   (consult-gh-forge-mode +1)
+  ;;   (setq consult-gh-forge-timeout-seconds 20))
   )
 
 ;;; :lang org
@@ -4078,29 +4079,31 @@ ${content}"))
 ;;;; doom-dashboard
 
 (progn
-  (defun emacs-dashboard-draw-ascii-banner-fn ()
-    (let* ((banner
-            '("Welcome to                                 "
-              "███████╗███╗   ███╗ █████╗  ██████╗███████╗"
-              "██╔════╝████╗ ████║██╔══██╗██╔════╝██╔════╝"
-              "█████╗  ██╔████╔██║███████║██║     ███████╗"
-              "██╔══╝  ██║╚██╔╝██║██╔══██║██║     ╚════██║"
-              "███████╗██║ ╚═╝ ██║██║  ██║╚██████╗███████║"
-              "╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚══════╝"))
-           (longest-line (apply #'max (mapcar #'length banner))))
-      (put-text-property
-       (point)
-       (dolist (line banner (point))
-         (insert
-          (+doom-dashboard--center
-           +doom-dashboard--width
-           (concat line (make-string (max 0 (- longest-line (length line))) 32)))
-          "\n"))
-       'face 'bold))) ;; 'doom-dashboard-banner
+  ;; (defun emacs-dashboard-draw-ascii-banner-fn ()
+  ;;   (let* ((banner
+  ;;           '("Welcome to                                 "
+  ;;             "███████╗███╗   ███╗ █████╗  ██████╗███████╗"
+  ;;             "██╔════╝████╗ ████║██╔══██╗██╔════╝██╔════╝"
+  ;;             "█████╗  ██╔████╔██║███████║██║     ███████╗"
+  ;;             "██╔══╝  ██║╚██╔╝██║██╔══██║██║     ╚════██║"
+  ;;             "███████╗██║ ╚═╝ ██║██║  ██║╚██████╗███████║"
+  ;;             "╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚══════╝"))
+  ;;          (longest-line (apply #'max (mapcar #'length banner))))
+  ;;     (put-text-property
+  ;;      (point)
+  ;;      (dolist (line banner (point))
+  ;;        (insert
+  ;;         (+doom-dashboard--center
+  ;;          +doom-dashboard--width
+  ;;          (concat line (make-string (max 0 (- longest-line (length line))) 32)))
+  ;;         "\n"))
+  ;;      'face 'bold)))
 
-  (setq +doom-dashboard-ascii-banner-fn 'emacs-dashboard-draw-ascii-banner-fn)
+  ;; doom-dashboard-banner
+  ;; (when (display-graphic-p) ; gui
+  ;;   (setq +doom-dashboard-ascii-banner-fn 'emacs-dashboard-draw-ascii-banner-fn))
 
-  ;; (setq fancy-splash-image (concat user-dotemacs-dir "assets/images/logo.png"))
+  (setq fancy-splash-image (concat user-dotemacs-dir "assets/images/logo.png"))
 
   (setq +doom-dashboard-functions
         '(doom-dashboard-widget-banner

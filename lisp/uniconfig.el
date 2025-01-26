@@ -103,6 +103,42 @@
 (with-eval-after-load 'dired
   (define-key dired-mode-map [f3] #'my/write-window-setup))
 
+
+;;;; my/convert-hangul-jamo-to-syllable
+
+(progn
+  (require 'ucs-normalize)
+
+  (defun my/convert-hangul-jamo-to-syllable ()
+    "Convert conjoining jamo to precomposed syllables in the current buffer."
+    (interactive)
+    (let* ((choseong "[\u1100-\u115F\uA960-\uA97C]")
+           (jungseong "[\u1160-\u11A7\uD7B0-\uD7C6]")
+           (jongseong "[\u11A8-\u11FF\uD7CB-\uD7FB]?")
+           (pattern (concat choseong jungseong jongseong)))
+      (save-excursion
+        (goto-char (point-min))
+        (while (re-search-forward pattern nil t)
+          (let ((start (match-beginning 0))
+                (end (match-end 0)))
+            (ucs-normalize-NFC-region start end))))))
+
+  ;; 버퍼 전체에 적용하려면 다음 함수를 호출하세요:
+  ;; (my/convert-hangul-jamo-to-syllable)
+
+  (defun my/process-files-by-extension (directory extension process-func)
+    "주어진 디렉토리에서 특정 확장자를 가진 파일들에 대해 처리 함수를 적용합니다."
+    (interactive
+     (list (read-directory-name "처리할 디렉토리: ")
+           (read-string "파일 확장자 (예: txt): ")
+           (intern (completing-read "처리 함수: " obarray 'functionp t))))
+    (dolist (file (directory-files-recursively directory (concat "\\." extension "$")))
+      (with-current-buffer (find-file-noselect file)
+        (funcall process-func)
+        (save-buffer)
+        (kill-buffer))))
+  )
+
 ;;; kmacro
 
 ;;;; mirror-buffer

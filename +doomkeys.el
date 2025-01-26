@@ -483,6 +483,17 @@
                         "s" #'gptel-send))
       )
 
+;;;; 's' search/symbol
+
+(map! :leader
+      (:prefix ("s" . "search/symbol")
+       :desc "search" "/" #'consult-omni-transient
+       :desc "eww search" "1" #'eww-search-words
+       :desc "find-name-dired" "2" #'find-name-dired
+       :desc "GitHub" "g" #'+search-github-with-lang
+       :desc "imenu" "j" #'imenu)
+      )
+
 ;;;; 'S' Search Plus : Custom Search
 
 (require 'my-search)
@@ -500,16 +511,16 @@
        ;; :desc "elixir"           "x"     #'my/search-elixir
        ;; :desc "flutter"          "f"     #'my/search-flutter
        :desc "blogs"         "b"     #'my/search-blogs
-       :desc "sdcv > at-point" "/" 'sdcv-search-pointer
-       :desc "sdcv > input" "?" 'sdcv-search-input
-       :desc "sdcv > at-point posframe" "." 'sdcv-search-pointer+ ; posframe
+       ;; :desc "sdcv > at-point" "/" 'sdcv-search-pointer
+       ;; :desc "sdcv > input" "?" 'sdcv-search-input
+       ;; :desc "sdcv > at-point posframe" "." 'sdcv-search-pointer+ ; posframe
        :desc "wordreference > ko->en" "\[" 'my/wr-koen
        :desc "wordreference > en->ko" "\]" 'my/wr-enko
 
-       :desc "lexic > search" "l" 'lexic-search
-       :desc "external-dict > search" "e" 'external-dict-dwim
-       :desc "mw-thesaurus > lookup" "X" 'mw-thesaurus-lookup-dwim
-       :desc "powerthesaurus > transient" "P" 'powerthesaurus-transient
+       ;; :desc "lexic > search" "l" 'lexic-search
+       ;; :desc "external-dict > search" "e" 'external-dict-dwim
+       ;; :desc "mw-thesaurus > lookup" "X" 'mw-thesaurus-lookup-dwim
+       ;; :desc "powerthesaurus > transient" "P" 'powerthesaurus-transient
 
        (:prefix ("w" . "wiktionary")
                 "e" 'wiktionary-lookup-word-en
@@ -1296,10 +1307,10 @@
   "M-s f" #'consult-find
   "M-s F" #'my/consult-fd
   "M-s L" #'consult-locate
-  "M-s g" #'consult-grep
+  ;; "M-s g" #'consult-grep
   "M-s G" #'consult-git-grep
   "M-s K" #'consult-git-log-grep
-  "M-s r" #'consult-ripgrep
+  ;; "M-s r" #'consult-ripgrep
   "M-s l" #'consult-line
   "M-s m" #'consult-line-multi
   "M-s k" #'consult-keep-lines

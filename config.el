@@ -941,6 +941,11 @@
 
 (progn
   (require 'tab-bar)
+
+  ;; 2025-01-26
+  (setq tab-bar-close-button-show nil)
+  (setq tab-bar-new-button-show nil)
+
   (setq tab-bar-format
         '( ;; tab-bar-format-history
           tab-bar-format-tabs
@@ -1634,10 +1639,10 @@ INFO is a plist used as a communication channel."
       ret))
   )
 
-;;; NOTE consult-omni
+;;; NOTE consult-omni with extra
 
+;; /home/junghan/sync/man/dotsamples/vanilla/sachac-dotfiles/Sacha.org
 (progn
-  ;; /home/junghan/sync/man/dotsamples/vanilla/sachac-dotfiles/Sacha.org
   (defun my-insert-or-replace-link (url &optional title)
     "Insert a link, wrap the current region in a link, or replace the current link."
     (cond
@@ -1693,26 +1698,21 @@ INFO is a plist used as a communication channel."
   )
 
 (use-package! consult-omni
-  :defer 2
-  :after (consult embark)
+  :after consult
   :commands (consult-omni-transient consult-omni-multi)
   :custom
   (consult-omni-show-preview t) ;;; show previews
   (consult-omni-preview-key "M-m") ;;; set the preview key to M-m
   (consult-omni-default-page 0) ;;; set the default page (default is 0 for the first page)
-  :bind
-  (("M-g w" . consult-omni)
-   :map consult-omni-embark-general-actions-map
-   ("I l" .  #'my-consult-omni-embark-insert-link)
-   ("I u" .  #'my-consult-omni-embark-insert-url)
-   ("I t" .  #'my-consult-omni-embark-insert-title)
-   ("W u" . #'my-consult-omni-embark-copy-url-as-kill)
-   ("W t" . #'my-consult-omni-embark-copy-title-as-kill))
+  :bind (:map consult-omni-embark-general-actions-map
+              ("I l" .  #'my-consult-omni-embark-insert-link)
+              ("I u" .  #'my-consult-omni-embark-insert-url)
+              ("I t" .  #'my-consult-omni-embark-insert-title)
+              ("W u" . #'my-consult-omni-embark-copy-url-as-kill)
+              ("W t" . #'my-consult-omni-embark-copy-title-as-kill))
   :config
   (require 'consult-omni-sources)
   (require 'consult-omni-embark)
-
-  ;; custom from agzam
   (require 'my-consult-omni)
 
   (progn
@@ -2178,11 +2178,10 @@ the next chapter, open Dired so you can find it manually."
 ;;;; ccmenu: context-menu with casual
 
 (when (display-graphic-p) ;; gui
-
   (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup)
   (require 'ccmenu))
 
-;;;; Terminal Mode
+;;;; Terminal Mode - (unless (display-graphic-p)
 
 ;; README /doomemacs-junghan0611/lisp/doom-ui.el
 
@@ -2193,6 +2192,9 @@ the next chapter, open Dired so you can find it manually."
   (setq fast-but-imprecise-scrolling nil)
   (setq hscroll-step 0)
 
+  ;; Make vertical window separators look nicer in terminal Emacs
+  (set-display-table-slot standard-display-table 'vertical-border (make-glyph-code ?│))
+
   (show-paren-mode -1)
   (remove-hook 'dired-mode-hook 'nerd-icons-dired-mode)
   ;; (remove-hook 'marginalia-mode-hook 'nerd-icons-completion-marginalia-setup)
@@ -2201,5 +2203,13 @@ the next chapter, open Dired so you can find it manually."
 ;;;; jupyter - repl
 
 ;; (setq jupyter-repl-echo-eval-p t)
+
+;;;; recent-rgrep
+
+;; $ recent-rgrep -f '*.org' 'happy to see you'
+(use-package! recent-rgrep
+  :defer t
+  :commands (recent-rgrep))
+;; (keymap-global-set "M-F" #'recent-rgrep)
 
 ;;; left blank on purpose
