@@ -512,8 +512,7 @@
   ;; :if window-system
   :hook (server-after-make-frame . spacious-padding-mode)
   :init
-  ;; Read the doc string of `spacious-padding-subtle-mode-line' as it is very
-  ;; flexible.
+  ;; Read the doc string of `spacious-padding-subtle-mode-line' as it is very flexible.
   (setq spacious-padding-subtle-mode-line
         '( :mode-line-active spacious-padding-subtle-mode-line-active
            :mode-line-inactive spacious-padding-subtle-mode-line-inactive))

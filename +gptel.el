@@ -1,5 +1,6 @@
 ;;; +gptel.el -*- lexical-binding: t; -*-
 
+;;;; gptel tips from agzam
 ;; /home/junghan/sync/man/dotsamples/doom/agzam-dot-doom/modules/custom/ai/autoload/gptel.el
 
 (defvar +gptel-improve-text-prompt nil)
@@ -182,3 +183,95 @@
 ;;         (make-directory chat-dir :parents))
 ;;       (write-file
 ;;        (expand-file-name (concat suffix "__llmlog" "." ext) chat-dir)))))
+
+;;;; model descriptions
+
+;; updated 2025-01-27
+
+;; sonar, sonar-pro
+
+;; (defconst gptel--gemini-models
+;;   '((gemini-1.5-pro-latest
+;;      :description "Google's latest model with enhanced capabilities across various tasks"
+;;      :capabilities (tool-use json media)
+;;      :mime-types ("image/png" "image/jpeg" "image/webp" "image/heic" "image/heif"
+;;                   "application/pdf" "text/plain" "text/csv" "text/html")
+;;      :context-window 2000
+;;      ;; input & output price is halved for prompts of 128k tokens or less
+;;      :input-cost 2.50
+;;      :output-cost 10
+;;      :cutoff-date "2024-05")
+;;     (gemini-2.0-flash-exp
+;;      :description "Next generation features, superior speed, native tool use"
+;;      :capabilities (tool-use json media)
+;;      :mime-types ("image/png" "image/jpeg" "image/webp" "image/heic" "image/heif"
+;;                   "application/pdf" "text/plain" "text/csv" "text/html")
+;;      :context-window 1000
+;;      :cutoff-date "2024-12")
+;;     (gemini-1.5-flash
+;;      :description "A faster, more efficient version of Gemini 1.5 optimized for speed"
+;;      :capabilities (tool-use json media)
+;;      :mime-types ("image/png" "image/jpeg" "image/webp" "image/heic" "image/heif"
+;;                   "application/pdf" "text/plain" "text/csv" "text/html")
+;;      :context-window 1000
+;;      ;; input & output price is halved for prompts of 128k tokens or less
+;;      :input-cost 0.15
+;;      :output-cost 0.60
+;;      :cutoff-date "2024-05")
+;;     (gemini-1.5-flash-8b
+;;      :description "High volume and lower intelligence tasks"
+;;      :capabilities (tool-use json media)
+;;      :context-window 1000
+;;      :mime-types ("image/png" "image/jpeg" "image/webp" "image/heic" "image/heif"
+;;                   "application/pdf" "text/plain" "text/csv" "text/html")
+;;      ;; input & output price is halved for prompts of 128k tokens or less
+;;      :input-cost 0.075
+;;      :output-cost 0.30
+;;      :cutoff-date "2024-10")
+;;     (gemini-2.0-flash-thinking-exp
+;;      :description "Stronger reasoning capabilities."
+;;      :capabilities (tool-use media)
+;;      :context-window 32
+;;      :mime-types ("image/png" "image/jpeg" "image/webp" "image/heic" "image/heif"
+;;                   "text/plain" "text/csv" "text/html")
+;;      :cutoff-date "2024-08")
+;;     (gemini-exp-1206
+;;      :description "Improved coding, reasoning and vision capabilities"
+;;      :capabilities (tool-use json media)
+;;      :mime-types ("image/png" "image/jpeg" "image/webp" "image/heic" "image/heif"
+;;                   "application/pdf" "text/plain" "text/csv" "text/html")
+;;      :cutoff-date "2024-12")
+;;     (gemini-pro
+;;      :description "The previous generation of Google's multimodal AI model"
+;;      :capabilities (tool-use json media)
+;;      :mime-types ("image/png" "image/jpeg" "image/webp" "image/heic" "image/heif"
+;;                   "application/pdf" "text/plain" "text/csv" "text/html")
+;;      :context-window 32
+;;      :input-cost 0.50
+;;      :output-cost 1.50
+;;      :cutoff-date "2023-02"))
+;;   "List of available Gemini models and associated properties.
+;; Keys:
+
+;; - `:description': a brief description of the model.
+
+;; - `:capabilities': a list of capabilities supported by the model.
+
+;; - `:mime-types': a list of supported MIME types for media files.
+
+;; - `:context-window': the context window size, in thousands of tokens.
+
+;; - `:input-cost': the input cost, in US dollars per million tokens.
+
+;; - `:output-cost': the output cost, in US dollars per million tokens.
+
+;; - `:cutoff-date': the knowledge cutoff date.
+
+;; - `:request-params': a plist of additional request parameters to
+;;   include when using this model.
+
+;; Information about the Gemini models was obtained from the following
+;; source:
+
+;; - <https://ai.google.dev/pricing>
+;; - <https://cloud.google.com/vertex-ai/generative-ai/docs/learn/models>")

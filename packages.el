@@ -296,10 +296,8 @@
 
 ;;;; AI
 
+(package! minuet) ;; code completion using LLM
 (package! aider :recipe (:host github :repo "tninja/aider.el" :files ("aider.el" "aider-doom.el")))
-
-;; git@github.com:ziova/wolfram.el.git
-;; (package! wolfram :recipe (:host github :repo "ziova/wolfram.el"))
 
 (package! llm)
 ;; (package! kagi)
@@ -333,6 +331,9 @@
 
 ;; ~/sync/man/dotsamples/doom/lemon-dot-doom/modules/cae/ai/config.el
 ;; (package! greader)
+
+;; git@github.com:ziova/wolfram.el.git
+;; (package! wolfram :recipe (:host github :repo "ziova/wolfram.el"))
 
 ;;;; :lang
 

@@ -1865,8 +1865,9 @@ only those in the selected frame."
 ;;;; org-pandoc-import
 
 (use-package! org-pandoc-import
+  :defer t
   :after org
-  :defer 10
+  :commands (org-pandoc-import-as-org)
   :config
   (require 'org-pandoc-import))
 
@@ -2182,10 +2183,10 @@ only those in the selected frame."
   ;; lambda-emacs-meow-ko/lambda-library/lambda-setup/lem-setup-help.el
   ;; set transient popop to top of window
   ;; (setq transient-display-buffer-action '(display-buffer-in-side-window
-  ;;                                    (side . top)
-  ;;                                    (dedicated . t)
-  ;;                                    (inhibit-same-window . t)
-  ;;                                    (window-parameters (no-other-window . t))))
+  ;;                                         (side . top)
+  ;;                                         (dedicated . t)
+  ;;                                         (inhibit-same-window . t)
+  ;;                                         (window-parameters (no-other-window . t))))
 
   )
 
@@ -3313,14 +3314,19 @@ ${content}"))
   :commands (gptel gptel-send)
   :init
   (setq gptel-default-mode 'org-mode)
-  (setq gptel-temperature 0.5) ; gptel 1.0, Perplexity 0.2
+  ;; (setq gptel-temperature 0.5) ; gptel 1.0, Perplexity 0.2
 
   ;; ("^\\*ChatGPT\\*" :size 84 :side right :modeline t :select t :quit nil :ttl t)
   (set-popup-rule! "^\\*ChatGPT\\*$" :side 'right :size 84 :vslot 100 :quit t) ; size 0.4
   ;; (set-popup-rule! "^\\*xAI\\*$" :side 'right :size 84 :vslot 100 :quit t) ; size 0.4
   :config
+  (setq gptel-model 'gemini-1.5-flash
+        gptel-backend (gptel-make-gemini "Gemini"
+                        :key user-gemini-api-key
+                        :stream t))
+
   ;; (setq gptel-model 'gpt-4o-mini) ; default 'gpt-4o-mini
-  (setq gptel-api-key user-openai-api-key)
+  ;; (setq gptel-api-key user-openai-api-key)
   ;; (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "*** [ME]: ")
   ;; (setf (alist-get 'org-mode gptel-response-prefix-alist) "*** [AI]: ")
 
@@ -3389,24 +3395,21 @@ ${content}"))
 ;;;;; configuration of gptel-models
 
 (after! gptel
+  ;; (gptel-make-gemini "Gemini" :key user-gemini-api-key :stream t)
 
-  (gptel-make-gemini "Gemini" :key user-gemini-api-key :stream t)
-  (gptel-make-anthropic "Claude" :stream t :key user-claude-api-key)
+  (gptel-make-anthropic "Claude" :key user-claude-api-key :stream t)
 
   ;; Model	Context Length	Model Type
   ;; sonar-pro	200k	Chat Completion
   ;; sonar	127k	Chat Completion
   ;; https://perplexity.mintlify.app/guides/pricing
-  (setq
-   gptel-model 'sonar
-   gptel-backend
-   (gptel-make-openai "Perplexity"
-     :host "api.perplexity.ai"
-     :key user-perplexity-api-key
-     :endpoint "/chat/completions"
-     :stream t
-     :request-params '(:temperature 0.2)
-     :models '(sonar sonar-pro)))
+  (gptel-make-openai "Perplexity"
+    :host "api.perplexity.ai"
+    :key user-perplexity-api-key
+    :endpoint "/chat/completions"
+    :stream t
+    :request-params '(:temperature 0.2)
+    :models '(sonar sonar-pro))
 
   ;; DeepSeek offers an OpenAI compatible API
   ;; The deepseek-chat model has been upgraded to DeepSeek-V3. deepseek-reasoner points to the new model DeepSeek-R1.
@@ -3417,13 +3420,48 @@ ${content}"))
   ;; Translation	1.3
   ;; Creative Writing / Poetry	1.5
   ;; https://api-docs.deepseek.com/quick_start/parameter_settings
-  (gptel-make-openai "DeepSeek"
-    :host "api.deepseek.com"
-    :key user-deepseek-api-key
+  ;; (gptel-make-openai "DeepSeek"
+  ;;   :host "api.deepseek.com"
+  ;;   :key user-deepseek-api-key
+  ;;   :endpoint "/chat/completions"
+  ;;   :stream t
+  ;;   :request-params '(:temperature 1.0) ; 1.0 default
+  ;;   :models '(deepseek-chat deepseek-reasoner))
+
+  ;; Upstage: solar
+  ;; https://developers.upstage.ai/docs/apis/chat
+  (gptel-make-openai "Upstage"
+    :host "api.upstage.ai/v1/solar"
+    :key user-upstageai-api-key
     :endpoint "/chat/completions"
     :stream t
-    :request-params '(:temperature 1.0) ; 1.0 default
-    :models '(deepseek-chat deepseek-reasoner))
+    :models '(solar-pro
+              solar-mini))
+
+  ;; OpenRouter offers an OpenAI compatible API
+  ;; https://openrouter.ai/
+  (gptel-make-openai "OpenRouter"
+    :host "openrouter.ai"
+    :endpoint "/api/v1/chat/completions"
+    :stream t
+    :key user-openrouter-api-key
+    :models '(
+              google/gemini-flash-1.5
+              anthropic/claude-3.5-sonnet
+              openai/gpt-4o-mini
+              deepseek/deepseek-chat
+              ;; qwen/qwen-2.5-7b-instruct
+              ))
+
+  ;; Together.ai offers an OpenAI compatible API
+  ;; (gptel-make-openai "TogetherAI"
+  ;;   :host "api.together.xyz"
+  ;;   :key user-togetherai-api-key
+  ;;   :stream t
+  ;;   :models '(;; has many more, check together.ai
+  ;;             "meta-llama/Llama-3.2-11B-Vision-Instruct-Turbo" ;; Meta Llama 3.2 11B Vision Instruct Turbo $0.18
+  ;;             "meta-llama/Llama-3.2-3B-Instruct-Turbo" ;; Meta Llama 3.2 3B Instruct Turbo $0.06
+  ;;             ))
 
   ;; Kagi’s FastGPT model and the Universal Summarizer are both supported. A couple of notes:
   ;; (gptel-make-kagi "Kagi" :stream t :key user-kagi-api-key)
@@ -3437,49 +3475,13 @@ ${content}"))
   ;;   :models '(gpt-4o-mini)) ;; low tier
 
   ;; xAI offers an OpenAI compatible API
-  (gptel-make-openai "xAI"
-    :host "api.x.ai"
-    :key user-xai-api-key
-    :endpoint "/v1/chat/completions"
-    :stream t
-    :models '(;; xAI now only offers `grok-beta` as of the time of this writing
-              grok-beta))
-
-  ;; Upstage: Solar
-  ;; https://developers.upstage.ai/docs/apis/chat
-  (gptel-make-openai "Upstage"
-    :host "api.upstage.ai/v1/solar"
-    :key user-upstageai-api-key
-    :endpoint "/chat/completions"
-    :stream t
-    :models '("solar-pro"
-              "solar-mini"))
-
-
-  ;; OpenRouter offers an OpenAI compatible API
-  ;; https://openrouter.ai/
-  (gptel-make-openai "OpenRouter"   ; Any name you want
-    :host "openrouter.ai"
-    :endpoint "/api/v1/chat/completions"
-    :stream t
-    :key user-openrouter-api-key
-    :models '(
-              "google/gemini-flash-1.5"
-              "anthropic/claude-3.5-sonnet"
-              "qwen/qwen-2.5-7b-instruct"
-              "openai/gpt-4o-mini"
-              ;; "openrouter/auto"
-              ))
-
-  ;; Together.ai offers an OpenAI compatible API
-  (gptel-make-openai "TogetherAI"
-    :host "api.together.xyz"
-    :key user-togetherai-api-key
-    :stream t
-    :models '(;; has many more, check together.ai
-              "meta-llama/Llama-3.2-11B-Vision-Instruct-Turbo" ;; Meta Llama 3.2 11B Vision Instruct Turbo $0.18
-              "meta-llama/Llama-3.2-3B-Instruct-Turbo" ;; Meta Llama 3.2 3B Instruct Turbo $0.06
-              ))
+  ;; (gptel-make-openai "xAI"
+  ;;   :host "api.x.ai"
+  ;;   :key user-xai-api-key
+  ;;   :endpoint "/v1/chat/completions"
+  ;;   :stream t
+  ;;   :models '(;; xAI now only offers `grok-beta` as of the time of this writing
+  ;;             grok-beta))
   ) ; end-of after
 
 ;;;;; cashpwd - gptel-send with prompt
