@@ -50,31 +50,35 @@
 
 ;;; doom-unpin-packages
 
+;;; consult - consult-omni consult-gh
+
 (package! consult :pin "93cf368a676da1072f141e298908be05e2968f60") ; 1.9 stable
+(package! consult-omni :recipe (:host github :repo "armindarvish/consult-omni" :files (:defaults "sources/*.el")) :pin "f0c5f07b9ffe25d0deca42b650f6e0c1c85e9759") ;; Jan 4, 2025
+(package! consult-gh :recipe (:host github :repo "armindarvish/consult-gh" :files ("*.el")) :pin "1acaf7b2a5fe8a8be19f83f5b20bb2bc377d1fc8") ; 2.0
 
 ;;; doom-disabled-packages
 
 (disable-packages!
  lsp-mode
- consult-lsp)
+ consult-lsp
+ diredfl ; conflict denote
+ dirvish
+ code-review
+ nose ; python module
+ lsp-python-ms
+ flyspell-lazy
+ flymake-popon
+ undo-fu-session
+ elfeed-goodies
+ org-superstar
+ org-fancy-priorities
+ solaire-mode
+ ace-window
+ flycheck-popup-tip ; conflict
+ )
 
-(package! diredfl :disable t) ; conflict with denote
-(package! dirvish :disable t)
 ;; (package! paredit :disable t) ; clojure module
-(package! code-review :disable t)
-(package! nose :disable t) ; python module
-(package! lsp-python-ms :disable t)
-(package! flyspell-lazy :disable t)
-(package! flymake-popon :disable t)
 
-(package! undo-fu-session :disable t)
-(package! elfeed-goodies :disable t)
-(package! org-superstar :disable t)
-(package! org-fancy-priorities :disable t)
-(package! solaire-mode :disable t)
-(package! ace-window :disable t)
-
-(package! flycheck-popup-tip :disable t) ; conflict
 ;; (package! flycheck-plantuml :disable t)
 
 (package! emojify :disable t) ; from mastodon
@@ -222,11 +226,10 @@
 (package! org-modern)
 (package! org-modern-indent :recipe (:host github :repo "jdtsmith/org-modern-indent"))
 
-;; (package! parse-csv :recipe (:host github :repo "junghan0611/el-csv")) ; for om-dash
-;; (package! om-dash :recipe (:host github :repo "gavv/om-dash" :files ("*.el" "*.org"))) ; org-based dashboards
+(package! parse-csv :recipe (:host github :repo "junghan0611/el-csv")) ; for om-dash
+(package! om-dash :recipe (:host github :repo "gavv/om-dash" :files ("*.el" "*.org"))) ; org-based dashboards
 
 ;; (package! org-bookmark-heading)
-
 ;; (package! d2-mode)
 ;; (package! ob-d2 :recipe (:host github :repo "dmacvicar/ob-d2"))
 
@@ -306,8 +309,8 @@
 (package! ob-chatgpt-shell)
 (package! pcsv)
 
-(package! gptel)
-;; (package! gptel :recipe (:host github :repo "karthink/gptel" :branch "master"))
+;; (package! gptel)
+(package! gptel :recipe (:host github :repo "karthink/gptel" :branch "master"))
 ;; (package! gptel :recipe (:host github :repo "karthink/gptel" :branch "feature-tool-use"))
 (package! gptel-quick :recipe (:host github :repo "karthink/gptel-quick"))
 
@@ -349,11 +352,11 @@
   (package! vega-view)
   (package! clj-deps-new)
   (package! clay))
-  ;; (package! clojure-essential-ref-nov)
+;; (package! clojure-essential-ref-nov)
 
 
 (unpin! elisp-demos)
-(package! elisp-demos :recipe (:host github :repo "junghan0611/elisp-demos" :branch "ko"))
+(package! elisp-demos :recipe (:host github :repo "junghan0611/elisp-demos" :branch "ko")) ;; https://github.com/junghan0611/elisp-demos
 
 (package! exercism)
 (package! bats-mode)
@@ -375,9 +378,6 @@
 ;; (package! geiser-mit :recipe (:host github :repo "emacsmirror/geiser-mit"))
 
 ;;;; Git
-
-(package! consult-omni :recipe (:host github :repo "armindarvish/consult-omni" :files (:defaults "sources/*.el")) :pin "f0c5f07b9ffe25d0deca42b650f6e0c1c85e9759") ;; Jan 4, 2025
-(package! consult-gh :recipe (:host github :repo "armindarvish/consult-gh" :files ("*.el")) :pin "1acaf7b2a5fe8a8be19f83f5b20bb2bc377d1fc8") ; 2.0
 
 (package! git-link :recipe (:host github :repo "sshaw/git-link"))
 
@@ -459,11 +459,11 @@
 
   (package! pylookup :recipe (:local-repo "local/pylookup")))
 
-  ;; (package! paw :recipe (:local-repo "local/paw" :branch "ko" :files ("*")))
-  ;; (package! paw :recipe (:host github :repo "junghan0611/paw" :branch "ko" :files ("*")))
+;; (package! paw :recipe (:local-repo "local/paw" :branch "ko" :files ("*")))
+;; (package! paw :recipe (:host github :repo "junghan0611/paw" :branch "ko" :files ("*")))
 
-  ;; (package! trekker
-  ;;   :recipe (:host github :repo "junghan0611/trekker" :branch "ko" :files("*.md" "*.el" "*.py")))
+;; (package! trekker
+;;   :recipe (:host github :repo "junghan0611/trekker" :branch "ko" :files("*.md" "*.el" "*.py")))
 
 
 ;;; Applications

@@ -210,26 +210,27 @@
 (map! :leader
       (:prefix ("g" . "git")
        "h" nil
-       :desc "magit file" "F" #'magit-file-dispatch
-       :desc "jump list" "j" #'evil-show-jumps
-       ;; :desc "ibuffer-sidebar-jump" "i" #'ibuffer-sidebar-jump
+       :desc "magit-file" "F" #'magit-file-dispatch
+       :desc "jump-list" "j" #'evil-show-jumps
        ;; :desc "git status" "s" #'magit-status
-       "K" #'consult-git-log-grep
-       (:prefix ("h" . "Github")
-        :desc "Search repos" "r" #'consult-gh-search-repos
-        :desc "Search code" "s" #'consult-gh-search-code
-        :desc "Search PRs" "p" #'consult-gh-search-prs
-        :desc "Search issues" "i" #'consult-gh-search-issues
-        :desc "List PRs" "P" #'consult-gh-pr-list
-        :desc "List issues" "I" #'consult-gh-issue-list
-        :desc "Default repos" "d" #'consult-gh-default-repos
-        :desc "Find file" "f" #'consult-gh-find-file
-        :desc "Clone" "c" #'consult-gh-repo-clone
-        :desc "Fork" "k" #'consult-gh-fork-current-repo)
+       :desc "git-log-grep" "K" #'consult-git-log-grep
+       :desc "gh/search-repos" "SPC" #'consult-gh-search-repos
+       :desc "gh/search-find-file" "1" #'consult-gh-find-file
+       (:prefix ("h" . "consult-gh")
+        :desc "gh/repo-clone" "c" #'consult-gh-repo-clone
+        :desc "gh/default-repos" "d" #'consult-gh-default-repos
+        :desc "gh/find-file" "f" #'consult-gh-find-file
+        :desc "gh/search-repos" "s" #'consult-gh-search-repos
+        :desc "gh-search-code" "S" #'consult-gh-search-code
+        :desc "gh-search-prs" "p" #'consult-gh-search-prs
+        :desc "gh-pr-list" "P" #'consult-gh-pr-list
+        :desc "gh-search-issues" "i" #'consult-gh-search-issues
+        :desc "gh-issue-list" "I" #'consult-gh-issue-list
+        :desc "gh-fork-current-repo" "k" #'consult-gh-fork-current-repo)
        (:prefix (";" . "git link")
-        :desc "blame link" "b" #'git-link-blame
-        :desc "copy link" "l" #'git-link-kill
-        :desc "main branch" "m" #'git-link-main-branch)))
+        :desc "git-link-blame" "b" #'git-link-blame
+        :desc "git-link-kill/copy" "l" #'git-link-kill
+        :desc "git-link-main-branch" "m" #'git-link-main-branch)))
 
 ;;;; 'h' help
 

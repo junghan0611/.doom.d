@@ -2128,7 +2128,7 @@ only those in the selected frame."
 ;; Location of Git repositories
 ;; define paths and level of sub-directories to search
 (setq magit-repository-directories
-      '(("~/doomemacs/" . 0)
+      '(("~/doomemacs-git/" . 0)
         ("~/.doom.d/" . 0) ("~/git/" . 1) ("~/mydotfiles/" . 0)
         ;; ("~/sync/code/" . 2)
         ))
@@ -2171,6 +2171,22 @@ only those in the selected frame."
   ;; (setq forge-owned-blacklist
   ;;       '(("bad-hacks" "really-bad-hacks")))
   ;; End of Version Control configuration
+
+  ;; 2025-01-27 reset transient-display-buffer-action for gptel-menu
+  (setq transient-display-buffer-action
+        '(display-buffer-in-side-window
+          (side . bottom)
+          (dedicated . t)
+          (inhibit-same-window . t)))
+
+  ;; lambda-emacs-meow-ko/lambda-library/lambda-setup/lem-setup-help.el
+  ;; set transient popop to top of window
+  ;; (setq transient-display-buffer-action '(display-buffer-in-side-window
+  ;;                                    (side . top)
+  ;;                                    (dedicated . t)
+  ;;                                    (inhibit-same-window . t)
+  ;;                                    (window-parameters (no-other-window . t))))
+
   )
 
 ;;;; git-commit : categories
@@ -2333,23 +2349,25 @@ ${content}"))
   ;; set the default folder for cloning repositories, By default Consult-GH will confirm this before cloning
   (setq consult-gh-default-clone-directory "~/git/default/")
   (setq consult-gh-default-save-directory "~/Downloads")
-  (setq consult-gh-default-orgs-list '("junghan0611" "junghanacs"))
-  (setq consult-gh-default-orgs-list (append consult-gh-default-orgs-list '
-                                             ("oantolin" "minad" "alphapapa"
-                                              "LemonBreezes" "protesilaos"
-                                              "emacs-mirror" "doomemacs" "tecosaur"
-                                              "systemcrafters")
-                                             ))
+
+  (dolist (repo '("junghan0611" "junghanacs" "agzam" "minad" "alphapapa"
+                  "LemonBreezes" "protesilaos" "armindarvish"
+                  "doomemacs" "tecosaur"))
+    (add-to-list 'consult-gh-favorite-orgs-list repo))
+
+  (add-to-list 'savehist-additional-variables 'consult-gh--known-orgs-list)
+  (add-to-list 'savehist-additional-variables 'consult-gh--known-repos-list)
+
   ;; Install `consult-gh-embark' for embark actions
   (use-package consult-gh-embark
     :config
     (consult-gh-embark-mode +1))
 
   ;; Install `consult-gh-forge' for forge actions
-  ;; (use-package consult-gh-forge
-  ;;   :config
-  ;;   (consult-gh-forge-mode +1)
-  ;;   (setq consult-gh-forge-timeout-seconds 20))
+  (use-package consult-gh-forge
+    :config
+    (consult-gh-forge-mode +1)
+    (setq consult-gh-forge-timeout-seconds 20))
   )
 
 ;;; :lang org
@@ -3388,10 +3406,24 @@ ${content}"))
      :endpoint "/chat/completions"
      :stream t
      :request-params '(:temperature 0.2)
-     :models '(
-               sonar
-               sonar-pro
-               )))
+     :models '(sonar sonar-pro)))
+
+  ;; DeepSeek offers an OpenAI compatible API
+  ;; The deepseek-chat model has been upgraded to DeepSeek-V3. deepseek-reasoner points to the new model DeepSeek-R1.
+  ;; USE CASE	TEMPERATURE
+  ;; Coding / Math	0.0
+  ;; Data Cleaning / Data Analysis	1.0
+  ;; General Conversation	1.3
+  ;; Translation	1.3
+  ;; Creative Writing / Poetry	1.5
+  ;; https://api-docs.deepseek.com/quick_start/parameter_settings
+  (gptel-make-openai "DeepSeek"
+    :host "api.deepseek.com"
+    :key user-deepseek-api-key
+    :endpoint "/chat/completions"
+    :stream t
+    :request-params '(:temperature 1.0) ; 1.0 default
+    :models '(deepseek-chat deepseek-reasoner))
 
   ;; Kagi’s FastGPT model and the Universal Summarizer are both supported. A couple of notes:
   ;; (gptel-make-kagi "Kagi" :stream t :key user-kagi-api-key)
