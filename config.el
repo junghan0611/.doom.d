@@ -2212,4 +2212,11 @@ the next chapter, open Dired so you can find it manually."
   :commands (recent-rgrep))
 ;; (keymap-global-set "M-F" #'recent-rgrep)
 
+;;;; emacs-everywhere
+
+;; (use-package! emacs-everywhere
+;;   :config
+;;   ;; emacs-everywhere-frame-name-format "Edit ∷ %s — %s"
+;;   (setq emacs-everywhere-major-mode-function #'org-mode))
+
 ;;; left blank on purpose

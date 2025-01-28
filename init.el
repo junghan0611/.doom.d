@@ -245,7 +245,7 @@
        calendar
        emms
        (rss +org +youtube)        ; emacs as an RSS reader
-       ;;everywhere        ; *leave* Emacs!? You must be joking
+       everywhere        ; *leave* Emacs!? You must be joking
        ;;irc               ; how neckbeards socialize
 
        ;; 2024-05-31 현재 사용자 설정은 다 커스텀 모듈로 옮기는게 좋겠다.
