@@ -22,7 +22,6 @@
       "." nil
       "," nil
       :desc "M-x" "SPC" #'execute-extended-command
-      ;; :desc "한/영" "SPC" #'toggle-input-method
       :desc "Find file in project" "." #'projectile-find-file
       :desc "Find file in cwd" "," #'my/consult-fd
       :desc "consult-buffer" "`" #'consult-buffer
@@ -628,35 +627,36 @@
 
 ;;;; 'N' consult-notes
 
-(map! :leader
-      :desc "consult-notes" "N" 'consult-notes)
+(after! consult-notes
+  (map! :leader
+        :desc "consult-notes" "N" 'consult-notes))
 
 ;;;; 'RET' EWS
 
-(map! :leader
-      "RET" nil
-      :desc "PKM" "RET" ews-map)
+  ;; (map! :leader
+  ;;       "RET" nil
+  ;;       :desc "PKM" "RET" ews-map)
 
 ;;;; DONT SPC 1-4 window
 
-;; (map! :leader
-;;       :desc "select-window 1" "1" #'winum-select-window-1
-;;       :desc "select-window 2" "2" #'winum-select-window-2
-;;       :desc "select-window 3" "3" #'winum-select-window-3
-;;       :desc "select-window 4" "4" #'winum-select-window-4)
+  ;; (map! :leader
+  ;;       :desc "select-window 1" "1" #'winum-select-window-1
+  ;;       :desc "select-window 2" "2" #'winum-select-window-2
+  ;;       :desc "select-window 3" "3" #'winum-select-window-3
+  ;;       :desc "select-window 4" "4" #'winum-select-window-4)
 
 ;;;; TODO '0' LLM - gptel
 
-(map! :leader
-      "0" nil
-      (:prefix ("0" . "llm/gptel")
-       ;; "0" #'+gpt-dwim-current-buffer
-       "0" #'gptel-mode
-       "t" #'gptel-org-toggle-branching-context
-       :desc "gptel-send: default" :n "l" (cmd! (cashpw/gptel-send (alist-get 'default gptel-directives)))
-       :desc "gptel-send: chain-of-thought" :n "c" (cmd! (cashpw/gptel-send (alist-get 'chain-of-thought gptel-directives)))
-       :desc "gptel-send: follow-up" :n "f" (cmd! (cashpw/gptel-send (alist-get 'follow-up gptel-directives))))
-      )
+  (map! :leader
+        "0" nil
+        (:prefix ("0" . "llm/gptel")
+         ;; "0" #'+gpt-dwim-current-buffer
+         "0" #'gptel-mode
+         "t" #'gptel-org-toggle-branching-context
+         :desc "gptel-send: default" :n "l" (cmd! (cashpw/gptel-send (alist-get 'default gptel-directives)))
+         :desc "gptel-send: chain-of-thought" :n "c" (cmd! (cashpw/gptel-send (alist-get 'chain-of-thought gptel-directives)))
+         :desc "gptel-send: follow-up" :n "f" (cmd! (cashpw/gptel-send (alist-get 'follow-up gptel-directives))))
+        )
 
 ;;; Custom EVIL Keys
 

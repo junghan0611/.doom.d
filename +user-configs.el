@@ -240,15 +240,7 @@
         which-key-idle-secondary-delay 0.01)
   (setq which-key-use-C-h-commands t) ; paging key maps
   (setq which-key-max-description-length 29) ; doom 27, spacemacs 36
-
-  ;; replace 'evil-' in which-key HUD with a tiny triangle
-  ;; borrowed from https://tecosaur.github.io/emacs-config/config.html
-  (setq which-key-allow-multiple-replacements t)
-  (pushnew!
-   which-key-replacement-alist
-   '(("" . "\\`+?evil[-:]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1"))
-   '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1")))
-  (which-key-mode +1))
+  )
 
 ;;;; evil
 
@@ -2111,6 +2103,10 @@ only those in the selected frame."
 
   (winum-mode +1)
   )
+
+;;;; tabgo
+
+(use-package! tabgo)
 
 ;;; :tools magit
 

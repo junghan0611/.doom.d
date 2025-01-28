@@ -1354,15 +1354,15 @@
   :after org
   :hook (org-mode . org-fragtog-mode)
   ;; :hook (markdown-mode . org-fragtog-mode)
-  ;; :init
-  ;; (progn ;; for org-fragtog-mode for markdown-mode
-  ;;   ;; 2025-01-24 disable for markdown-mode, 2024-06-27 안쓰는게 나은듯
-  ;;   ;; The new org-data element provides properties from top-level property drawer,
-  ;;   (setq org-element-use-cache nil) ; default t
-  ;;   ;; Element cache persists across Emacs sessions
-  ;;   (setq org-element-cache-persistent nil) ; default t
-  ;;   (add-to-list 'warning-suppress-types '(org-element))
-  ;;   )
+  :init
+  (progn ;; for org-fragtog-mode for markdown-mode
+    ;; 2025-01-24 disable for markdown-mode, 2024-06-27 안쓰는게 나은듯
+    ;; The new org-data element provides properties from top-level property drawer,
+    (setq org-element-use-cache nil) ; default t
+    ;; Element cache persists across Emacs sessions
+    (setq org-element-cache-persistent nil) ; default t
+    (add-to-list 'warning-suppress-types '(org-element))
+    )
 
   ;; (setq org-fragtog-preview-delay 0.2)
   ;; (setq org-startup-with-latex-preview t) ; doom nil
