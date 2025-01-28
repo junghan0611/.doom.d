@@ -1091,10 +1091,10 @@ A prefix arg forces clock in of the default task."
   (define-key org-mode-map (kbd "<f3>") 'org-toggle-link-display)
   (define-key org-mode-map (kbd "<f4>") 'org-toggle-inline-images)
 
-  (define-key org-mode-map (kbd "S-<tab>") (lambda () (interactive) (org-cycle 'FOLDED)))
-  (define-key org-mode-map (kbd "S-TAB") (lambda () (interactive) (org-cycle 'FOLDED)))
-  (define-key org-mode-map (kbd "<backtab>") (lambda () (interactive) (org-cycle 'FOLDED)))
-  (define-key org-mode-map (kbd "S-<iso-lefttab>") (lambda () (interactive) (org-cycle 'FOLDED)))
+  ;; (define-key org-mode-map (kbd "S-<tab>") (lambda () (interactive) (org-cycle 'FOLDED)))
+  ;; (define-key org-mode-map (kbd "S-TAB") (lambda () (interactive) (org-cycle 'FOLDED)))
+  ;; (define-key org-mode-map (kbd "<backtab>") (lambda () (interactive) (org-cycle 'FOLDED)))
+  ;; (define-key org-mode-map (kbd "S-<iso-lefttab>") (lambda () (interactive) (org-cycle 'FOLDED)))
   (define-key org-mode-map (kbd "C-M-<tab>") 'org-shifttab)
 
   (define-key org-mode-map (kbd "C-c 1") 'org-show-level-1)

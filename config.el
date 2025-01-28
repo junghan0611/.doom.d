@@ -1021,11 +1021,8 @@
 ;;; tab-line-mode on emacs-30
 
 (when (eq emacs-major-version 30)
-  (use-package tab-line
+  (use-package! tab-line
     :demand t
-    :bind
-    (("C-<iso-lefttab>" . tab-line-switch-to-prev-tab)
-     ("C-<tab>" . tab-line-switch-to-next-tab))
     :config
     (global-tab-line-mode 1)
     (setq tab-line-close-tab-function #'kill-buffer)

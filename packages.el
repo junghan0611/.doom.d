@@ -414,9 +414,9 @@
 
 ;;;; Workspace
 
+(package! tabgo)
 
 ;;;; Misc
-
 (package! atomic-chrome)
 (package! empv) ;; TODO mpv frontend
 (package! djvu)

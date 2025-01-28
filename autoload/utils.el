@@ -64,3 +64,14 @@ a dedicated window."
         (window-state-put second-window-state (funcall splitter)))
     (error "Can't toggle window layout when the number of windows isn't two.")))
 
+;;;; spacemacs/delete-window
+
+; SPC w d
+;;;###autoload
+(defun spacemacs/delete-window (&optional arg)
+  "Delete the current window.
+If the universal prefix argument is used then kill the buffer too."
+  (interactive "P")
+  (if (equal '(4) arg)
+      (kill-buffer-and-window)
+    (delete-window)))

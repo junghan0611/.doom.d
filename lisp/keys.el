@@ -456,35 +456,35 @@
     ))
 
 
-;;;; Wordreference
+;;;; DONT  Wordreference
 
-(when (locate-library "wordreference")
-  (with-eval-after-load 'wordreference
-    (evil-define-key '(normal visual) wordreference-mode-map (kbd "TAB") #'forward-button)
-    (evil-define-key '(normal visual) wordreference-mode-map (kbd "<backtab>") #'backward-button)
-    (evil-define-key '(normal visual) wordreference-mode-map (kbd "s") #'wordreference-search)
-    (evil-define-key '(normal visual) wordreference-mode-map (kbd "w") #'wordreference-search)
-    (evil-define-key '(normal visual) wordreference-mode-map (kbd "b") #'wordreference-browse-url-results)
-    (evil-define-key '(normal visual) wordreference-mode-map (kbd "C") #'wordreference-copy-search-term)
-    (evil-define-key '(normal visual) wordreference-mode-map (kbd "c") #'wordreference-browse-term-cntrl)
-    (when (require 'sdcv nil :no-error)
-      (evil-define-key '(normal visual) wordreference-mode-map (kbd "L") #'wordreference-browse-term-sdcv-littre))
-    (evil-define-key '(normal visual) wordreference-mode-map (kbd "l") #'wordreference-browse-term-linguee)
-    (evil-define-key '(normal visual) wordreference-mode-map (kbd "N") #'wordreference-nearby-entries-search)
-    (evil-define-key '(normal visual) wordreference-mode-map (kbd "n") #'wordreference-next-entry)
-    (evil-define-key '(normal visual) wordreference-mode-map (kbd "p") #'wordreference-prev-entry)
-    (when (require 'reverso nil :no-error)
-      (evil-define-key '(normal visual) wordreference-mode-map (kbd "r") #'wordreference-browse-term-reverso))
-    (when (require 'wiktionary-bro nil :no-error)
-      (evil-define-key '(normal visual) wordreference-mode-map (kbd "k") #'wordreference-browse-term-wiktionary-bro))
-    (evil-define-key '(normal visual) wordreference-mode-map (kbd ",") #'wordreference-previous-heading)
-    (evil-define-key '(normal visual) wordreference-mode-map (kbd ".") #'wordreference-next-heading)
-    (evil-define-key '(normal visual) wordreference-mode-map (kbd "RET") #'wordreference-return-search-word)
-    (evil-define-key '(normal visual) wordreference-mode-map (kbd "v") #'wordreference-paste-to-search)
-    (evil-define-key '(normal visual) wordreference-mode-map (kbd "S") #'wordreference-switch-source-target-and-search)
-    (evil-define-key '(normal visual) wordreference-mode-map (kbd "?") #'wordreference-dispatch)
-    )
-  )
+;; (when (locate-library "wordreference")
+;;   (with-eval-after-load 'wordreference
+;;     (evil-define-key '(normal visual) wordreference-mode-map (kbd "TAB") #'forward-button)
+;;     (evil-define-key '(normal visual) wordreference-mode-map (kbd "<backtab>") #'backward-button)
+;;     (evil-define-key '(normal visual) wordreference-mode-map (kbd "s") #'wordreference-search)
+;;     (evil-define-key '(normal visual) wordreference-mode-map (kbd "w") #'wordreference-search)
+;;     (evil-define-key '(normal visual) wordreference-mode-map (kbd "b") #'wordreference-browse-url-results)
+;;     (evil-define-key '(normal visual) wordreference-mode-map (kbd "C") #'wordreference-copy-search-term)
+;;     (evil-define-key '(normal visual) wordreference-mode-map (kbd "c") #'wordreference-browse-term-cntrl)
+;;     (when (require 'sdcv nil :no-error)
+;;       (evil-define-key '(normal visual) wordreference-mode-map (kbd "L") #'wordreference-browse-term-sdcv-littre))
+;;     (evil-define-key '(normal visual) wordreference-mode-map (kbd "l") #'wordreference-browse-term-linguee)
+;;     (evil-define-key '(normal visual) wordreference-mode-map (kbd "N") #'wordreference-nearby-entries-search)
+;;     (evil-define-key '(normal visual) wordreference-mode-map (kbd "n") #'wordreference-next-entry)
+;;     (evil-define-key '(normal visual) wordreference-mode-map (kbd "p") #'wordreference-prev-entry)
+;;     (when (require 'reverso nil :no-error)
+;;       (evil-define-key '(normal visual) wordreference-mode-map (kbd "r") #'wordreference-browse-term-reverso))
+;;     (when (require 'wiktionary-bro nil :no-error)
+;;       (evil-define-key '(normal visual) wordreference-mode-map (kbd "k") #'wordreference-browse-term-wiktionary-bro))
+;;     (evil-define-key '(normal visual) wordreference-mode-map (kbd ",") #'wordreference-previous-heading)
+;;     (evil-define-key '(normal visual) wordreference-mode-map (kbd ".") #'wordreference-next-heading)
+;;     (evil-define-key '(normal visual) wordreference-mode-map (kbd "RET") #'wordreference-return-search-word)
+;;     (evil-define-key '(normal visual) wordreference-mode-map (kbd "v") #'wordreference-paste-to-search)
+;;     (evil-define-key '(normal visual) wordreference-mode-map (kbd "S") #'wordreference-switch-source-target-and-search)
+;;     (evil-define-key '(normal visual) wordreference-mode-map (kbd "?") #'wordreference-dispatch)
+;;     )
+;;   )
 
 ;;;; calendar :mouse:
 
@@ -611,6 +611,10 @@
     )
   )
 
+;;;; TODO tabgo
+
+;; (when (locate-library "tabgo")
+;;   (global-set-key (kbd "M-t") #'tabgo))
 
 ;;; C-c M-g M-s
 ;;;; C-c j
@@ -790,14 +794,14 @@
   (define-prefix-command 'my-search-map)
   (define-key global-map (kbd "M-s s") 'my-search-map)
   (let ((map my-search-map))
-    (define-key map (kbd "/") 'sdcv-search-pointer)
-    (define-key map (kbd "?") 'sdcv-search-input)
-    (define-key map (kbd ".") 'sdcv-search-pointer+) ; posframe
+    ;; (define-key map (kbd "/") 'sdcv-search-pointer)
+    ;; (define-key map (kbd "?") 'sdcv-search-input)
+    ;; (define-key map (kbd ".") 'sdcv-search-pointer+) ; posframe
     (define-key map (kbd "\[") 'my/wr-koen)
     (define-key map (kbd "\]") 'my/wr-enko)
 
-    (define-key map (kbd "l") 'lexic-search)
-    (define-key map (kbd "e") 'external-dict-dwim)
+    ;; (define-key map (kbd "l") 'lexic-search)
+    ;; (define-key map (kbd "e") 'external-dict-dwim)
 
     (define-key map (kbd "N") 'my/search-naver)
     (define-key map (kbd "n") 'my/search-terms-naver)
@@ -1284,6 +1288,122 @@
      ("~" "invert-char" evil-invert-char)
      ("SPC" "SPC" (lambda () (interactive) (funcall (general-simulate-key "SPC"))))])
   )
+
+;;;; transient : transient-window
+
+(progn
+
+;;;###autoload
+  (transient-define-suffix transient-window--enlarge-v ()
+    :transient t
+    :key "k"
+    :description "enlarge vertically"
+    (interactive)
+    (call-interactively #'enlarge-window))
+
+;;;###autoload
+  (transient-define-suffix transient-window--shrink-v ()
+    :transient t
+    :key "j"
+    :description "shrink vertically"
+    (interactive)
+    (call-interactively #'shrink-window))
+
+;;;###autoload
+  (transient-define-suffix transient-window--enlarge-h ()
+    :transient t
+    :key "l"
+    :description "enlarge horizontally"
+    (interactive)
+    (call-interactively #'enlarge-window-horizontally))
+
+;;;###autoload
+  (transient-define-suffix transient-window--shrink-h ()
+    :transient t
+    :key "h"
+    :description "shrink horizontally"
+    (interactive)
+    (call-interactively #'shrink-window-horizontally))
+
+;;;###autoload
+  (transient-define-suffix transient-window--balance ()
+    :key "="
+    :description "balance"
+    (interactive)
+    (call-interactively #'balance-windows))
+
+;;;###autoload
+  (transient-define-suffix transient-window--golden-ratio ()
+    :key "g"
+    :description "golden-ratio"
+    (interactive)
+    (call-interactively #'golden-ratio))
+
+;;;###autoload
+  (transient-define-prefix window-transient ()
+    "Window manipulations"
+    ["Window"
+     [(transient-window--enlarge-v)
+      (transient-window--shrink-v)
+      (transient-window--enlarge-h)
+      (transient-window--shrink-h)
+      (transient-window--balance)
+      (transient-window--golden-ratio)]])
+
+;;;###autoload
+  (defun window-cleanup+ ()
+    "Deletes duplicate windows. Leaves single window per buffer, removing all duplicates."
+    (interactive)
+    (when (->>
+           (window-list)
+           (seq-group-by (lambda (win) (window-buffer win)))
+           (seq-filter (lambda (group) (length> (cdr group) 1)))
+           (seq-do (lambda (group) (seq-do #'delete-window (cddr group)))))
+      (balance-windows-area)))
+
+  (defun delete-other-windows-horizontally ()
+    "Delete all windows to the left and right of the current
+window."
+    (interactive)
+    (require 'windmove)
+    (save-excursion
+      (while (condition-case nil (windmove-left) (error nil))
+        (delete-window))
+      (while (condition-case nil (windmove-right) (error nil))
+        (delete-window))))
+
+  (defun toggle-window-divider ()
+    (interactive)
+    (setf right-divider-width (if window-divider-mode 1 6))
+    (setf left-divider-width (if window-divider-mode 1 6))
+    (window-divider-mode 'toggle))
+
+  )
+
+;; ;;;###autoload
+;; (defun +scroll-line-down-other-window (&optional count)
+;;   "Scrolls in the window COUNT lines downwards."
+;;   (interactive "P")
+;;   (with-selected-window (other-window-for-scrolling)
+;;     (funcall (doom-lookup-key (kbd "C-e")) (or count 1))))
+
+;; ;;;###autoload
+;; (defun +scroll-line-up-other-window (&optional count)
+;;   "Scrolls in the window COUNT lines downwards."
+;;   (interactive "P")
+;;   (with-selected-window (other-window-for-scrolling)
+;;     (funcall (doom-lookup-key (kbd "C-y")) (or count 1))))
+
+;; ;;;###autoload
+;; (defun display-buffer-window-equal-width (buffer alist)
+;;   "Keep buffer window width proportional to other windows."
+;;   (let* ((win (display-buffer-in-direction buffer alist)))
+;;     (window-resize
+;;      win
+;;      (- (/ (frame-width) (length (window-list)))
+;;         (window-width win))
+;;      t t)
+;;     win))
 
 ;;;; transient : casual-anddo
 

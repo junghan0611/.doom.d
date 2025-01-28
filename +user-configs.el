@@ -236,25 +236,21 @@
 ;;;; Which-key
 
 (after! which-key
-  ;; important configurations
-  (setq which-key-idle-delay 0.4
+  (setq which-key-idle-delay 0.4 ; important
         which-key-idle-secondary-delay 0.01)
-  ;; (setq which-key-ellipsis ".."
-  ;;       which-key-allow-multiple-replacements nil)
-  ;; (setq which-key-use-C-h-commands t) ; paging key maps
+  (setq which-key-use-C-h-commands t) ; paging key maps
   (setq which-key-max-description-length 29) ; doom 27, spacemacs 36
-  )
+
+  ;; replace 'evil-' in which-key HUD with a tiny triangle
+  ;; borrowed from https://tecosaur.github.io/emacs-config/config.html
+  (setq which-key-allow-multiple-replacements t)
+  (pushnew!
+   which-key-replacement-alist
+   '(("" . "\\`+?evil[-:]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1"))
+   '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1")))
+  (which-key-mode +1))
 
 ;;;; evil
-
-;; Focus new window after splitting
-(setq
- evil-split-window-below t
- evil-vsplit-window-right t) ; default nil
-
-;; Implicit /g flag on evil ex substitution, because I use the default behavior
-;; less often.
-(setq evil-ex-substitute-global t) ; default nil
 
 ;; Key binding guide
 ;; https://discourse.doomemacs.org/t/how-to-re-bind-keys/
@@ -263,6 +259,9 @@
 ;; ------------------------------------------------
 ;; Key binding vars
 (after! evil
+  ;; Implicit /g flag on evil ex substitution, because I use the default behavior less often.
+  (setq evil-ex-substitute-global t) ; default nil
+
   ;; C-h is backspace in insert state
   ;; (setq evil-want-C-h-delete t) ; default nil
   (setq evil-want-C-w-delete t) ; default t
@@ -271,7 +270,7 @@
   ;; use C-i / C-o  evil-jump-backward/forward
   (setq evil-want-C-i-jump t) ; default nil
 
-  ;;  /home/junghan/sync/man/dotsamples/vanilla/mpereira-dotfiles-evil-clojure/configuration.org
+  ;; mpereira-dotfiles-evil-clojure/configuration.org
   ;; FIXME: this correctly causes '*' to match on whole symbols (e.g., on a
   ;; Clojure file pressing '*' on 'foo.bar' matches the whole thing, instead of
   ;; just 'foo' or 'bar', BUT, it won't match 'foo.bar' in something like
@@ -996,7 +995,7 @@
 
 (after! flycheck
   (setq flycheck-global-modes '(not emacs-lisp-mode org-mode markdown-mode gfm-mode))
-  ;; (setq flycheck-checker-error-threshold 1000) ; need more than default of 400
+  (setq flycheck-checker-error-threshold 1000) ; need more than default of 400
   (global-flycheck-mode +1)
   )
 
@@ -1114,7 +1113,7 @@
 
 ;; move: m +{n}, delete: +{n},+{n}d, join: .,+{n}j glboal: g/{target}/{change}
 
-;;;; TODO evil-owl
+;;;; evil-owl
 
 ;; gl ${operator}
 ;; evil-owl-mode                   A minor mode to preview marks and registers before using them.
@@ -1128,12 +1127,13 @@
 ;; evil-owl-scroll-popup-down      Scroll the popup down one page.
 ;; evil-owl-paste-from-register    Wrapper function for ‘evil-paste-from-register’ that shows a preview popup.
 
+;; Not sure what is in a register? Have it show you when you hit ~”~ or ~@~
 (use-package! evil-owl
-  :hook (after-init . evil-owl-mode)
+  :hook (doom-first-input . evil-owl-mode)
   :config
-  (setq evil-owl-idle-delay 0.5)
-  (setq evil-owl-max-string-length 500)
-  )
+  (setq evil-owl-display-method 'window)
+  (setq evil-owl-idle-delay 0.5) ; default 1
+  (setq evil-owl-max-string-length 500))
 
 ;;;; smartparens
 
@@ -4460,7 +4460,15 @@ x×X .,·°;:¡!¿?`'‘’   ÄAÃÀ TODO
   ;; (setq Info-breadcrumbs-in-mode-line-mode nil)
   (setq doom-modeline-support-imenu t)
 
-  (setq doom-modeline-buffer-encoding t)
+  ;; UTF-8 is default encoding remove it from modeline
+  ;; frap-dot-doom/ui-old.el
+  (defun doom-modeline-conditional-buffer-encoding ()
+    "We expect the encoding to be LF UTF-8, so only show the modeline when this is not the case"
+    (setq-local doom-modeline-buffer-encoding
+                (unless (or (eq buffer-file-coding-system 'utf-8-unix)
+                            (eq buffer-file-coding-system 'utf-8)))))
+  (add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
+
   (setq doom-modeline-enable-word-count nil)
   ;; (setq doom-modeline-continuous-word-count-modes '(markdown-mode gfm-mod)) ; org-mode
 
@@ -4546,6 +4554,7 @@ x×X .,·°;:¡!¿?`'‘’   ÄAÃÀ TODO
              pixel-scroll-interpolate-up ; <prior> page-up
              pixel-scroll-interpolate-down ; <next> page-down
 
+             org-cycle
              ;; toggle-input-method
              ;; block-toggle-input-method
              ;; evil-formal-state
