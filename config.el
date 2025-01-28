@@ -2226,4 +2226,60 @@ the next chapter, open Dired so you can find it manually."
 ;;   ;; emacs-everywhere-frame-name-format "Edit ∷ %s — %s"
 ;;   (setq emacs-everywhere-major-mode-function #'org-mode))
 
+;;;; command-log-mode - keycast alternative
+
+;; For showing which keys I'm pressing during screencasts, presentations, or pairing sessions.
+;; - [[https://gitlab.com/screenkey/screenkey][screenkey]]: "A screencast tool to display your keys inspired by Screenflick"
+
+(use-package! command-log-mode
+  :config
+  (setq
+   command-log-mode-open-log-turns-on-mode t
+   command-log-mode-window-size 80
+   command-log-mode-is-global t))
+
+;;;; code-cells for python jupyter
+
+;; (progn
+;;   (use-package! code-cells
+;;     :config
+;;     ;; (setq code-cells-convert-ipynb-style '(("pandoc" "--to" "ipynb" "--from" "org")
+;;     ;; 					 ("pandoc" "--to" "org" "--from" "ipynb")
+;;     ;; 					 org-mode))
+;;     ;; see https://github.com/astoff/code-cells.el/issues/22
+;;     ;; (defun gm/jupyter-eval-region (beg end)
+;;     ;;   (jupyter-eval-region nil beg end))
+;;     ;; (add-to-list 'code-cells-eval-region-commands '(jupyter-repl-interaction-mode . gm/jupyter-eval-region))
+;;     (let ((map code-cells-mode-map))
+;;       (define-key map (kbd "C-c <up>") 'code-cells-backward-cell)
+;;       (define-key map (kbd "C-c <down>") 'code-cells-forward-cell)
+;;       (define-key map (kbd "M-<up>") 'code-cells-move-cell-up)
+;;       (define-key map (kbd "M-<down>") 'code-cells-move-cell-down)
+;;       (define-key map (kbd "C-c C-c") 'code-cells-eval)
+;;       ;; Overriding other minor mode bindings requires some insistence...
+;;       (define-key
+;;        map [remap jupyter-eval-line-or-region] 'code-cells-eval)))
+
+;;   (defun my/new-notebook (notebook-name &optional kernel)
+;;     "Creates an empty notebook in the current directory with an associated kernel."
+;;     (interactive "sEnter the notebook name: ")
+;;     (when (file-name-extension notebook-name)
+;;       (setq notebook-name (file-name-sans-extension notebook-name)))
+;;     (unless kernel
+;;       (setq kernel
+;;             (jupyter-kernelspec-name
+;;              (jupyter-completing-read-kernelspec))))
+;;     (unless (executable-find "jupytext")
+;;       (error "Can't find \"jupytext\""))
+;;     (let ((notebook-py (concat notebook-name ".py")))
+;;       (shell-command (concat "touch " notebook-py))
+;;       (shell-command
+;;        (concat "jupytext --set-kernel " kernel " " notebook-py))
+;;       (shell-command (concat "jupytext --to notebook " notebook-py))
+;;       (shell-command (concat "rm " notebook-py))
+;;       (message
+;;        (concat
+;;         "Notebook successfully created at " notebook-name ".ipynb"))))
+;;   )
+
 ;;; left blank on purpose

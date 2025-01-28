@@ -139,6 +139,18 @@
         (kill-buffer))))
   )
 
+;;;; my/replace-latex-delimiters-with-dollar
+
+(defun my/replace-latex-delimiters-with-dollar ()
+  "현재 버퍼에서 \\[와 \\]를 $로 바꿉니다."
+  (interactive)
+  (goto-char (point-min))
+  (while (search-forward "\\[" nil t)
+    (replace-match "$$" nil nil))
+  (goto-char (point-min))
+  (while (search-forward "\\]" nil t)
+    (replace-match "$$" nil nil)))
+
 ;;; kmacro
 
 ;;;; mirror-buffer

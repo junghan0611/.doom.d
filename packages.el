@@ -355,12 +355,14 @@
   (package! clay))
 ;; (package! clojure-essential-ref-nov)
 
-
 (unpin! elisp-demos)
 (package! elisp-demos :recipe (:host github :repo "junghan0611/elisp-demos" :branch "ko")) ;; https://github.com/junghan0611/elisp-demos
 
 (package! exercism)
 (package! bats-mode)
+
+(when (modulep! :lang python)
+  (package! code-cells))
 
 ;; Use the latest available packages for Clojure
 ;; - cider, clojure-mode
@@ -417,6 +419,8 @@
 (package! tabgo)
 
 ;;;; Misc
+
+(package! command-log-mode)
 (package! atomic-chrome)
 (package! empv) ;; TODO mpv frontend
 (package! djvu)
