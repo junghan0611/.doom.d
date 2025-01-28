@@ -3420,13 +3420,13 @@ ${content}"))
   ;; Translation	1.3
   ;; Creative Writing / Poetry	1.5
   ;; https://api-docs.deepseek.com/quick_start/parameter_settings
-  ;; (gptel-make-openai "DeepSeek"
-  ;;   :host "api.deepseek.com"
-  ;;   :key user-deepseek-api-key
-  ;;   :endpoint "/chat/completions"
-  ;;   :stream t
-  ;;   :request-params '(:temperature 1.0) ; 1.0 default
-  ;;   :models '(deepseek-chat deepseek-reasoner))
+  (gptel-make-openai "DeepSeek"
+    :host "api.deepseek.com"
+    :key user-deepseek-api-key
+    :endpoint "/chat/completions"
+    :stream t
+    ;; :request-params '(:temperature 1.0) ; 1.0 default
+    :models '(deepseek-chat deepseek-reasoner))
 
   ;; Upstage: solar
   ;; https://developers.upstage.ai/docs/apis/chat

@@ -453,11 +453,11 @@
 (unless IS-TERMUX
   ;; This is an emacs package which supports OWL Manchester Notation https://www.w3.org/TR/owl2-manchester-syntax/
   ;; (package! omn-mode)
-  ;; (package! elot
-  ;;   :recipe (:host github :repo "junghan0611/elot"  :branch "ko" :files("elot-package/*")))
+  ;; (package! elot :recipe (:host github :repo "junghan0611/elot"  :branch "ko" :files("elot-package/*")))
   ;; "johanwk/elot"
-  (package! elot :recipe (:local-repo "local/elot" :branch "ko" :files("elot-package/*")))
+  ;; (package! elot :recipe (:local-repo "local/elot" :branch "ko" :files("elot-package/*")))
 
+  ;; (package! pylookup :recipe (:host github :repo "junghan0611/pylookup"))
   (package! pylookup :recipe (:local-repo "local/pylookup")))
 
 ;; (package! paw :recipe (:local-repo "local/paw" :branch "ko" :files ("*")))

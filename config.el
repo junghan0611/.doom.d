@@ -876,11 +876,11 @@
 
 ;;; :custom 'Local' Packages
 
-;;;; elot : literate ontology tools
+;;;; TODO elot : literate ontology tools
 
 ;; (add-to-list 'load-path "~/sync/emacs/forked-pkgs/elot")
-(use-package! elot
-  :defer t)
+;; (use-package! elot ; better
+;;   :defer t)
 
 ;;;; TODO emacs-bluesky
 

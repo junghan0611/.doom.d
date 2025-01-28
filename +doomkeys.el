@@ -1602,22 +1602,18 @@
       ;; "C-S-SPC" #'embark-preview+
       )
 
-;;;; DONT gptel - pbalille
+;;;; gptel - fix transient menu
 
-;; (after! gptel
-;;   ;; the only way I found for redefining the broken RET key of the menu to C-RET
-;;   ;; the problem is that gptel-menu is autoloaded,
-;;   ;; it has to be called once before the rebinding is possible.
-;;   ;; (defun pb-gptel-change-return-key-in-menu ()
-;;   ;;   (transient-suffix-put 'gptel-menu (kbd "RET") :key "C-<return>")
-;;   ;;   (advice-remove #'gptel-menu #'pb-gptel-change-return-key-in-menu))
-;;   ;; (advice-add #'gptel-menu :after #'pb-gptel-change-return-key-in-menu)
+(after! gptel
+  (transient-append-suffix 'gptel-menu "k"
+    '("q" "quit" transient-quit-one))
 
-;;   ;; ~/man/dotsamples/doom/pbaille-dot-doom-symex/bindings.el
-;;   ;; (map! :ni "s-g b" #'gptel
-;;   ;;       ;; :ni "s-g n" #'pb-gptel_new-session-above
-;;   ;;       :ni "s-g g" #'gptel-menu)
-;;   )
+  ;; Doom binds ~RET~ in Org mode to =+org/dwim-at-point=, which appears to conflict with gptel's transient menu bindings for some reason.
+  ;; Two solutions:
+  ;; - Press ~C-m~ instead of the return key. evil-ret
+  ;; - Change the send key from return to a key of your choice:
+  (transient-suffix-put 'gptel-menu (kbd "RET") :key "M-RET")
+  )
 
 ;;; TODO ctl-x maps
 
