@@ -390,8 +390,9 @@
        ;; `(keycast-command ((,c :inherit default :height 0.9)))
        )
       )
-    (when (locate-library "spacious-padding")
-      (spacious-padding-mode +1))
+    (when (display-graphic-p) ; gui
+      (when (locate-library "spacious-padding")
+        (spacious-padding-mode +1)))
     )
   (add-hook 'modus-themes-post-load-hook #'my/modus-themes-custom-faces)
   ) ;; end-of use-package
@@ -495,8 +496,10 @@
               ("XXX+" . ,red-warmer)
               ("REVIEW" . ,red)
               ("DEPRECATED" . ,yellow))))
-    (when (locate-library "spacious-padding")
-      (spacious-padding-mode +1))
+
+    (when (display-graphic-p) ; gui
+      (when (locate-library "spacious-padding")
+        (spacious-padding-mode +1)))
     ;; (setq ring-bell-function 'jf/pulse)
     )
   (add-hook 'ef-themes-post-load-hook #'my/ef-themes-custom-faces))
@@ -509,7 +512,7 @@
 ;;;; spacious-padding
 
 (use-package! spacious-padding
-  ;; :if window-system
+  :if window-system ; important
   :hook (server-after-make-frame . spacious-padding-mode)
   :init
   ;; Read the doc string of `spacious-padding-subtle-mode-line' as it is very flexible.
@@ -1025,6 +1028,11 @@
      ("C-<tab>" . tab-line-switch-to-next-tab))
     :config
     (global-tab-line-mode 1)
+    (setq tab-line-close-tab-function #'kill-buffer)
+    (setq tab-line-tab-name-truncated-max 26) ; default 20
+    (setq tab-line-tab-name-ellipsis "…")
+    (setq tab-line-tab-name-function
+          #'tab-line-tab-name-truncated-buffer)
     (setq
      tab-line-new-button-show nil
      tab-line-close-button-show nil))
@@ -1336,54 +1344,53 @@
 ;;                 (require 'dired+)
 ;;                 (diredp-do-apply/eval-marked 'org-hugo-export-wim-to-md '(4)))))
 
-;;; Math and Latex
+;;; Latex Preview for math symbol
 
 ;;;; math-preview
 
 (use-package! math-preview)
 
-;;;; TODO org-fragtog
+;;;; org-fragtog
 
 ;; Automatically toggle Org mode LaTeX fragment previews as the cursor enters and exits them
 (use-package! org-fragtog
   :after org
   :hook (org-mode . org-fragtog-mode)
   ;; :hook (markdown-mode . org-fragtog-mode)
-  :init
-  (progn ;; for org-fragtog-mode for markdown-mode
-    ;; 2025-01-24 disable for markdown-mode, 2024-06-27 안쓰는게 나은듯
-    ;; The new org-data element provides properties from top-level property drawer,
-    (setq org-element-use-cache nil) ; default t
-    ;; Element cache persists across Emacs sessions
-    (setq org-element-cache-persistent nil) ; default t
-    (add-to-list 'warning-suppress-types '(org-element))
-    )
+  ;; :init
+  ;; (progn ;; for org-fragtog-mode for markdown-mode
+  ;;   ;; 2025-01-24 disable for markdown-mode, 2024-06-27 안쓰는게 나은듯
+  ;;   ;; The new org-data element provides properties from top-level property drawer,
+  ;;   (setq org-element-use-cache nil) ; default t
+  ;;   ;; Element cache persists across Emacs sessions
+  ;;   (setq org-element-cache-persistent nil) ; default t
+  ;;   (add-to-list 'warning-suppress-types '(org-element))
+  ;;   )
 
-  (setq org-fragtog-preview-delay 0.2)
+  ;; (setq org-fragtog-preview-delay 0.2)
   ;; (setq org-startup-with-latex-preview t) ; doom nil
-  (setq org-highlight-latex-and-related '(native))
+  ;; (setq org-highlight-latex-and-related '(native)) ; doom nil
   ;; (setq org-highlight-latex-and-related '(native script entities)) ; doom org +pretty
   )
 
+;;;; DONT xelatex and dvisvgm
 
-;;;; TODO change latex-compiler for xelatex and dvisvgm
-
-;; tshu
-(after! ox-latex
-  (setq org-latex-compiler "xelatex"
-        org-latex-pdf-process '("latexmk -f -pdf -%latex -interaction=nonstopmode -output-directory=%o %f"
-                                "latexmk -c -bibtex")
-        org-latex-prefer-user-labels t
-        org-preview-latex-default-process 'dvisvgm
-        ;; org-preview-latex-image-directory (no-littering-expand-var-file-name "ltximg/")
-        org-preview-latex-process-alist
-        '((dvisvgm :programs ("xelatex" "dvisvgm")
-           :description "xdv > svg"
-           :message "you need to install the programs: xelatex and dvisvgm."
-           :image-input-type "xdv" :image-output-type "svg" :image-size-adjust (1.7 . 1.5)
-           :latex-compiler ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
-           :image-converter ("dvisvgm %f --no-fonts --exact-bbox --scale=%S --output=%O"))))
-  )
+;; from tshu
+;; (after! ox-latex
+;;   (setq org-latex-compiler "xelatex"
+;;         org-latex-pdf-process '("latexmk -f -pdf -%latex -interaction=nonstopmode -output-directory=%o %f"
+;;                                 "latexmk -c -bibtex")
+;;         org-latex-prefer-user-labels t
+;;         org-preview-latex-default-process 'dvisvgm
+;;         ;; org-preview-latex-image-directory (no-littering-expand-var-file-name "ltximg/")
+;;         org-preview-latex-process-alist
+;;         '((dvisvgm :programs ("xelatex" "dvisvgm")
+;;            :description "xdv > svg"
+;;            :message "you need to install the programs: xelatex and dvisvgm."
+;;            :image-input-type "xdv" :image-output-type "svg" :image-size-adjust (1.7 . 1.5)
+;;            :latex-compiler ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
+;;            :image-converter ("dvisvgm %f --no-fonts --exact-bbox --scale=%S --output=%O"))))
+;;   )
 
 ;;;; DONT org-latex-preview
 
@@ -2200,8 +2207,12 @@ the next chapter, open Dired so you can find it manually."
   ;; (remove-hook 'marginalia-mode-hook 'nerd-icons-completion-marginalia-setup)
   )
 
-;;;; jupyter - repl
+;;;; :lang python - ipython jupyter
 
+;; The arguments passed to the [[https://ipython.org/][ipython]] or [[https://jupyter.org/][jupyter]] shells can be altered through
+;; these two variables:
+;; (setq +python-ipython-repl-args '("-i" "--simple-prompt" "--no-color-info"))
+;; (setq +python-jupyter-repl-args '("--simple-prompt"))
 ;; (setq jupyter-repl-echo-eval-p t)
 
 ;;;; recent-rgrep
@@ -2210,7 +2221,6 @@ the next chapter, open Dired so you can find it manually."
 (use-package! recent-rgrep
   :defer t
   :commands (recent-rgrep))
-;; (keymap-global-set "M-F" #'recent-rgrep)
 
 ;;;; emacs-everywhere
 

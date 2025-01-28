@@ -116,12 +116,12 @@
  input-method-verbose-flag nil
  input-method-highlight-flag nil)
 
-;; (global-set-key (kbd "<S-SPC>") 'toggle-input-method)
 ;; (global-set-key (kbd "<Alt_R>") 'toggle-input-method)
+(global-set-key (kbd "<S-SPC>") 'toggle-input-method)
 (global-set-key (kbd "<Hangul>") 'toggle-input-method)
 (global-set-key (kbd "<menu>") 'toggle-input-method) ;; caps lock as <menu>
 (add-hook 'context-menu-mode-hook '(lambda () (define-key context-menu-mode-map (kbd "<menu>") #'toggle-input-method)))
-(global-unset-key (kbd "S-SPC"))
+;; (global-unset-key (kbd "S-SPC"))
 
 ;; +------------+------------+
 ;; | 일이삼사오 | 일이삼사오 |
@@ -269,7 +269,7 @@
   (setq evil-want-C-u-scroll t) ; default t
 
   ;; use C-i / C-o  evil-jump-backward/forward
-  ;; (setq evil-want-C-i-jump t) ; default nil
+  (setq evil-want-C-i-jump t) ; default nil
 
   ;;  /home/junghan/sync/man/dotsamples/vanilla/mpereira-dotfiles-evil-clojure/configuration.org
   ;; FIXME: this correctly causes '*' to match on whole symbols (e.g., on a
@@ -365,7 +365,7 @@
    (lambda (mode)
      (let ((keymap (intern (format "evil-%s-state-map" mode))))
        (define-key (symbol-value keymap) (kbd "<Hangul>") #'block-toggle-input-method)
-       ;; (define-key (symbol-value keymap) (kbd "S-SPC") #'block-toggle-input-method)
+       (define-key (symbol-value keymap) (kbd "S-SPC") #'block-toggle-input-method)
        (define-key (symbol-value keymap) (kbd "<menu>") #'block-toggle-input-method)))
    '(motion normal visual))
 
@@ -3050,10 +3050,10 @@ ${content}"))
   (setq denote-org-store-link-to-heading nil ; default t
         denote-rename-confirmations nil ; default '(rewrite-front-matter modify-file-name)
         denote-save-buffers t) ; default nil
+
   (add-hook 'org-mode-hook (lambda ()
-                             ;; (setq denote-rename-buffer-backlinks-indicator " @")
+                             (setq denote-rename-buffer-backlinks-indicator "¶")
                              (setq denote-rename-buffer-format "%t%b")
-                             (setq denote-rename-buffer-backlinks-indicator "")
                              (denote-rename-buffer-mode +1)))
   :config
   (set-register ?n (cons 'file (concat org-directory "notes")))

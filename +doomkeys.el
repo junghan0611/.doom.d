@@ -693,15 +693,21 @@
       :m "3" #'evil-ex-search-word-backward ; default #
       :m "4" #'evil-end-of-line ; default $
       :m "0" #'evil-beginning-of-line
+
+      ;; :m "C-i" #'evil-jump-forward ;; evil-want-C-i-jump - evil-maps.el
+      :n "g ]" #'evil-jump-forward
+      :n "g [" #'evil-jump-backward
       )
+
+;;; Major-Mode Leader Keybindings
+
+;;;; minibuffer-mode-map
 
 (map! (:map minibuffer-mode-map
             "M-l" #'sp-forward-slurp-sexp
             "M-h" #'sp-forward-barf-sexp)
       (:map minibuffer-local-map
             "C-c C-s" #'embark-collect))
-
-;;; Major-Mode Leader Keybindings
 
 ;;;; Doom's org-mode-map
 
