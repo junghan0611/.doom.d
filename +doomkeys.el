@@ -235,18 +235,20 @@
 
 (map! :leader
       (:prefix "h"
-               "a" #'helpful-at-point
-               "f" #'helpful-function
-               "h" #'helpful-symbol
-               "p" nil
-               (:prefix ("p" . "packages")
-                        "l" #'list-packages
-                        "f" #'find-library-other-window
-                        "p" #'doom/help-packages
-                        "d" #'doom/describe-package)
-               "1" #'find-function-other-window
-               "v" #'helpful-variable
-               "j" #'info-display-manual))
+       "a" #'helpful-at-point
+       "f" #'helpful-function
+       "h" #'helpful-symbol
+       "t" nil ; consult-theme
+       :desc "themes-map" "t" ews-modus-themes-map
+       "p" nil
+       (:prefix ("p" . "packages")
+                "l" #'list-packages
+                "f" #'find-library-other-window
+                "p" #'doom/help-packages
+                "d" #'doom/describe-package)
+       "1" #'find-function-other-window
+       "v" #'helpful-variable
+       "j" #'info-display-manual))
 
 ;;;; 'k' lisp
 
@@ -548,11 +550,11 @@
 (map! :leader
       (:prefix ("o" . "open")
        ;; :desc "Side-journal-toggle" :n "TAB" #'side-journal-toggle-notes
-       :desc "org-journal-open-today" :n "SPC" #'org-journal-open-current-journal-file
+       :desc "open journal today" :n "SPC" #'org-journal-open-current-journal-file
        :desc "elfeed" "l" #'elfeed
        ))
 
-;;;; OKAY 'j' junghanacs hotkey
+;;;; 'j' junghanacs hotkey
 
 (map! :leader
       (:prefix ("j" . "junghanacs")
@@ -619,7 +621,6 @@
 
        ;; :desc "ews-note-map"                  "n" ews-note-map
        :desc "ews-denote-map"                  "n" ews-denote-map
-       ;; :desc "org-roam-node-find"            "N" #'org-roam-node-find
 
        ;; :desc "my/denote-random-note"        "?" #'my/denote-random-note
        ;; :desc "org-roam-random-no-dates"        "?" #'ash/org-roam-node-random-no-dates
@@ -631,32 +632,26 @@
   (map! :leader
         :desc "consult-notes" "N" 'consult-notes))
 
-;;;; 'RET' EWS
-
-  ;; (map! :leader
-  ;;       "RET" nil
-  ;;       :desc "EWS-map" "RET" ews-map)
-
 ;;;; DONT SPC 1-4 window
 
-  ;; (map! :leader
-  ;;       :desc "select-window 1" "1" #'winum-select-window-1
-  ;;       :desc "select-window 2" "2" #'winum-select-window-2
-  ;;       :desc "select-window 3" "3" #'winum-select-window-3
-  ;;       :desc "select-window 4" "4" #'winum-select-window-4)
+;; (map! :leader
+;;       :desc "select-window 1" "1" #'winum-select-window-1
+;;       :desc "select-window 2" "2" #'winum-select-window-2
+;;       :desc "select-window 3" "3" #'winum-select-window-3
+;;       :desc "select-window 4" "4" #'winum-select-window-4)
 
 ;;;; TODO '0' LLM - gptel
 
-  (map! :leader
-        "0" nil
-        (:prefix ("0" . "llm/gptel")
-         ;; "0" #'+gpt-dwim-current-buffer
-         "0" #'gptel-mode
-         "t" #'gptel-org-toggle-branching-context
-         :desc "gptel-send: default" :n "l" (cmd! (cashpw/gptel-send (alist-get 'default gptel-directives)))
-         :desc "gptel-send: chain-of-thought" :n "c" (cmd! (cashpw/gptel-send (alist-get 'chain-of-thought gptel-directives)))
-         :desc "gptel-send: follow-up" :n "f" (cmd! (cashpw/gptel-send (alist-get 'follow-up gptel-directives))))
-        )
+(map! :leader
+      "0" nil
+      (:prefix ("0" . "llm/gptel")
+       ;; "0" #'+gpt-dwim-current-buffer
+       "0" #'gptel-mode
+       "t" #'gptel-org-toggle-branching-context
+       :desc "gptel-send: default" :n "l" (cmd! (cashpw/gptel-send (alist-get 'default gptel-directives)))
+       :desc "gptel-send: chain-of-thought" :n "c" (cmd! (cashpw/gptel-send (alist-get 'chain-of-thought gptel-directives)))
+       :desc "gptel-send: follow-up" :n "f" (cmd! (cashpw/gptel-send (alist-get 'follow-up gptel-directives))))
+      )
 
 ;;; Custom EVIL Keys
 
@@ -1619,6 +1614,7 @@
   ;; - Change the send key from return to a key of your choice:
   (transient-suffix-put 'gptel-menu (kbd "RET") :key "M-RET")
   )
+
 
 ;;; TODO ctl-x maps
 

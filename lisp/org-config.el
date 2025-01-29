@@ -233,7 +233,7 @@
 ;;;; imenu ellipsis bookmark
 
 (setq org-capture-bookmark nil)
-(setq org-imenu-depth 2) ; doom 6, default 2
+(setq org-imenu-depth 4) ; doom 6, default 2
 
 ;; Search on https://www.compart.com/en/unicode/U+25BF
 ;; Unicode Character “◉” (U+25C9)

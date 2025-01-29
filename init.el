@@ -127,8 +127,8 @@
        :tools
        ;; ansible
        biblio ;; Writes a PhD for you (citation needed)
-       (:unless IS-TERMUX (debugger)) ; FIXME stepping through code, to help you add bugs
-       (:unless IS-TERMUX (direnv))
+       debugger ; FIXME stepping through code, to help you add bugs
+       direnv
 
        ;; (docker +lsp)
        ;; editorconfig      ; let someone else argue about tabs vs spaces

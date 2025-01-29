@@ -983,6 +983,20 @@
 
 ;;; :checkers
 
+;;;; Eldoc
+
+(progn
+  (require 'eldoc)
+  (setq eldoc-idle-delay 0)
+  (setq eldoc-echo-area-use-multiline-p nil) ;  important - default 'truncate-sym-name-if-fit
+  (setq eldoc-echo-area-display-truncation-message nil)
+  (setq eldoc-echo-area-prefer-doc-buffer t) ; default nil - alway show echo-area
+  )
+
+;; =M-x eldoc-doc-buffer= 함수 호출로 표시하는 buffer 크기 조절
+;; (set-popup-rule! "^\\*eldoc for" :size 0.2 :vslot -1)
+;; eldoc-display-functions '(eldoc-display-in-echo-area eldoc-display-in-buffer)
+
 ;;;; OKAY Flycheck
 
 (after! flycheck
@@ -1000,13 +1014,6 @@
 ;;     (ignore-errors
 ;;       (define-key flycheck-mode-map flycheck-keymap-prefix nil))
 ;;     (setq flycheck-keymap-prefix nil)
-
-;;     ;; =M-x eldoc-doc-buffer= 함수 호출로 표시하는 buffer 크기 조절
-;;     ;; (set-popup-rule! "^\\*eldoc for" :size 0.2 :vslot -1)
-
-;;     (setq eldoc-echo-area-use-multiline-p nil) ;  important - default 'truncate-sym-name-if-fit
-;;     ;; eldoc-echo-area-prefer-doc-buffer t ; default nil - alway show echo-area
-;;     ;; ;; eldoc-display-functions '(eldoc-display-in-echo-area eldoc-display-in-buffer)
 
 ;;     (add-hook! flycheck-mode
 ;;       (defun disable-flycheck-popup-buffer ()
@@ -4864,7 +4871,12 @@ Suitable for `imenu-create-index-function'."
 ;;   (setq ahs-idle-interval 1.0) ; default 1.0
 ;;   (add-hook 'prog-mode-hook #'auto-highlight-symbol-mode))
 
-;;;; DONT breadcrumb
+;;;; breadcrumb
+
+(use-package! breadcrumb
+  :defer 2
+  :hook
+  (eglot-connect . breadcrumb-mode))
 
 ;; (use-package! breadcrumb
 ;;   :defer 1

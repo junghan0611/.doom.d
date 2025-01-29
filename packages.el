@@ -137,6 +137,7 @@
 
 ;;;; :ui - visual
 
+(package! pulsar)
 (package! transpose-frame)
 (package! hydra)
 (package! pretty-hydra)
@@ -160,7 +161,7 @@
 (package! fontaine)
 (package! golden-ratio)
 (package! mode-minder :recipe (:host github :repo "jdtsmith/mode-minder"))
-;; (package! breadcrumb)
+(package! breadcrumb)
 (package! celestial-mode-line)
 (package! lin)
 (package! nerd-icons-dired)
@@ -503,8 +504,9 @@
 ;; (package! org-linenote) ; require lsp-mode
 
 ;;;;; misc
+
 (package! fireplace)
 (package! snow)
-;; (package! selectric-mode)
+(package! selectric-mode)
 
 ;;; end-of file
