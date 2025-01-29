@@ -56,6 +56,15 @@
 (package! consult-omni :recipe (:host github :repo "armindarvish/consult-omni" :files (:defaults "sources/*.el")) :pin "f0c5f07b9ffe25d0deca42b650f6e0c1c85e9759") ;; Jan 4, 2025
 (package! consult-gh :recipe (:host github :repo "armindarvish/consult-gh" :files ("*.el")) :pin "1acaf7b2a5fe8a8be19f83f5b20bb2bc377d1fc8") ; 2.0
 
+;;; use built-in instead on emacs 30
+
+(when (eq emacs-major-version 30)
+  (package! org :built-in t) ; 9.7.11
+  (package! use-package :built-in t)
+  (package! eglot :built-in t)
+  (package! flymake :built-in t)
+  (package! which-key :built-in t))
+
 ;;; doom-disabled-packages
 
 (disable-packages!
@@ -78,7 +87,6 @@
  )
 
 ;; (package! paredit :disable t) ; clojure module
-
 ;; (package! flycheck-plantuml :disable t)
 
 (package! emojify :disable t) ; from mastodon
@@ -391,7 +399,6 @@
 
 ;;;; Reading
 
-(package! eww :built-in t)
 (package! tp)
 ;; (package! mastodon)
 (package! adoc-mode)

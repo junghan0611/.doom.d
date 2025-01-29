@@ -1283,7 +1283,7 @@
      ("l" "forward-char" evil-forward-char :transient t)
      ;; ("%" "jump-items" evilmi-jump-items :transient t) ; evil-matchit
      ("%" "evil-jump-item" evil-jump-item :transient t)
-     ("M-o" "embark-action" embark-act)
+     ("M-o" "embark-act" embark-act)
      (">" "indent-rigidly" indent-rigidly)
      ("~" "invert-char" evil-invert-char)
      ("SPC" "SPC" (lambda () (interactive) (funcall (general-simulate-key "SPC"))))])

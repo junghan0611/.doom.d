@@ -498,6 +498,7 @@
       ;; ("*EKG Edit.*\\*" :slot 3 :side bottom :size 0.4 :select t :quit nil) ; jh
       ("*Go-Translate*" :side bottom :size 0.4 :select t :quit t) ; jh
       ("\\`\\*evil-owl\\*\\'" :side bottom :ttl t :height 20 :quit t)
+      ;; ("\\*Embark Actions\\*" :side bottom :ttl t :height 20 :quit t) ; mixed
       ;; ("^\\*info\\*$" :slot 2 :vslot 2 :size 0.45 :select t))
       ("^\\*info\\*$"
        :slot 2
@@ -2793,19 +2794,20 @@ ${content}"))
       map))
   ;; (define-key global-map (kbd "M-g M-t") 'tmr-action-map)
 
-  (with-eval-after-load 'embark
-    (add-to-list 'embark-keymap-alist '(tmr-timer . tmr-action-map))
-    (cl-loop
-     for
-     cmd
-     the
-     key-bindings
-     of
-     tmr-action-map
-     if
-     (commandp cmd)
-     do
-     (add-to-list 'embark-post-action-hooks (list cmd 'embark--restart)))))
+  ;; (with-eval-after-load 'embark
+  ;;   (add-to-list 'embark-keymap-alist '(tmr-timer . tmr-action-map))
+  ;;   (cl-loop
+  ;;    for
+  ;;    cmd
+  ;;    the
+  ;;    key-bindings
+  ;;    of
+  ;;    tmr-action-map
+  ;;    if
+  ;;    (commandp cmd)
+  ;;    do
+  ;;    (add-to-list 'embark-post-action-hooks (list cmd 'embark--restart))))
+  )
 
 ;;;;; ox-leanpub
 

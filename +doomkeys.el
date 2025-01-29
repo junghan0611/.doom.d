@@ -677,7 +677,6 @@
       ;; :i "TAB" #'completion-at-point ; jump out of
       ;; (:when (featurep :system 'linux)
       ;;   :i "C-M-S-s-y" #'nerd-dictation-toggle)
-
       ;; SPC g [ / ]
       :n "[ g" #'+vc-gutter/previous-hunk ; remap diff-hl-previous-hunk
       :n "] g" #'+vc-gutter/next-hunk ; remap diff-hl-next-hunk
@@ -691,6 +690,7 @@
       :n "g ]" #'evil-jump-forward
       :n "g [" #'evil-jump-backward
       :n "g RET" #'tabgo
+
       )
 
 ;;; Major-Mode Leader Keybindings
