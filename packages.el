@@ -374,7 +374,6 @@
 (package! aggressive-indent)
 
 ;; (package! bats-mode) ; shell-scripts
-;; (package! code-cells)
 
 ;; (package! hy-mode :recipe (:host github :repo "jethack23/hy-mode"))
 ;; (package! geiser)
@@ -498,11 +497,14 @@
 ;; (package! google-this)
 (package! webpaste)
 ;; (package! password-store-menu)
-;; (package! fireplace)
-;; (package! snow)
 
 (package! image-slicing :recipe (:host github :repo "ginqi7/image-slicing"))
 (package! org-sliced-images)
 ;; (package! org-linenote) ; require lsp-mode
+
+;;;;; misc
+(package! fireplace)
+(package! snow)
+;; (package! selectric-mode)
 
 ;;; end-of file

@@ -3351,7 +3351,7 @@ ${content}"))
         (insert (format "#+date: %s\n" (format-time-string "[%Y-%m-%d %a %H:%M]")))
         (insert (format "#+identifier: %s\n" suffix))
         (insert (format "#+export_file_name: %s.md\n" suffix))
-        (insert (format "#+HUGO_SECTION: notes\n\n"))
+        ;; (insert (format "#+HUGO_SECTION: notes\n\n"))
 
         ;; move to bottom line
         (insert (format "* #Related-Notes\n-\n#+print_bibliography:\n"))

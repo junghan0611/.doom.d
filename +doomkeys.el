@@ -635,7 +635,7 @@
 
   ;; (map! :leader
   ;;       "RET" nil
-  ;;       :desc "PKM" "RET" ews-map)
+  ;;       :desc "EWS-map" "RET" ews-map)
 
 ;;;; DONT SPC 1-4 window
 

@@ -1762,14 +1762,6 @@ window."
       )
     ))
 
-;;; unless is-termux
-
-;; (unless IS-TERMUX
-;;   (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map))
-
-;; (setq projectile-project-search-path '("~/workspace/" "~/workspace/github" ("~/Exercism/emacs-lisp/" . 1)))
-;; (define-key dired-mode-map (kbd "<return>") 'dired-find-file-other-window)
-
 ;;; provide
 
 (provide 'keys)
