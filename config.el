@@ -1435,6 +1435,7 @@
     (setq org-element-use-cache nil) ; default t
     ;; Element cache persists across Emacs sessions
     (setq org-element-cache-persistent nil) ; default t
+    ;; org-element-with-disabled-cache
     (add-to-list 'warning-suppress-types '(org-element))
     )
 

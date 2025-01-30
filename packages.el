@@ -59,7 +59,6 @@
 ;;; use built-in instead on emacs 30
 
 (when (eq emacs-major-version 30)
-  (package! org :built-in t) ; 9.7.11
   (package! use-package :built-in t)
   (package! eglot :built-in t)
   (package! flymake :built-in t)
