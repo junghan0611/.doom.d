@@ -308,8 +308,7 @@
 (package! aider :recipe (:host github :repo "tninja/aider.el" :files ("aider.el" "aider-doom.el")))
 
 (package! llm)
-;; (package! kagi)
-;; (package! org-ai)
+(package! kagi)
 
 (package! chatgpt-shell)
 (package! ob-chatgpt-shell)
@@ -342,6 +341,7 @@
 
 ;; git@github.com:ziova/wolfram.el.git
 ;; (package! wolfram :recipe (:host github :repo "ziova/wolfram.el"))
+;; (package! org-ai)
 
 ;;;; :lang
 

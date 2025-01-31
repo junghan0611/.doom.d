@@ -611,19 +611,24 @@
                             ;; ("@family" . ?F)
                             ;; (:endgroup) ;; Status
                             (:startgroup) ;; Action
-                            ("later" . ?l)
-                            ("now" . ?n)
-                            ("waiting" . ?w)
-                            ("hold" . ?h)
+                            ("LATER" . ?l)
+                            ("NOW" . ?n)
+                            ("WAITING" . ?w)
+                            ("HOLD" . ?h)
                             (:endgroup)
-                            ("important" . ?i) ; 별도 처리
+                            ("IMPORTANT" . ?i) ; 별도 처리
                             ;; ("crypt" . ?E)
-                            ("note" . ?o)
+                            ;; ("NOTE" . ?o)
                             ("noexport" . ?x)
                             ("fulltext" . ?f)
                             ("nonum" . ?u)
                             ("ATTACH" . ?a)
-                            ;; ("latest" . ?t) ;; latest version
+                            ("LATEST" . ?t) ;; latest version
+                            ("WORKLOG" . ?o)
+                            ("2022" . ?2) ;; 2022
+                            ("2023" . ?3) ;; 2023
+                            ("2024" . ?4) ;; 2024
+                            ("2025" . ?5) ;; 2025
                             )))
 
 (add-to-list 'org-tags-exclude-from-inheritance "projects") ; projects 왜 구분했었지?

@@ -444,7 +444,7 @@
 
 (map! :leader
       (:prefix "i"
-       :desc "time-stamp" "0" #'time-stamp
+       :desc "time-stamp" "1" #'time-stamp
        :desc "hl-todo-insert" "t" #'hl-todo-insert
        :desc "add-global-abbrev" "a" #'add-global-abbrev
        :desc "list-unicode-display" "U" #'list-unicode-display
@@ -695,6 +695,13 @@
 
 ;;; Major-Mode Leader Keybindings
 
+;;;; TODO C-c M-a - M-a Bindings
+
+(map! (:map prog-mode-map
+            "C-c M-a" #'aider-transient-menu)
+      (:map text-mode-map
+            "C-c M-a" #'casual-avy-tmenu))
+
 ;;;; minibuffer-mode-map
 
 (map! (:map minibuffer-mode-map
@@ -939,7 +946,7 @@
         :desc "@org-noter-map" "o" ews-org-noter-map
 
         :desc "org-set-effot" "E" #'org-set-effort
-        :desc "time-stamp" "!" #'time-stamp
+        :desc "time-stamp" "1" #'time-stamp
         :desc "org-appear-mode" "8" #'org-appear-mode
         :desc "insert-inactive-timestamp" "9" #'bh/insert-inactive-timestamp
 
@@ -1614,7 +1621,6 @@
   ;; - Change the send key from return to a key of your choice:
   (transient-suffix-put 'gptel-menu (kbd "RET") :key "M-RET")
   )
-
 
 ;;; TODO ctl-x maps
 

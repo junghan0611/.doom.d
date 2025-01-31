@@ -3040,10 +3040,13 @@ ${content}"))
 #+identifier: %4$s
 #+export_file_name: %4$s.md
 #+description:
-#+HUGO_CATEGORIES: Noname
-#+filetags:   :fleeting:
+#+hugo_categories: Noname
+#+hugo_tags: \"fleeting\"
 
 #+print_bibliography:
+
+* History
+- %2$s
 
 \n")
 
@@ -3289,31 +3292,12 @@ ${content}"))
 
 ;;; :custom AI
 
-;;;; DONT whisper
-
-;; 데스크탑에서 사용해야 할 듯
-;; (use-package! whisper
-;;   :defer t
-;;   :config
-;;   ;; (setq whisper-language "ko") ; "en"
-;;   (setq
-;;    ;; whisper-install-directory "~/.config/emacs/.local/cache/"
-;;    ;; whisper-model "large-v3"
-;;    ;; whisper-model "medium"
-;;    ;; whisper-model "small"
-;;    whisper-model "base"
-;;    whisper-language "en"
-;;    whisper-translate nil
-;;    ;; whisper--ffmpeg-input-device "hw:0"
-;;    ;; whisper-return-cursor-to-start nil)
-;;    )
-;;   )
-
-;;;; gptel
+;;;; llmclient: gptel - llmclient
 
 ;;;;; use-package gptel
 
-;; /home/junghan/sync/man/dotsamples/vanilla/gregoryg-dotfiles-gpt/README.org
+;;;;;; 01 - gptel
+
 (use-package! gptel
   :defer 1
   :commands (gptel gptel-send)
@@ -3321,17 +3305,18 @@ ${content}"))
   (setq gptel-default-mode 'org-mode)
   ;; (setq gptel-temperature 0.5) ; gptel 1.0, Perplexity 0.2
 
+  ;; "^\\*gptel-ask\\*"
   ;; ("^\\*ChatGPT\\*" :size 84 :side right :modeline t :select t :quit nil :ttl t)
   (set-popup-rule! "^\\*ChatGPT\\*$" :side 'right :size 84 :vslot 100 :quit t) ; size 0.4
+  (set-popup-rule! "^\\*gptel\\*$" :side 'right :size 84 :vslot 100 :quit t) ; size 0.4
   ;; (set-popup-rule! "^\\*xAI\\*$" :side 'right :size 84 :vslot 100 :quit t) ; size 0.4
   :config
-  (setq gptel-model 'gemini-1.5-flash
-        gptel-backend (gptel-make-gemini "Gemini"
-                        :key user-gemini-api-key
-                        :stream t))
+
+;;;;;; 02 - default prompt
 
   ;; (setq gptel-model 'gpt-4o-mini) ; default 'gpt-4o-mini
   ;; (setq gptel-api-key user-openai-api-key)
+
   ;; (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "*** [ME]: ")
   ;; (setf (alist-get 'org-mode gptel-response-prefix-alist) "*** [AI]: ")
 
@@ -3339,6 +3324,8 @@ ${content}"))
    (cdr (assoc 'default gptel-directives))
    "You are a large language model living in Emacs and a helpful assistant. Respond concisely using Korean language.")
   (setq gptel--system-message (alist-get 'default gptel-directives))
+
+;;;;;; 03 - gptel-save-as-org-with-denote-metadata
 
 ;;;###autoload
   (defun gptel-save-as-org-with-denote-metadata ()
@@ -3353,6 +3340,7 @@ ${content}"))
         (unless (file-directory-p chat-dir)
           (make-directory chat-dir :parents))
         (write-file full-path)
+
         ;; Add metadata to the file
         (goto-char 0) (search-forward ":END:") (end-of-line)
         (insert (format "\n#+title: #LLM: %s\n" suffix))
@@ -3360,12 +3348,12 @@ ${content}"))
         (insert (format "#+date: %s\n" (format-time-string "[%Y-%m-%d %a %H:%M]")))
         (insert (format "#+identifier: %s\n" suffix))
         (insert (format "#+export_file_name: %s.md\n" suffix))
-        ;; (insert (format "#+HUGO_SECTION: notes\n\n"))
+        (insert (format "#+hugo_tags: \"fleeting\" \"llmlog\" \n\n"))
 
-        ;; move to bottom line
-        (insert (format "* #Related-Notes\n-\n#+print_bibliography:\n"))
+        ;; add bib and history
+        (insert (format "#+print_bibliography:\n* History\n- %s\n" (format-time-string "[%Y-%m-%d %a %H:%M]")))
+
         ;; heading-1 add backlink to today
-
         (insert (format "* [[denote:%s][%s]]\n"
                         ;; (format-time-string "%Y%m%dT000000")
                         (format-time-string "%Y%m%dT000000"
@@ -3376,6 +3364,8 @@ ${content}"))
         ;; heading-2 [SUM]:
         ;; (insert (format "** TODO [SUM]: \n"))
         (insert "\n"))))
+
+;;;;;; 04 - gptel-org-toggle-branching-context
 
   (with-eval-after-load 'gptel-org
     (defun gptel-org-toggle-branching-context ()
@@ -3395,26 +3385,29 @@ ${content}"))
           (alist-get 'markdown-mode gptel-prompt-prefix-alist) "#### ")
 
     (setq-default gptel-org-branching-context t))
-  ) ; end-of use-package gptel
 
-;;;;; configuration of gptel-models
+;;;;;; 05 - gptel backend configurations
 
-(after! gptel
-  ;; (gptel-make-gemini "Gemini" :key user-gemini-api-key :stream t)
+  ;; Google - Gemini
+  (gptel-make-gemini "Gemini" :key user-gemini-api-key :stream t)
 
-  (gptel-make-anthropic "Claude" :key user-claude-api-key :stream t)
+  ;; Anthropic - Claude
+  ;; (gptel-make-anthropic "Claude" :key user-claude-api-key :stream t)
 
+  ;; https://perplexity.mintlify.app/guides/pricing
   ;; Model	Context Length	Model Type
+  ;; sonar-reasoning	127k	Chat Completion
   ;; sonar-pro	200k	Chat Completion
   ;; sonar	127k	Chat Completion
-  ;; https://perplexity.mintlify.app/guides/pricing
-  (gptel-make-openai "Perplexity"
-    :host "api.perplexity.ai"
-    :key user-perplexity-api-key
-    :endpoint "/chat/completions"
-    :stream t
-    :request-params '(:temperature 0.2)
-    :models '(sonar sonar-pro))
+  (setq gptel-model 'sonar
+        gptel-backend
+        (gptel-make-perplexity "Perplexity"
+          :host "api.perplexity.ai"
+          :key user-perplexity-api-key
+          :endpoint "/chat/completions"
+          :stream t
+          :request-params '(:temperature 0.2) ; default 0.2
+          :models '(sonar sonar-pro sonar-reasoning)))
 
   ;; DeepSeek offers an OpenAI compatible API
   ;; The deepseek-chat model has been upgraded to DeepSeek-V3. deepseek-reasoner points to the new model DeepSeek-R1.
@@ -3430,7 +3423,7 @@ ${content}"))
     :key user-deepseek-api-key
     :endpoint "/chat/completions"
     :stream t
-    ;; :request-params '(:temperature 1.0) ; 1.0 default
+    :request-params '(:temperature 0.0) ; 1.0 default
     :models '(deepseek-chat deepseek-reasoner))
 
   ;; Upstage: solar
@@ -3440,6 +3433,7 @@ ${content}"))
     :key user-upstageai-api-key
     :endpoint "/chat/completions"
     :stream t
+    :request-params '(:temperature 0.5)
     :models '(solar-pro
               solar-mini))
 
@@ -3450,6 +3444,7 @@ ${content}"))
     :endpoint "/api/v1/chat/completions"
     :stream t
     :key user-openrouter-api-key
+    :request-params '(:temperature 0.5)
     :models '(
               google/gemini-flash-1.5
               anthropic/claude-3.5-sonnet
@@ -3457,6 +3452,9 @@ ${content}"))
               deepseek/deepseek-chat
               ;; qwen/qwen-2.5-7b-instruct
               ))
+
+  ;; Kagi’s FastGPT model and the Universal Summarizer are both supported. A couple of notes:
+  (gptel-make-kagi "Kagi" :stream t :key user-kagi-api-key)
 
   ;; Together.ai offers an OpenAI compatible API
   ;; (gptel-make-openai "TogetherAI"
@@ -3468,8 +3466,6 @@ ${content}"))
   ;;             "meta-llama/Llama-3.2-3B-Instruct-Turbo" ;; Meta Llama 3.2 3B Instruct Turbo $0.06
   ;;             ))
 
-  ;; Kagi’s FastGPT model and the Universal Summarizer are both supported. A couple of notes:
-  ;; (gptel-make-kagi "Kagi" :stream t :key user-kagi-api-key)
   ;; Github Models offers an OpenAI compatible API
   ;; https://docs.github.com/en/github-models/prototyping-with-ai-models
   ;; (gptel-make-openai "GithubModels" ; Any name you want
@@ -3487,7 +3483,8 @@ ${content}"))
   ;;   :stream t
   ;;   :models '(;; xAI now only offers `grok-beta` as of the time of this writing
   ;;             grok-beta))
-  ) ; end-of after
+
+  ) ; end-of gptel
 
 ;;;;; cashpwd - gptel-send with prompt
 
@@ -3622,55 +3619,9 @@ ${content}"))
     ) ; progn gptel-quick
   )
 
-;;;;; DONT gptel with citations
+;;;; llmclient: chatgpt-shell
 
-;; (after! gptel
-;;   ;;--------------------------------------------------------------------------------
-;;   ;; Workaround: show citations
-;;   ;;--------------------------------------------------------------------------------
-;;   (cl-defmethod gptel-curl--parse-stream ((_backend gptel-openai) _info)
-;;     (let* ((content-strs)
-;;            (citations-strs (or (plist-get _info :citations-strs) '()))  ;; 从 info 中获取 citations-strs
-;;            (citations-added (plist-get _info :citations-added)))  ;; 从 info 中获取 citations-added
-;;       (condition-case nil
-;;           (while (re-search-forward "^data:" nil t)
-;;             (save-match-data
-;;               (unless (looking-at " *\\[DONE\\]")
-;;                 (let* ((response (gptel--json-read))
-;;                        (delta (map-nested-elt
-;;                                response '(:choices 0 :delta)))
-;;                        (content (plist-get delta :content))
-;;                        (citations (plist-get response :citations)))
-;;                   (push content content-strs)
-;;                   (unless citations-added
-;;                     (when citations
-;;                       (setq citations-strs
-;;                             (let ((index 0))
-;;                               (concat "Citations:\n"
-;;                                       (mapconcat (lambda (citation)
-;;                                                    (setq index (1+ index))
-;;                                                    (format "[%d] %s \n" index citation))
-;;                                                  citations)
-;;                                       "\n")))
-;;                       (plist-put _info :citations-strs citations-strs)  ;; 更新 info 中的 citations-strs
-;;                       (plist-put _info :citations-added t)  ;; 更新 info 中的 citations-added
-;;                       ))
-;;                   ))))
-;;         (error
-;;          (goto-char (match-beginning 0))))
-;;       (apply #'concat (append (unless citations-added
-;;                                 (list citations-strs))
-;;                               (nreverse content-strs)
-;;                               ))))
-;;   )
-
-;;;; DONT DALL-E
-
-;; (setq dall-e-n 1)
-;; (setq dall-e-spinner-type 'flipping-line)
-;; (setq dall-e-display-width 256)
-
-;;;; chatgpt-shell
+;;;;; use-package chatgpt-shell
 
 (use-package! chatgpt-shell
   :defer t
@@ -3754,7 +3705,7 @@ ${content}"))
   ;;              ("M-." . dictionary-lookup-definition)))
   )
 
-;;;; Custom ChatGPT Functions
+;;;;; Custom ChatGPT Functions
 
 ;; Custom ChatGPT Functions
 (after! chatgpt-shell
@@ -3814,6 +3765,46 @@ ${content}"))
              ;; (my/org-breadcrumbs)
              ))))
 
+
+;;;; llmclient: aider.el
+
+(use-package! aider
+  :config
+  (setq aider-args '("--model" "deepseek/deepseek-chat"))
+  (setenv "ANTHROPIC_API_KEY" user-claude-api-key)
+  (setenv "OPENAI_API_KEY" user-openai-api-key)
+  (setenv "GEMINI_API_KEY" user-gemini-api-key)
+  (setenv "PERPLEXITYAI_API_KEY" user-perplexity-api-key)
+  (setenv "XAI_API_KEY" user-xai-api-key)
+  (setenv "DEEPSEEK_API_KEY" user-deepseek-api-key)
+  )
+
+;; aider --list-models deepseek
+;; deepseek/deepseek-chat, deepseek/deepseek-coder, deepseek/deepseek-reasoner
+
+;; Or use chatgpt model since it is most well known
+;; (setq aider-args '("--model" "gpt-4o-mini"))
+;; Or use gemini v2 model since it is very good and free
+;; (setq aider-args '("--model" "gemini/gemini-exp-1206"))
+;; Optional: Set a key binding for the transient menu
+;; (global-set-key (kbd "C-c a") 'aider-transient-menu)
+
+;;;; llmclient: kagi
+
+;; cecil
+;; agnes
+;; daphne
+;; muriel
+(use-package! kagi
+  :defer 3
+  :custom
+  (kagi-api-token user-kagi-api-key)
+  ;; (kagi-api-token (lambda () (password-store-get "Kagi/API")))
+  ;; Universal Summarizer settings
+  (kagi-summarizer-engine "cecil") ;; Formal, technical, analytical summary.
+  (kagi-summarizer-default-language "KO")
+  (kagi-summarizer-cache t))
+
 ;;;; DONT org-ai
 
 ;; (use-package! org-ai
@@ -3855,6 +3846,192 @@ ${content}"))
 
 ;;   ;; I've looked for this option for 1.5 hours
 ;;   (setq ellama-long-lines-length 100000)
+;;   )
+
+;;;; DONT whisper
+
+;; 데스크탑에서 사용해야 할 듯
+;; (use-package! whisper
+;;   :defer t
+;;   :config
+;;   ;; (setq whisper-language "ko") ; "en"
+;;   (setq
+;;    ;; whisper-install-directory "~/.config/emacs/.local/cache/"
+;;    ;; whisper-model "large-v3"
+;;    ;; whisper-model "medium"
+;;    ;; whisper-model "small"
+;;    whisper-model "base"
+;;    whisper-language "en"
+;;    whisper-translate nil
+;;    ;; whisper--ffmpeg-input-device "hw:0"
+;;    ;; whisper-return-cursor-to-start nil)
+;;    )
+;;   )
+
+;;;; DONT DALL-E
+
+;; (setq dall-e-n 1)
+;; (setq dall-e-spinner-type 'flipping-line)
+;; (setq dall-e-display-width 256)
+
+;;;; TODO llmclient: elysium with gptel
+
+;; (use-package! elysium :after gptel)
+
+;; "sq" #'elysium-query
+;; "so" #'elysium-keep-all-suggested-changes
+;; "sm" #'elysium-discard-all-suggested-changes
+;; "st" #'elysium-toggle-window)
+; '(insert normal) 'gptel-mode-map "C-<return>" #'elysium-query
+
+;;;; TODO llmclient: yap - gptel another
+
+;; vanilla/meain-dotfiles/emacs/.config/emacs/init.el
+;; (use-package! yap
+;;   :after (plz)
+;;   :config
+;;   (setq yap-service "openai")
+;;   (setq yap-model "gpt-4o-mini") ; start with something cheap
+
+;;   (setq yap-api-key:openai user-openai-api-key)
+;;   (setq yap-api-key:anthropic user-claude-api-key)
+
+;;   ;; (setq yap-respond-in-buffer nil)
+;;   ;; (setq yap-show-diff-before-rewrite t)
+;;   ;; (setq yap-log-requests "/Users/meain/.cache/yap")
+
+;;   ;; Add window rules for *yap-response* buffer so that it shows up at
+;;   ;; top of the frame
+;;   (add-to-list 'display-buffer-alist
+;;                `(,(rx bos "*yap-response*" eos)
+;;                  (display-buffer-reuse-window
+;;                   display-buffer-in-side-window)
+;;                  (reusable-frames . visible)
+;;                  (side            . top)
+;;                  (window-height   . 0.3)))
+
+;;   (defun meain/yap-set-default-model ()
+;;     (interactive)
+;;     (setq yap-service "openai")
+;;     (setq yap-model "gpt-4o-mini"))
+
+;;   ;; (global-unset-key (kbd "M-m"))
+;;   ;; (global-set-key (kbd "M-m M-c") 'yap-buffer-toggle)
+;;   ;; (global-set-key (kbd "M-m M-m") 'yap-prompt)
+;;   ;; (global-set-key (kbd "M-m M-r") 'yap-rewrite)
+;;   ;; (global-set-key (kbd "M-m M-w") 'yap-write)
+;;   ;; (global-set-key (kbd "M-m M-e") (lambda () (interactive) (yap-prompt 'explain-code)))
+;;   )
+
+;;;; TODO llmclient: evedel - gtpel for programmer
+
+;; https://github.com/daedsidog/evedel
+;; (use-package! evedel
+;;   :after gptel)
+
+;;;; DONT llmclient: wolframalpha
+
+;; ziova/wolfram.el
+;; (use-package! wolfram
+;;   :config (setq wolfram-alpha-app-id user-wolfram-alpha-app-id))
+
+;;;; DONT llmclient: github copilot
+
+;; (use-package! copilot
+;;   :commands (copilot-login copilot-diagnose)
+;;   :init
+;;   ;; Sometimes the copilot agent doesn't start. Restarting fixes the issue.
+;;   (setq copilot-indent-offset-warning-disable t
+;;         copilot-max-char 10000) ; default 100000
+;;   :bind (:map copilot-completion-map
+;;               ("C-g" . 'copilot-clear-overlay)
+;;               ("M-p" . 'copilot-previous-completion)
+;;               ("M-n" . 'copilot-next-completion)
+;;               ("<tab>" . 'copilot-accept-completion) ; vscode
+;;               ("TAB" . 'copilot-accept-completion) ; vscode
+;;               ("M-f" . 'copilot-accept-completion-by-word)
+;;               ("M-<return>" . 'copilot-accept-completion-by-line)
+;;               ("M-]" . 'copilot-next-completion) ; vscode
+;;               ("M-[" . 'copilot-next-completion) ; vscode
+;;               ;; ("C-'" . 'copilot-accept-completion)
+;;               ;; ("C-;" . 'copilot-accept-completion)
+;;               )
+;;   ;; :hook ((prog-mode . copilot-mode))
+;;   ;; (org-mode . copilot-mode)
+;;   ;; (markdown-mode . copilot-mode)
+;;   )
+
+;;;; DONT llmclient: github copilot-chat
+
+;; (use-package! copilot-chat
+;;   :after request
+;;   :config
+;;   (setq copilot-chat-backend 'request)
+;;   (setq copilot-chat-frontend 'markdown)
+;;   ;; From https://github.com/chep/copilot-chat.el/issues/24
+;;   (defun meain/copilot-chat-display (prefix)
+;;     "Opens the Copilot chat window, adding the current buffer to the context.
+;; Called with a PREFIX, resets the context buffer list before opening"
+;;     (interactive "P")
+
+;;     (require 'copilot-chat)
+;;     (let ((buf (current-buffer)))
+
+;;       ;; Explicit reset before doing anything, avoid it resetting later on
+;;       ;; target-fn and ignoring the added buffers
+;;       (unless (copilot-chat--ready-p)
+;;         (copilot-chat-reset))
+
+;;       (when prefix (copilot-chat--clear-buffers))
+
+;;       (copilot-chat--add-buffer buf)
+;;       (copilot-chat-display)))
+;;   )
+
+;;;; DONT llmclient: codeium
+
+;; (use-package! codeium
+;;   :after cape
+;;   :commands (codeium-install)
+;;   :config
+;;   ;; codeium-completion-at-point is autoloaded, but you can
+;;   ;; optionally set a timer, which might speed up things as the
+;;   ;; codeium local language server takes ~0.2s to start up
+;;   ;; (add-hook 'emacs-startup-hook
+;;   ;;  (lambda () (run-with-timer 0.1 nil #'codeium-init)))
+
+;;   ;; if you don't want to use customize to save the api-key
+;;   ;; (setq codeium/metadata/api_key "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")
+
+;;   ;; get codeium status in the modeline
+;;   (setq codeium-mode-line-enable
+;;         (lambda (api) (not (memq api '(CancelRequest Heartbeat AcceptCompletion)))))
+;;   (add-to-list 'mode-line-format '(:eval (car-safe codeium-mode-line)) t)
+
+;;   ;; alternatively for a more extensive mode-line
+;;   ;; (add-to-list 'mode-line-format '(-50 "" codeium-mode-line) t)
+
+;;   ;; use M-x codeium-diagnose to see apis/fields that would be sent to the local language server
+;;   (setq codeium-api-enabled
+;;         (lambda (api)
+;;           (memq api '(GetCompletions Heartbeat CancelRequest GetAuthToken RegisterUser auth-redirect AcceptCompletion))))
+
+;;   ;; you can also set a config for a single buffer like this:
+;;   ;; (add-hook 'python-mode-hook
+;;   ;;     (lambda ()
+;;   ;;         (setq-local codeium/editor_options/tab_size 4)))
+
+;;   ;; You can overwrite all the codeium configs!
+;;   ;; for example, we recommend limiting the string sent to codeium for better performance
+;;   (defun my-codeium/document/text ()
+;;     (buffer-substring-no-properties (max (- (point) 3000) (point-min)) (min (+ (point) 1000) (point-max))))
+;;   ;; if you change the text, you should also change the cursor_offset
+;;   ;; warning: this is measured by UTF-8 encoded bytes
+;;   (defun my-codeium/document/cursor_offset ()
+;;     (codeium-utf8-byte-length
+;;      (buffer-substring-no-properties (max (- (point) 3000) (point-min)) (point))))
+;;   (setq codeium/document/text 'my-codeium/document/text)
+;;   (setq codeium/document/cursor_offset 'my-codeium/document/cursor_offset)
 ;;   )
 
 ;;; :lang coding
@@ -4915,7 +5092,14 @@ Suitable for `imenu-create-index-function'."
 
 ;;; :app
 
+;;;; :app calendar
+
+;; calendar
+
 ;;;; :app emms
+
+;; emms
+
 ;; A media player for music no one's heard of
 
 ;; (after! emms
@@ -4927,7 +5111,29 @@ Suitable for `imenu-create-index-function'."
 ;;    ("<XF86AudioPlay>" . emms-pause))
 ;;   )
 
+;;;; :app @yeetube
+
+(use-package! yeetube
+  :defer t
+  :after emms
+  :init (define-prefix-command 'my/yeetube-map)
+  :config
+  (setf yeetube-mpv-disable-video t) ;; Disable video output
+  (setf yeetube-play-function #'emms-play-url)
+  :bind (("C-c y" . 'my/yeetube-map)
+         :map my/yeetube-map
+         ("s" . 'yeetube-search)
+         ("b" . 'yeetube-play-saved-video)
+         ("d" . 'yeetube-download-videos)
+         ("p" . 'yeetube-mpv-toggle-pause)
+         ("v" . 'yeetube-mpv-toggle-video)
+         ("V" . 'yeetube-mpv-toggle-no-video-flag)
+         ("k" . 'yeetube-remove-saved-video)))
+
+
 ;;;; :app rss
+
+;; (rss +org +youtube)        ; emacs as an RSS reader
 
 ;; gc copy-link
 (after! elfeed
@@ -4943,7 +5149,7 @@ Suitable for `imenu-create-index-function'."
   (require 'elfeed-tube)
   (setq elfeed-tube-captions-languages '("en" "ko" "englsh (auto generated)")))
 
-;;;; DONT :app mastodon
+;;;; DONT :app @mastodon
 
 ;; (use-package! tp)
 
@@ -5011,9 +5217,9 @@ Suitable for `imenu-create-index-function'."
 ;;       ))
 ;;   )
 
-;;;; :app ebooks
+;;;; :app @ebooks
 
-;;;; :app exercism
+;;;; :app @exercism
 
 (use-package! exercism
   :defer t
@@ -5029,7 +5235,7 @@ Suitable for `imenu-create-index-function'."
     (ert 't))
   )
 
-;;;; :app osm OpenStreetMaps
+;;;; :app @osm OpenStreetMaps
 
 ;; Very cool and the nice thing is it integrates itself with the built-in
 ;; bookmarking system. So you can bookmark places (or store them as org links)
@@ -5164,7 +5370,7 @@ Suitable for `imenu-create-index-function'."
   (setq font-lock-global-modes '(not nov-mode))
   )
 
-;;;; :app anddo for todo
+;;;; :app @anddo for todo
 
 (progn
   (require 'anddo)
@@ -5177,7 +5383,7 @@ Suitable for `imenu-create-index-function'."
       (sqlite-execute anddo--db "create table if not exists item (id integer primary key, status text, subject text, body text, entry_time text, modification_time text)")))
   )
 
-;;;; :app gif-screencast
+;;;; :app @gif-screencast
 
 (use-package! gif-screencast
   :defer 5
@@ -5236,6 +5442,7 @@ Suitable for `imenu-create-index-function'."
                                                 (dolist (f gif-screencast--frames)
                                                   (delete-file (gif-screencast-frame-filename f))))))))
   )
+
 
 ;;; :os tty
 
