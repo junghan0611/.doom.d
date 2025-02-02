@@ -144,7 +144,7 @@
 
 ;;;; :ui - visual
 
-(package! pulsar)
+;; (package! pulsar)
 (package! transpose-frame)
 (package! hydra)
 (package! pretty-hydra)
@@ -505,8 +505,8 @@
 (package! webpaste)
 ;; (package! password-store-menu)
 
-(package! image-slicing :recipe (:host github :repo "ginqi7/image-slicing"))
 (package! org-sliced-images)
+;; (package! image-slicing :recipe (:host github :repo "ginqi7/image-slicing"))
 ;; (package! org-linenote) ; require lsp-mode
 
 ;;;;; misc

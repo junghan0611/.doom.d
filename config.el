@@ -553,12 +553,11 @@
 ;;     "Pulse the current line."
 ;;     (pulse-momentary-highlight-one-line (point)))
 ;;   (dolist (command
-;;            '(scroll-up-command
-;;              scroll-down-command recenter-top-bottom other-window))
+;;            '(scroll-up-command scroll-down-command recenter-top-bottom other-window))
 ;;     (advice-add command :after #'pulse-line))
 ;;   )
 
-;;;; pulsar
+;;;; DONT pulsar - performance issue
 
 ;; LionyxML-lemacs/lemacs-init.org
 ;; The `pulsar' package enhances the user experience in Emacs by providing
@@ -567,70 +566,75 @@
 ;; actions such as scrolling, error navigation, yanking, deleting, and
 ;; jumping to definitions.
 
-(use-package! pulsar
-  :hook (doom-first-input . pulsar-global-mode)
-  :config
-  (setq pulsar-pulse t)
-  (setq pulsar-delay 0.025)
-  (setq pulsar-iterations 10)
-  ;; (setq pulsar-face 'evil-ex-lazy-highlight)
-  ;; (setq pulsar-face 'pulsar-magenta)
-  ;; (setq pulsar-highlight-face 'pulsar-yellow)
+;; (use-package! pulsar
+;;   :hook (doom-first-input . pulsar-global-mode)
+;;   :config
+;;   (progn
+;;     (setq pulsar-pulse t)
+;;     (setq pulsar-delay 0.025)
+;;     (setq pulsar-iterations 10)
+;;     ;; (setq pulsar-face 'evil-ex-lazy-highlight)
+;;     (setq pulsar-face 'pulsar-magenta)
+;;     ;; (setq pulsar-highlight-face 'pulsar-yellow)
 
-  ;; (dolist
-  ;;     (built-in-function
-  ;;      '(recenter-top-bottom
-  ;;        move-to-window-line-top-bottom
-  ;;        reposition-window bookmark-jump other-window
-  ;;        delete-window delete-other-windows
-  ;;        forward-page backward-page scroll-up-command
-  ;;        scroll-down-command tab-new tab-close tab-next
-  ;;        org-next-visible-heading
-  ;;        org-previous-visible-heading
-  ;;        org-forward-heading-same-level
-  ;;        org-backward-heading-same-level
-  ;;        outline-backward-same-level
-  ;;        outline-forward-same-level
-  ;;        outline-next-visible-heading
-  ;;        outline-previous-visible-heading
-  ;;        outline-up-heading))
-  ;;   (add-to-list 'pulsar-pulse-functions built-in-function))
+;;     ;; reset
+;;     (setq pulsar-pulse-functions nil)
 
-  (when (fboundp 'winner-undo)
-    (add-to-list 'pulsar-pulse-functions 'winner-undo)
-    (add-to-list 'pulsar-pulse-functions 'winner-redo))
+;;     (dolist
+;;         (built-in-function
+;;          '(recenter-top-bottom
+;;            move-to-window-line-top-bottom
+;;            reposition-window bookmark-jump other-window
+;;            delete-window delete-other-windows
+;;            forward-page backward-page scroll-up-command
+;;            scroll-down-command tab-new tab-close tab-next
+;;            org-next-visible-heading
+;;            org-previous-visible-heading
+;;            org-forward-heading-same-level
+;;            org-backward-heading-same-level
+;;            outline-backward-same-level
+;;            outline-forward-same-level
+;;            outline-next-visible-heading
+;;            outline-previous-visible-heading
+;;            outline-up-heading))
+;;       (add-to-list 'pulsar-pulse-functions built-in-function))
 
-  (when (fboundp 'winum-select-window-1)
-    (add-to-list 'pulsar-pulse-functions 'winum-select-window-1)
-    (add-to-list 'pulsar-pulse-functions 'winum-select-window-2)
-    (add-to-list 'pulsar-pulse-functions 'winum-select-window-3)
-    (add-to-list 'pulsar-pulse-functions 'winum-select-window-4)
-    (add-to-list 'pulsar-pulse-functions 'winum-select-window-5)
-    (add-to-list 'pulsar-pulse-functions 'winum-select-window-6)
-    (add-to-list 'pulsar-pulse-functions 'winum-select-window-7)
-    (add-to-list 'pulsar-pulse-functions 'winum-select-window-8)
-    (add-to-list 'pulsar-pulse-functions 'winum-select-window-9))
+;;     (when (fboundp 'winner-undo)
+;;       (add-to-list 'pulsar-pulse-functions 'winner-undo)
+;;       (add-to-list 'pulsar-pulse-functions 'winner-redo))
 
-  (when (fboundp 'evil-window-right)
-    (add-to-list 'pulsar-pulse-functions 'evil-window-right)
-    (add-to-list 'pulsar-pulse-functions 'evil-window-left)
-    (add-to-list 'pulsar-pulse-functions 'evil-window-up)
-    (add-to-list 'pulsar-pulse-functions 'evil-window-next)
-    (add-to-list 'pulsar-pulse-functions 'evil-window-prev)
-    (add-to-list 'pulsar-pulse-functions 'evil-window-down))
+;;     (when (fboundp 'winum-select-window-1)
+;;       (add-to-list 'pulsar-pulse-functions 'winum-select-window-1)
+;;       (add-to-list 'pulsar-pulse-functions 'winum-select-window-2)
+;;       (add-to-list 'pulsar-pulse-functions 'winum-select-window-3)
+;;       (add-to-list 'pulsar-pulse-functions 'winum-select-window-4)
+;;       (add-to-list 'pulsar-pulse-functions 'winum-select-window-5)
+;;       (add-to-list 'pulsar-pulse-functions 'winum-select-window-6)
+;;       (add-to-list 'pulsar-pulse-functions 'winum-select-window-7)
+;;       (add-to-list 'pulsar-pulse-functions 'winum-select-window-8)
+;;       (add-to-list 'pulsar-pulse-functions 'winum-select-window-9))
 
-  (add-to-list 'pulsar-pulse-functions 'evil-scroll-down)
-  (add-to-list 'pulsar-pulse-functions 'flymake-goto-next-error)
-  (add-to-list 'pulsar-pulse-functions 'flymake-goto-prev-error)
-  (add-to-list 'pulsar-pulse-functions 'flycheck-next-error)
-  (add-to-list 'pulsar-pulse-functions 'flycheck-previous-error)
-  (add-to-list 'pulsar-pulse-functions 'evil-yank)
-  (add-to-list 'pulsar-pulse-functions 'evil-yank-line)
-  (add-to-list 'pulsar-pulse-functions 'evil-delete)
-  (add-to-list 'pulsar-pulse-functions 'evil-delete-line)
-  (add-to-list 'pulsar-pulse-functions 'evil-jump-item)
-  (add-to-list 'pulsar-pulse-functions 'diff-hl-next-hunk)
-  (add-to-list 'pulsar-pulse-functions 'diff-hl-previous-hunk))
+;;     (when (fboundp 'evil-window-right)
+;;       (add-to-list 'pulsar-pulse-functions 'evil-window-right)
+;;       (add-to-list 'pulsar-pulse-functions 'evil-window-left)
+;;       (add-to-list 'pulsar-pulse-functions 'evil-window-up)
+;;       (add-to-list 'pulsar-pulse-functions 'evil-window-next)
+;;       (add-to-list 'pulsar-pulse-functions 'evil-window-prev)
+;;       (add-to-list 'pulsar-pulse-functions 'evil-window-down))
+
+;;     (add-to-list 'pulsar-pulse-functions 'evil-scroll-down)
+;;     (add-to-list 'pulsar-pulse-functions 'flymake-goto-next-error)
+;;     (add-to-list 'pulsar-pulse-functions 'flymake-goto-prev-error)
+;;     (add-to-list 'pulsar-pulse-functions 'flycheck-next-error)
+;;     (add-to-list 'pulsar-pulse-functions 'flycheck-previous-error)
+;;     ;; (add-to-list 'pulsar-pulse-functions 'evil-yank)
+;;     ;; (add-to-list 'pulsar-pulse-functions 'evil-yank-line)
+;;     (add-to-list 'pulsar-pulse-functions 'evil-delete)
+;;     (add-to-list 'pulsar-pulse-functions 'evil-delete-line)
+;;     ;; (add-to-list 'pulsar-pulse-functions 'evil-jump-item)
+;;     (add-to-list 'pulsar-pulse-functions 'diff-hl-next-hunk)
+;;     (add-to-list 'pulsar-pulse-functions 'diff-hl-previous-hunk)
+;;     ))
 
 ;;; :lang pkm
 
