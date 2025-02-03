@@ -749,6 +749,7 @@
         ;; [tab]        #'org-cycle
 
         "M-8" #'tempel-insert
+        "M-9" #'denote-link
         "<f12>" #'org-transclusion-mode
         "C-M-y" #'org-rich-yank
         ;; "C-M-Y" #'cae-org-rich-yank
@@ -1323,6 +1324,7 @@
   "M-s G" #'consult-git-grep
   "M-s K" #'consult-git-log-grep
   ;; "M-s r" #'consult-ripgrep
+  "M-s i" #'consult-info
   "M-s l" #'consult-line
   "M-s m" #'consult-line-multi
   "M-s k" #'consult-keep-lines
