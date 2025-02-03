@@ -101,10 +101,9 @@
 
 (defconst user-inbox-file "20230202T020200--inbox-now__aprj.org")
 (defun my/org-inbox-file () (my/expand-org-file-name user-inbox-file))
+
 (defun my/org-tasks-file () (my/expand-org-file-name user-inbox-file))
-(defun my/org-now-file () (my/expand-org-file-name user-inbox-file))
-;; (defun my/org-now-file () (my/expand-org-file-name "20240618T125104--now.org"))
-;; (defun my/org-tasks-file () (my/expand-org-file-name "20230101T010100--tasks.org"))
+;; (defun my/org-now-file () (my/expand-org-file-name user-inbox-file))
 
 (defun my/org-index-file () (my/expand-org-file-name "20240429T165725--index.org"))
 (defun my/org-about-file () (my/expand-org-file-name "20240326T053829--about.org"))
@@ -124,11 +123,10 @@
 ;; meta
 (defun my/org-kdc-file () (my/expand-org-file-name "meta/20240312T142358--한국십진분류__classification_kdc_meta.org"))
 (defun my/org-tags-file () (my/expand-org-file-name "meta/20231005T133900--tags__meta.org"))
-(defun my/org-glossary-file () (my/expand-org-file-name "dict/ithink.org"))
+(defun my/org-glossary-file () (my/expand-org-file-name "dict/20240913T145640--general__glossary.txt"))
 
 ;; blog
-(defun my/org-blog-file ()
-  (my/expand-org-file-name "posts/20240104T061355--blog__aprj_posts_schedule.org"))
+(defun my/org-blog-file () (my/expand-org-file-name "posts/20240104T061355--blog__aprj_posts_schedule.org"))
 
 ;; talks
 (defun my/org-talks-file () (my/expand-org-file-name "talks/20240827T150414--talks.org"))
