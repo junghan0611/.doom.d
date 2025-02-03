@@ -93,7 +93,13 @@ org-mode
 
 ;; (cite "{{{cite(" (p (completing-read "Cite: " (jf/org-macro-value-list "cite"))) ")}}}")
 
+
 (date "[[date:" p "][" p "]]")
+
+;; (tag-meta "{{{meta(" (p (completing-read "meta: " (my/org-tag-value-list "meta"))) ")}}}")
+
+(meta "{{{meta(" (p (completing-read "Meta: " (jf/org-macro-value-list "meta"))) ")}}}")
+
 (keyboard "{{{kbd(" (p (completing-read "Keyboard: " (jf/org-macro-value-list "kbd"))) ")}}}")
 (idiomatic "{{{i(" (p (completing-read "Idiom: " (jf/org-macro-value-list "i"))) ")}}}")
 (shell "#+begin_src bash :results scalar replace :exports both :tangle yes" n> q n> "#+end_src" n>)

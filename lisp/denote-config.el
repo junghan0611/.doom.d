@@ -255,35 +255,35 @@
       (message "Current buffer is not a Denote file.")))
   )
 
-;;; denote completion
+;;; DONT denote completion
 
-(progn
-  ;; (( -> <tab> for completion
-  ;; (defun my/expand-and-complete-with-denote ()
-  ;;   (interactive)
-  ;; (let ((limit (- (point) 2)))
-  ;;   (when (looking-back "((" limit)
-  ;;     (progn
-  ;;       (call-interactively #'denote-link-or-create)
-  ;;       (let ((end-of-link (point)))
-  ;;         (goto-char limit)
-  ;;         (delete-char 2)
-  ;;         (goto-char end-of-link)))))
-  ;; )
-  ;; (define-key org-mode-map (kbd "<tab>") #'my/expand-and-complete-with-denote)
+;; (progn
+;;   ;; (( -> <tab> for completion
+;;   ;; (defun my/expand-and-complete-with-denote ()
+;;   ;;   (interactive)
+;;   ;; (let ((limit (- (point) 2)))
+;;   ;;   (when (looking-back "((" limit)
+;;   ;;     (progn
+;;   ;;       (call-interactively #'denote-link-or-create)
+;;   ;;       (let ((end-of-link (point)))
+;;   ;;         (goto-char limit)
+;;   ;;         (delete-char 2)
+;;   ;;         (goto-char end-of-link)))))
+;;   ;; )
+;;   ;; (define-key org-mode-map (kbd "<tab>") #'my/expand-and-complete-with-denote)
 
-  (defun my/denote-try-to-complete-then-cycle (&optional arg)
-    (interactive)
-    (let ((limit (- (point) 2)))
-      (if (looking-back "((" limit)
-          (progn
-            (call-interactively #'denote-link-or-create)
-            (let ((end-of-link (point)))
-              (goto-char limit)
-              (delete-char 2)
-              (goto-char end-of-link)))
-        (org-cycle arg))))
-  (evil-define-key '(insert) org-mode-map (kbd "<tab>") 'my/denote-try-to-complete-then-cycle))
+;;   (defun my/denote-try-to-complete-then-cycle (&optional arg)
+;;     (interactive)
+;;     (let ((limit (- (point) 2)))
+;;       (if (looking-back "((" limit)
+;;           (progn
+;;             (call-interactively #'denote-link-or-create)
+;;             (let ((end-of-link (point)))
+;;               (goto-char limit)
+;;               (delete-char 2)
+;;               (goto-char end-of-link)))
+;;         (org-cycle arg))))
+;;   (evil-define-key '(insert) org-mode-map (kbd "<tab>") 'my/denote-try-to-complete-then-cycle))
 
 ;;; DONT denote completion capf on buffer
 
@@ -367,38 +367,39 @@
 ;;   ;; (add-hook 'org-mode-hook #'jf/org-capf-links-cape-tempel)
 ;;   )
 
-;;; denote sort : Luhmann-style signatures
+;;; DONT denote sort : Luhmann-style signatures
 
+;; check denote-sequence
 ;; https://protesilaos.com/codelog/2024-08-01-emacs-denote-luhmann-signature-sort/
 ;; Luhmann-style signatures will be slightly different in their appearance: 1=1, 1=1a, 1=2, 1=2a, 1=2b.
 ;;  A sorted and filtered Dired listing (per denote-sort-dired) https://protesilaos.com/assets/images/attachments/2024-08-01-denote-luhmann-signatures-sorted.png
 
-(progn
-  (defun my-denote--split-luhman-sig (signature)
-    "Split numbers and letters in Luhmann-style SIGNATURE string."
-    (replace-regexp-in-string
-     "\\([a-zA-Z]+?\\)\\([0-9]\\)" "\\1=\\2"
-     (replace-regexp-in-string
-      "\\([0-9]+?\\)\\([a-zA-Z]\\)" "\\1=\\2"
-      signature)))
+;; (progn
+;;   (defun my-denote--split-luhman-sig (signature)
+;;     "Split numbers and letters in Luhmann-style SIGNATURE string."
+;;     (replace-regexp-in-string
+;;      "\\([a-zA-Z]+?\\)\\([0-9]\\)" "\\1=\\2"
+;;      (replace-regexp-in-string
+;;       "\\([0-9]+?\\)\\([a-zA-Z]\\)" "\\1=\\2"
+;;       signature)))
 
-  (defun my-denote--pad-sig (signature)
-    "Create a new signature with padded spaces for all components"
-    (combine-and-quote-strings
-     (mapcar
-      (lambda (x)
-        (string-pad x 5 32 t))
-      (split-string (my-denote--split-luhman-sig signature) "=" t))
-     "="))
+;;   (defun my-denote--pad-sig (signature)
+;;     "Create a new signature with padded spaces for all components"
+;;     (combine-and-quote-strings
+;;      (mapcar
+;;       (lambda (x)
+;;         (string-pad x 5 32 t))
+;;       (split-string (my-denote--split-luhman-sig signature) "=" t))
+;;      "="))
 
-  (defun my-denote-sort-for-signatures (sig1 sig2)
-    "Return non-nil if SIG1 is smaller that SIG2.
-Perform the comparison with `string<'."
-    (string< (my-denote--pad-sig sig1) (my-denote--pad-sig sig2)))
+;;   (defun my-denote-sort-for-signatures (sig1 sig2)
+;;     "Return non-nil if SIG1 is smaller that SIG2.
+;; Perform the comparison with `string<'."
+;;     (string< (my-denote--pad-sig sig1) (my-denote--pad-sig sig2)))
 
-  ;; Change the sorting function only when we sort by signature.
-  (setq denote-sort-signature-comparison-function #'my-denote-sort-for-signatures) ; default - string-collate-lessp
-  )
+;;   ;; Change the sorting function only when we sort by signature.
+;;   (setq denote-sort-signature-comparison-function #'my-denote-sort-for-signatures) ; default - string-collate-lessp
+;;   )
 
 ;;; DONT denote journal
 
@@ -440,7 +441,7 @@ Perform the comparison with `string<'."
 ;;     (save-buffer) ;; gotta save immediately to avoid creating duplicate dailies
 ;;     ))
 
-;;; org-id-link-to-org-use-id nil
+;;; DONT org-id-link-to-org-use-id nil
 
 ;; (setq org-id-link-to-org-use-id 'use-existing) ; default nil
 ;; (setq org-hide-emphasis-markers t)

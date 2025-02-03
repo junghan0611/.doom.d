@@ -286,7 +286,7 @@
 
 (package! consult-denote)
 
-(package! citar-denote)
+(package! citar-denote :pin "3b14fc8e98a701893dd226d9f4050606d11891fc") ; 2025-02-03 v2.4
 (package! tmr) ; timer
 
 ;; (package! ekg)

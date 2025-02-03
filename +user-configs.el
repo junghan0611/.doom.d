@@ -642,23 +642,24 @@
   ;; (add-hook 'markdown-mode-hook 'display-fill-column-indicator-mode)
   )
 
+
+;;;; backtrace-mode-hook
+
+(add-hook 'backtrace-mode-hook 'display-line-numbers-mode)
+(add-hook 'backtrace-mode-hook 'visual-line-mode)
+
 ;;;; dabbrev
 
 (progn
   (require 'dabbrev)
-  ;; (setq dabbrev-abbrev-char-regexp "\\sw\\|\\s_") ; prot
-  (setq dabbrev-abbrev-char-regexp "[A-Za-z-_]") ; tshu
+  (setq dabbrev-abbrev-char-regexp "[가-힣A-Za-z-_]")
   (setq dabbrev-ignored-buffer-regexps
         '("\\` "
           "\\.\\(?:pdf\\|jpe?g\\|png\\)\\'"
           "\\(?:\\(?:[EG]?\\|GR\\)TAGS\\|e?tags\\|GPATH\\)\\(<[0-9]+>\\)?"))
   (setq dabbrev-abbrev-skip-leading-regexp "[$*/=~']")
-
-  ;; (setq dabbrev-upcase-means-case-search t) ; default nil
+  (setq dabbrev-upcase-means-case-search nil) ; default t
   ;; (setq dabbrev-check-all-buffers t) ;; default t
-  ;; (let ((map global-map))
-  ;;   (define-key map (kbd "C-M-/") #'dabbrev-expand) ; M-/ 'hippie-exp
-  ;;   ;; (define-key map (kbd "C-M-/") #'dabbrev-completion)
   )
 
 ;;;; fortune
@@ -898,7 +899,7 @@
 
 (after! corfu
   ;; (setq corfu-auto-delay 0.5) ; doom 0.24
-  (setq corfu-auto-prefix 3) ; doom 2
+  (setq corfu-auto-prefix 4) ; doom 2
   (setq corfu-preselect 'valid) ; doom 'prompt
   (setq completion-cycle-threshold 3) ; doom nil
   (setq tab-always-indent t) ; for jump-out-of-pair - doom 'complete
@@ -906,17 +907,17 @@
 
   (setq +corfu-want-tab-prefer-expand-snippets t) ; 2024-11-06
   (setq +corfu-want-tab-prefer-navigating-snippets t)
-  ;; (setq +corfu-want-tab-prefer-navigating-org-tables t)
+  (setq +corfu-want-tab-prefer-navigating-org-tables t)
 
   ;; from minemacs
   ;; HACK: Prevent the annoting completion error when no `ispell' dictionary is set, prefer `cape-dict'
   (when (eq emacs-major-version 30)
     (setq text-mode-ispell-word-completion nil))
 
-  ;; cape-dict-file
-  (add-hook! '(org-mode-hook markdown-mode-hook)
-    (defun +corfu-add-cape-dict-h ()
-      (add-hook 'completion-at-point-functions #'cape-dict 0 t)))
+  ;; 2025-02-03 disable - use C-c d @org-mode
+  ;; (add-hook! '(org-mode-hook markdown-mode-hook)
+  ;;   (defun +corfu-add-cape-dict-h ()
+  ;;     (add-hook 'completion-at-point-functions #'cape-dict 0 t)))
 
   ;; IMO, modern editors have trained a bad habit into us all: a burning need for
   ;; completion all the time -- as we type, as we breathe, as we pray to the
@@ -947,10 +948,10 @@
 ;; ;; OR, but note the different call signature
 ;; (add-hook 'some-mode-hook (lambda () (add-hook 'completion-at-point-functions #'some-capf depth t)))
 
-(after! cape
-  (setq cape-dabbrev-min-length 5) ; default 4
-  (setq cape-dabbrev-check-other-buffers #'cape--buffers-major-mode) ; 'some
-  )
+;; (after! cape
+;;   (setq cape-dabbrev-min-length 5) ; default 4
+;;   (setq cape-dabbrev-check-other-buffers #'cape--buffers-major-mode) ; 'some
+;;   )
 
 ;; ;; 2023-07-08 순서 때문에 따로 확실하게 점검한다.
 ;; (defun cape-markdown-mode-setup ()
@@ -1247,15 +1248,76 @@
 
 ;;;; tempel
 
+(defvar jf/denote-base-dir
+  (file-truename
+   (if (file-exists-p (expand-file-name "~/.my-computer"))
+       "~/sync/org/"
+     "~/Documents/denote/"))
+  "Where I put my notes; I need to provision differently for personal and
+work computers.")
+
+;;;###autoload
+(cl-defun jf/org-macro-value-list (macro-name
+                                   &key (dir jf/denote-base-dir))
+  "List the unique inner text of all uses of MACRO-NAME in given DIR."
+  (let ((path
+         (if current-prefix-arg
+             dir
+           (or (buffer-file-name (current-buffer)) dir))))
+    (s-split
+     "\n"
+     (s-trim
+      (shell-command-to-string
+       (concat
+        "rg \"\\{\\{\\{"
+        macro-name
+        "\\((.+?)\\)\\}\\}\\}"
+        "\" --only-matching --no-filename -r '$1' "
+        path
+        " | sort | uniq"))))))
+
+;; (cl-defun my/org-tag-value-list (macro-name
+;;                                  &key (dir jf/denote-base-dir))
+;;   "list the unique inner text of all uses of macro-name in given dir."
+;;   (let ((path
+;;          (if current-prefix-arg
+;;              dir
+;;            (or (buffer-file-name (current-buffer)) dir))))
+;;     (s-split
+;;      "\n"
+;;      (s-trim
+;;       (shell-command-to-string
+;;        (concat
+;;         "fd "
+;;         macro-name
+;;         path))))))
+
 ;; Template-based in-buffer completion (tempel.el)
 ;; NOTE 2023-01-19: Check the `templates'
 (use-package! tempel
   :bind
   (("M-+" . tempel-complete) ;; Alternative tempel-expand
    ("M-*" . tempel-insert))
+  :bind (:map tempel-map (([backtab] . tempel-previous)
+                          ("TAB" . tempel-next)))
   :config
+  ;; (global-tempel-abbrev-mode)
   ;; (setq tempel-trigger-prefix "<") ; conflits with evil-shift
   (setq tempel-path (expand-file-name "tempel-templates.eld" user-dotemacs-dir))
+
+  ;; Setup completion at point
+  ;; (defun tempel-setup-capf ()
+  ;;   ;; Add the Tempel Capf to
+  ;;   ;; `completion-at-point-functions'. `tempel-expand' only triggers on
+  ;;   ;; exact matches. Alternatively use `tempel-complete' if you want to
+  ;;   ;; see all matches, but then Tempel will probably trigger too often
+  ;;   ;; when you don't expect it.  NOTE: We add `tempel-expand' *before*
+  ;;   ;; the main programming mode Capf, such that it will be tried first.
+  ;;   (setq-local completion-at-point-functions
+  ;;               (cons #'tempel-expand
+  ;;                     completion-at-point-functions)))
+  ;; (add-hook 'prog-mode-hook 'tempel-setup-capf)
+  ;; (add-hook 'text-mode-hook 'tempel-setup-capf)
 
   ;; Use concrete keys because of org mode
   ;; "M-RET" #'tempel-done
@@ -3023,9 +3085,10 @@ ${content}"))
   (require 'denote-silo-extras)
   ;; (require 'denote-journal-extras)
   (require 'denote-org-extras)
+  ;; (require 'denote-md-extras) ; markdown-obsidian
   (setq denote-file-type 'org)
   (setq denote-sort-components '(signature title keywords identifier))
-  (setq denote-backlinks-show-context t)
+  ;; (setq denote-backlinks-show-context nil) ; default nil
   (setq denote-sort-keywords t)
   (setq denote-infer-keywords t)
   (setq denote-excluded-directories-regexp "screenshot")
@@ -3063,6 +3126,7 @@ ${content}"))
                              (setq denote-rename-buffer-backlinks-indicator "¶")
                              (setq denote-rename-buffer-format "%t%b")
                              (denote-rename-buffer-mode +1)))
+
   :config
   (set-register ?n (cons 'file (concat org-directory "notes")))
 
@@ -3106,16 +3170,7 @@ ${content}"))
     ;; (add-hook 'context-menu-functions #'denote-context-menu)
     ) ;; end-of progn from vedang's custom
 
-  ;; denote-link-backlinks buffer
-  (setq denote-link-backlinks-display-buffer-action
-        '((display-buffer-reuse-window display-buffer-in-side-window)
-          (side . right)
-          (slot . 99)
-          (window-width . 0.3)
-          (dedicated . t)
-          (preserve-size . (t . t))))
-
-;;;;; add denote type for quarto
+;;;;; add denote-file-types for quarto - qmd
 
   (after! denote
     (let ((quarto (cdr (assoc 'markdown-yaml denote-file-types))))
@@ -3241,6 +3296,7 @@ ${content}"))
 ;;;;; citar-denote
 
   (use-package! citar-denote
+    :after citar
     :demand t ;; Ensure minor mode is loaded
     :bind (:map org-mode-map ("C-c B" . citar-insert-citation)) ;; ("M-B" . citar-insert-preset)
     :commands
@@ -3251,7 +3307,6 @@ ${content}"))
     :custom
     ;; (citar-open-always-create-notes t)
     ;; (citar-denote-signature t)
-    (defvar emacs-llm-default-provider nil "The default LLM provider to use in Emacs.")
     (citar-denote-file-type 'org)
     (citar-denote-subdir t)
     (citar-denote-keyword "bib")
@@ -3263,12 +3318,30 @@ ${content}"))
     (setq citar-file-open-functions '(("html" . citar-file-open-external)
                                       ;; ("pdf" . citar-file-open-external)
                                       (t . find-file)))
+
+    ;; FIXME for denote-obsidian
+    (setq citar-denote-file-types
+          `((org
+             :reference-format "#+reference:  %s\n"
+             :reference-regex "^#\\+reference\\s-*:")
+            (markdown-obsidian ;; 2025-02-03
+             :reference-format "reference:  %s\n"
+             :reference-regex "^reference\\s-*:")
+            (markdown-yaml
+             :reference-format "reference:  %s\n"
+             :reference-regex "^reference\\s-*:")
+            (markdown-toml
+             :reference-format "reference  = %s\n"
+             :reference-regex "^reference\\s-*=")
+            (text
+             :reference-format "reference:  %s\n"
+             :reference-regex "^reference\\s-*:")))
     (citar-denote-mode))
 
 ;;;;; end-of denote
   ) ;; end-of denote
 
-;;;; Obsidian
+;;;; DONT Obsidian
 
 ;; (use-package! obsidian
 ;;   :defer t

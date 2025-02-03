@@ -14,6 +14,8 @@
 
 ;;; Configs
 
+;;;; Xref
+
 ;; Denote 23.9. Speed up backlinks’ buffer creation?
 ;; Prefer ripgrep, then ugrep, and fall back to regular grep.
 (setq xref-search-program
@@ -315,50 +317,50 @@ Also see `prot-window-delete-popup-frame'." command)
 
 ;;;; DONT citar with nerd-icons
 
-(with-eval-after-load 'citar
-  (progn
-    (defvar citar-indicator-files-icons
-      (citar-indicator-create
-       :symbol (nerd-icons-faicon
-                "nf-fa-file_o"
-                :face 'nerd-icons-green
-                :v-adjust 0.01)
-       :function #'citar-has-files
-       :padding "  " ; need this because the default padding is too low for these icons
-       :tag "has:files"))
-    (defvar citar-indicator-links-icons
-      (citar-indicator-create
-       :symbol (nerd-icons-faicon
-                "nf-fa-link"
-                :face 'nerd-icons-orange
-                :v-adjust 0.0)
-       :function #'citar-has-links
-       :padding "  "
-       :tag "has:links"))
-    (defvar citar-indicator-notes-icons
-      (citar-indicator-create
-       :symbol (nerd-icons-codicon
-                "nf-cod-note"
-                :face 'nerd-icons-blue
-                :v-adjust 0.0)
-       :function #'citar-has-notes
-       :padding "    "
-       :tag "has:notes"))
-    (defvar citar-indicator-cited-icons
-      (citar-indicator-create
-       :symbol (nerd-icons-faicon
-                "nf-fa-circle_o"
-                :face 'nerd-icon-green
-                :v-adjust 0.0)
-       :function #'citar-is-cited
-       :padding "  "
-       :tag "is:cited"))
-    (setq citar-indicators
-          (list citar-indicator-files-icons
-                citar-indicator-links-icons
-                citar-indicator-notes-icons
-                citar-indicator-cited-icons)))
-  )
+;; (with-eval-after-load 'citar
+;;   (progn
+;;     (defvar citar-indicator-files-icons
+;;       (citar-indicator-create
+;;        :symbol (nerd-icons-faicon
+;;                 "nf-fa-file_o"
+;;                 :face 'nerd-icons-green
+;;                 :v-adjust 0.01)
+;;        :function #'citar-has-files
+;;        :padding "  " ; need this because the default padding is too low for these icons
+;;        :tag "has:files"))
+;;     (defvar citar-indicator-links-icons
+;;       (citar-indicator-create
+;;        :symbol (nerd-icons-faicon
+;;                 "nf-fa-link"
+;;                 :face 'nerd-icons-orange
+;;                 :v-adjust 0.0)
+;;        :function #'citar-has-links
+;;        :padding "  "
+;;        :tag "has:links"))
+;;     (defvar citar-indicator-notes-icons
+;;       (citar-indicator-create
+;;        :symbol (nerd-icons-codicon
+;;                 "nf-cod-note"
+;;                 :face 'nerd-icons-blue
+;;                 :v-adjust 0.0)
+;;        :function #'citar-has-notes
+;;        :padding "    "
+;;        :tag "has:notes"))
+;;     (defvar citar-indicator-cited-icons
+;;       (citar-indicator-create
+;;        :symbol (nerd-icons-faicon
+;;                 "nf-fa-circle_o"
+;;                 :face 'nerd-icon-green
+;;                 :v-adjust 0.0)
+;;        :function #'citar-is-cited
+;;        :padding "  "
+;;        :tag "is:cited"))
+;;     (setq citar-indicators
+;;           (list citar-indicator-files-icons
+;;                 citar-indicator-links-icons
+;;                 citar-indicator-notes-icons
+;;                 citar-indicator-cited-icons)))
+;;   )
 
 ;;;; ox-hugo
 

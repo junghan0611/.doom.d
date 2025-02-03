@@ -376,9 +376,9 @@
 
 ;; Hide ~*~, ~~~ and ~/~ in org text.
 ;; Org styling, hide markup etc. = / ~
-(setq org-hide-emphasis-markers nil)
-(setq org-hide-block-startup nil)
-(setq org-hide-macro-markers nil)
+;; (setq org-hide-emphasis-markers nil) ; nil
+;; (setq org-hide-block-startup nil) ; nil
+;; (setq org-hide-macro-markers nil) ; nil
 
 (setq org-indent-mode-turns-on-hiding-stars nil) ; default t -- MINE
 (setq org-indent-mode-turns-off-org-adapt-indentation t) ; must t, default t

@@ -1094,12 +1094,14 @@
   ;; (tab-bar-select-tab 1)
   )
 
-(add-hook 'doom-first-input-hook #'my/open-workspaces)
+(when (display-graphic-p) ; gui
+  (add-hook 'doom-first-input-hook #'my/open-workspaces))
 
 ;;; tab-line-mode on emacs-30
 
 (when (eq emacs-major-version 30)
   (use-package! tab-line
+    :if window-system
     :demand t
     :config
     (global-tab-line-mode 1)

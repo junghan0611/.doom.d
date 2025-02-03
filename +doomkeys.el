@@ -757,6 +757,10 @@
         "M-p" #'org-previous-link
         :n "]b"  #'org-next-block
         :n "[b"  #'org-previous-block
+        "C-c d"  #'cape-dict
+        :i "<tab>"  #'completion-at-point ; 2025-02-03
+        :i "TAB"  #'completion-at-point
+        "M--" #'denote-find-backlink
 
         ;; "C-c C-S-l"  #'+org/remove-link
         ;; "C-c C-i"    #'org-toggle-inline-images

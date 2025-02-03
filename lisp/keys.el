@@ -1563,7 +1563,8 @@ window."
   :doc "Denote keybindings."
   "a" ews-annotate-map
   "b" ews-bibliography-map
-  "B" #'denote-org-extras-backlinks-for-heading 
+
+  "B" #'denote-org-extras-backlinks-for-heading
   "d" #'denote-create-note
 
   "f" #'my/denote-find-file ; find org files
