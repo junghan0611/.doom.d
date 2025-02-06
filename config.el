@@ -2108,73 +2108,67 @@ the next chapter, open Dired so you can find it manually."
 
 ;;;; code-cells for python jupyter
 
-;; default - code-cells-convert-ipynb-style (("jupytext" "--to" "ipynb")
-;; ("jupytext" "--to" "auto:percent") code-cells--guess-mode
-;; code-cells-convert-ipynb-hook)
-(use-package! code-cells
-  ;; :config
-  ;; ;; use pandoc instead
-  ;; (setq code-cells-convert-ipynb-style '(("pandoc" "--to" "ipynb" "--from" "org")
-  ;;       				 ("pandoc" "--to" "org" "--from" "ipynb")
-  ;;       				 org-mode))
+(progn
+  (use-package! code-cells
+    :config
+    ;; (setq code-cells-convert-ipynb-style '(("pandoc" "--to" "ipynb" "--from" "org")
+    ;; 					 ("pandoc" "--to" "org" "--from" "ipynb")
+    ;; 					 org-mode))
+    ;; see https://github.com/astoff/code-cells.el/issues/22
+    ;; (defun gm/jupyter-eval-region (beg end)
+    ;;   (jupyter-eval-region nil beg end))
+    ;; (add-to-list 'code-cells-eval-region-commands '(jupyter-repl-interaction-mode . gm/jupyter-eval-region))
+    (let ((map code-cells-mode-map))
+      (define-key map (kbd "C-c <up>") 'code-cells-backward-cell)
+      (define-key map (kbd "C-c <down>") 'code-cells-forward-cell)
+      (define-key map (kbd "M-<up>") 'code-cells-move-cell-up)
+      (define-key map (kbd "M-<down>") 'code-cells-move-cell-down)
+      (define-key map (kbd "C-c C-c") 'code-cells-eval)
+      ;; Overriding other minor mode bindings requires some insistence...
+      (define-key
+       map [remap jupyter-eval-line-or-region] 'code-cells-eval)))
+
+  (defun my/new-notebook (notebook-name &optional kernel)
+    "Creates an empty notebook in the current directory with an associated kernel."
+    (interactive "sEnter the notebook name: ")
+    (when (file-name-extension notebook-name)
+      (setq notebook-name (file-name-sans-extension notebook-name)))
+    (unless kernel
+      (setq kernel
+            (jupyter-kernelspec-name
+             (jupyter-completing-read-kernelspec))))
+    (unless (executable-find "jupytext")
+      (error "Can't find \"jupytext\""))
+    (let ((notebook-py (concat notebook-name ".py")))
+      (shell-command (concat "touch " notebook-py))
+      (shell-command
+       (concat "jupytext --set-kernel " kernel " " notebook-py))
+      (shell-command (concat "jupytext --to notebook " notebook-py))
+      (shell-command (concat "rm " notebook-py))
+      (message
+       (concat
+        "Notebook successfully created at " notebook-name ".ipynb"))))
   )
-
-  ;; (progn
-  ;;   (use-package! code-cells
-  ;;     :config
-  ;;     ;; (setq code-cells-convert-ipynb-style '(("pandoc" "--to" "ipynb" "--from" "org")
-  ;;     ;; 					 ("pandoc" "--to" "org" "--from" "ipynb")
-  ;;     ;; 					 org-mode))
-  ;;     ;; see https://github.com/astoff/code-cells.el/issues/22
-  ;;     ;; (defun gm/jupyter-eval-region (beg end)
-  ;;     ;;   (jupyter-eval-region nil beg end))
-  ;;     ;; (add-to-list 'code-cells-eval-region-commands '(jupyter-repl-interaction-mode . gm/jupyter-eval-region))
-  ;;     (let ((map code-cells-mode-map))
-  ;;       (define-key map (kbd "C-c <up>") 'code-cells-backward-cell)
-  ;;       (define-key map (kbd "C-c <down>") 'code-cells-forward-cell)
-  ;;       (define-key map (kbd "M-<up>") 'code-cells-move-cell-up)
-  ;;       (define-key map (kbd "M-<down>") 'code-cells-move-cell-down)
-  ;;       (define-key map (kbd "C-c C-c") 'code-cells-eval)
-  ;;       ;; Overriding other minor mode bindings requires some insistence...
-  ;;       (define-key
-  ;;        map [remap jupyter-eval-line-or-region] 'code-cells-eval)))
-
-  ;;   (defun my/new-notebook (notebook-name &optional kernel)
-  ;;     "Creates an empty notebook in the current directory with an associated kernel."
-  ;;     (interactive "sEnter the notebook name: ")
-  ;;     (when (file-name-extension notebook-name)
-  ;;       (setq notebook-name (file-name-sans-extension notebook-name)))
-  ;;     (unless kernel
-  ;;       (setq kernel
-  ;;             (jupyter-kernelspec-name
-  ;;              (jupyter-completing-read-kernelspec))))
-  ;;     (unless (executable-find "jupytext")
-  ;;       (error "Can't find \"jupytext\""))
-  ;;     (let ((notebook-py (concat notebook-name ".py")))
-  ;;       (shell-command (concat "touch " notebook-py))
-  ;;       (shell-command
-  ;;        (concat "jupytext --set-kernel " kernel " " notebook-py))
-  ;;       (shell-command (concat "jupytext --to notebook " notebook-py))
-  ;;       (shell-command (concat "rm " notebook-py))
-  ;;       (message
-  ;;        (concat
-  ;;         "Notebook successfully created at " notebook-name ".ipynb"))))
-  ;;   )
 
 ;;;; TODO embark-indicators
 
-  ;; `embark-minimal-indicator', which does not display any
-  ;; (setq embark-indicators
-  ;;       '(embark-mixed-indicator
-  ;;         embark-highlight-indicator
-  ;;         embark-isearch-highlight-indicator))
+;; (progn
+;;   ;; `embark-minimal-indicator', which does not display any
+;;   (setq embark-indicators
+;;         '(embark-mixed-indicator
+;;           embark-highlight-indicator
+;;           embark-isearch-highlight-indicator))
 
-  ;; (add-to-list 'display-buffer-alist
-  ;;              '("\\*Embark Actions\\*"
-  ;;                (display-buffer-reuse-mode-window
-  ;;                 display-buffer-below-selected)
-  ;;                (window-height . fit-window-to-buffer)
-  ;;                (window-parameters . ((no-other-window . t)
-  ;;                                      (mode-line-format . (" %b"))))))
+;;   (set-popup-rule! "\\*Embark Actions\\*" :side 'bottom :size 0.5 :select t :quit t) ; jh
+;;   )
+
+;;;;; org-cv
+
+;; [2023-08-14 Mon 14:12] http://ohyecloudy.com/emacsian/2022/10/29/org-mode-cv/
+;; 종빈님 버전을 바로 사용.
+;; M-x org-export-dispatch 함수를 호출하면 moderncv 메뉴가 보인다.
+(use-package! ox-moderncv
+  :init (require 'ox-moderncv)
+  )
 
 ;;; left blank on purpose

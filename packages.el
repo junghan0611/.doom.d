@@ -205,6 +205,7 @@
 (package! org-fragtog)          ;; interactive toggling of inline latex formulas
 (package! org-appear)
 (package! orgabilize :recipe (:host github :repo "akirak/orgabilize.el"))
+(package! org-cv :recipe (:host github :repo "ohyecloudy/org-cv"))
 (package! org-glossary :recipe (:host github :repo "tecosaur/org-glossary" :files ("*.el" "*.org" "*.texi")))
 (package! org-pandoc-import :recipe (:host github :repo "tecosaur/org-pandoc-import" :files ("*.el" "*.org" "filters" "preprocessors")))
 (package! org-web-tools)
