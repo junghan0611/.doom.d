@@ -235,6 +235,7 @@
 
 (map! :leader
       (:prefix "h"
+       "SPC" #'consult-info
        "a" #'helpful-at-point
        "f" #'helpful-function
        "h" #'helpful-symbol
@@ -1628,6 +1629,13 @@
   ;; - Change the send key from return to a key of your choice:
   (transient-suffix-put 'gptel-menu (kbd "RET") :key "M-RET")
   )
+
+;;;; vterm-mode-map
+
+(after! vterm
+  ;; Compile Vterm without asking.
+  (setq vterm-always-compile-module t)
+  (map! :map vterm-mode-map "M-y" #'vterm-yank-pop))
 
 ;;; TODO ctl-x maps
 

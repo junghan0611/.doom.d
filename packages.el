@@ -358,11 +358,11 @@
 (package! symbol-overlay)
 
 (when (modulep! :lang clojure)
-  ;; (package! kaocha-runner) ; Koacha test runner in Emacs
+  (package! kaocha-runner) ; Koacha test runner in Emacs
   (package! vega-view)
   (package! clj-deps-new)
+  (package! clojure-essential-ref-nov)
   (package! clay))
-;; (package! clojure-essential-ref-nov)
 
 (unpin! elisp-demos)
 (package! elisp-demos :recipe (:host github :repo "junghan0611/elisp-demos" :branch "ko")) ;; https://github.com/junghan0611/elisp-demos
@@ -401,7 +401,7 @@
 
 (package! tp)
 ;; (package! mastodon)
-(package! adoc-mode)
+;; (package! adoc-mode)
 
 (package! yeetube :recipe (:host github :repo "Boruch-Baum/emacs-yeetube.el"))
 

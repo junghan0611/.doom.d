@@ -235,7 +235,7 @@
         "~/sync/org/dict/20241110T051844--it-terms__glossary.txt"
         ;;,(concat org-directory "dict/20240913T145640--general__glossary.txt")
         ))
-(setq ten-tags-file-default (concat user-org-directory "dict/ten-TAGS"))
+;; (setq ten-tags-file-default (concat user-org-directory "dict/ten-TAGS"))
 
 ;;; cc/url-bookmarks
 

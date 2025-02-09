@@ -1104,6 +1104,7 @@
     :if window-system
     :demand t
     :config
+    (setq tab-line-exclude-modes '(completion-list-mode reb-mode reb-lisp-mode calc-mode calc-trail-mode)) ; 2025-02-09
     (global-tab-line-mode 1)
     (setq tab-line-close-tab-function #'kill-buffer)
     (setq tab-line-tab-name-truncated-max 26) ; default 20
@@ -1141,27 +1142,12 @@
   :defer 2
   ;; :bind (("M-c t" . complete-tag)
   ;;        ("C-c M-." . my/goto-etags))
-  :hook ((org-mode Info-mode) . ten-font-lock-mode) ;; text-mode
+  ;; :hook ((org-mode Info-mode) . ten-font-lock-mode) ;; text-mode
   :init
   (setq ten-file-extensions '("org" "md" "txt"))
   (setq ten-exclude-regexps '("/\\."))
-  ;; I am listing two specific dictionary files in the `test/`
-  ;; subdirectory as an example below. You can list the
-  ;; `~/src/ten/test/' directory to let Ten to search files recursively
-  ;; in the directory and subdirectories in it. There are about 5,000
-  ;; terms in total and I don't experience any perfomance issue on my
-  ;; old Lenovo Thinkpad laptop. Ten looks for files with an extension
-  ;; listed in `ten-file-extensions' and excludes files and those in
-  ;; directories that match the list of regexps `ten-exclude-regexps'.
-  ;; (setq ten-files-and-directories
-  ;;       '( "~/sync/emacs/git/default/ten/test/Glossary-philosophy.txt"
-  ;;          "~/sync/emacs/git/default/ten/test/Glossary-of-graph-theory.txt"))
-  ;; The dictionary file (only one at a time can be active through
-  ;; `etags', but you can switch between more than one of them if you
-  ;; need to. The switching experience is not intuitive and it's a TODO
-  ;; to improve it.)
-  ;; (setq ten-tags-file-default "~/sync/emacs/git/default/ten/ten-TAGS")
   :config
+  (set-popup-rule! "^\\ten-TAGS" :ignore t)
   (require 'consult-ten)
   (add-to-list 'consult-buffer-sources 'consult-ten-glossary 'append) ; g
   )
@@ -1899,44 +1885,45 @@ INFO is a plist used as a communication channel."
 
   ;; Kaocha test runner from Emacs
   ;; - provides rich test reports
-  ;; (use-package! kaocha-runner
-  ;;   :after cider
-  ;;   :config
-  ;;   ;; enable Kaocha test runner
-  ;;   (setq clojure-enable-kaocha-runner t))
+  (use-package! kaocha-runner
+    :after cider
+    ;; :config
+    ;; enable Kaocha test runner
+    ;; (setq clojure-enable-kaocha-runner t)
+    )
 
-;;;;; DONT cloure-essential-ref-nov
+;;;;; cloure-essential-ref-nov
 
-  ;; (use-package! clojure-essential-ref-nov
-  ;;   :after cider
-  ;;   :init
-  ;;   (setq clojure-essential-ref-default-browse-fn #'clojure-essential-ref-nov-browse)
-  ;;   (setq clojure-essential-ref-nov-epub-path "~/Documents/Book/Clojure_The_Essential_Reference_v31.epub")
-  ;;   ;; :config
-  ;;   ;; (with-eval-after-load 'cider
-  ;;   ;;   (evil-define-key '(insert normal) cider-mode-map (kbd "C-0") 'clojure-essential-ref)
-  ;;   ;;   (evil-define-key '(insert normal) cider-repl-mode-map (kbd "C-0") 'clojure-essential-ref))
-  ;;   )
+  ;; https://github.com/p3r7/clojure-essential-ref
+  (use-package! clojure-essential-ref-nov
+    :after cider
+    :init
+    (setq clojure-essential-ref-default-browse-fn #'clojure-essential-ref-nov-browse)
+    (setq clojure-essential-ref-nov-epub-path "~/git/default/clj-essential-ref-v31.epub")
+    :config
+    (with-eval-after-load 'cider
+      (evil-define-key '(insert normal) cider-mode-map (kbd "M-9") 'clojure-essential-ref)
+      (evil-define-key '(insert normal) cider-repl-mode-map (kbd "M-9") 'clojure-essential-ref))
+    )
 
-
-;;;;; DONT Clojure helper functions
+;;;;; TODO Clojure helper functions
 
   ;; Toggle reader comment #_ at beginnig of an expression
-  ;; (defun clojure-toggle-reader-comment-sexp ()
-  ;;   (interactive)
-  ;;   (let* ((point-pos1 (point)))
-  ;;     (evil-insert-line 0)
-  ;;     (let* ((point-pos2 (point))
-  ;;            (cmtstr "#_")
-  ;;            (cmtstr-len (length cmtstr))
-  ;;            (line-start (buffer-substring-no-properties point-pos2 (+ point-pos2 cmtstr-len)))
-  ;;            (point-movement (if (string= cmtstr line-start) -2 2))
-  ;;            (ending-point-pos (+ point-pos1 point-movement 1)))
-  ;;       (if (string= cmtstr line-start)
-  ;;           (delete-char cmtstr-len)
-  ;;         (insert cmtstr))
-  ;;       (goto-char ending-point-pos)))
-  ;;   (evil-normal-state))
+  (defun my/clojure-toggle-reader-comment-sexp ()
+    (interactive)
+    (let* ((point-pos1 (point)))
+      (evil-insert-line 0)
+      (let* ((point-pos2 (point))
+             (cmtstr "#_")
+             (cmtstr-len (length cmtstr))
+             (line-start (buffer-substring-no-properties point-pos2 (+ point-pos2 cmtstr-len)))
+             (point-movement (if (string= cmtstr line-start) -2 2))
+             (ending-point-pos (+ point-pos1 point-movement 1)))
+        (if (string= cmtstr line-start)
+            (delete-char cmtstr-len)
+          (insert cmtstr))
+        (goto-char ending-point-pos)))
+    (evil-normal-state))
 
   ;; Assign keybinding to the toggle-reader-comment-sexp function
   ;; (define-key global-map (kbd "C-#") 'clojure-toggle-reader-comment-sexp)
@@ -1961,37 +1948,38 @@ INFO is a plist used as a communication channel."
   ;; - , d p p - portal open
   ;; - , d p c - portal clear
   ;; - , d p D - portal clear
-;;;;; clojure-cookbook with adoc-mode
 
-  (use-package! adoc-mode
-    :mode (("\\.adoc$" . adoc-mode)
-           ("\\.asciidoc$" . adoc-mode)))
+;;;;; DONT clojure-cookbook with adoc-mode
 
-  (defun increment-clojure-cookbook ()
-    "When reading the Clojure cookbook, find the next section, and
-close the buffer. If the next section is a sub-directory or in
-the next chapter, open Dired so you can find it manually."
-    (interactive)
-    (let* ((cur (buffer-name))
-	   (split-cur (split-string cur "[-_]"))
-	   (chap (car split-cur))
-	   (rec (car (cdr split-cur)))
-	   (rec-num (string-to-number rec))
-	   (next-rec-num (1+ rec-num))
-	   (next-rec-s (number-to-string next-rec-num))
-	   (next-rec (if (< next-rec-num 10)
-		         (concat "0" next-rec-s)
-		       next-rec-s))
-	   (target (file-name-completion (concat chap "-" next-rec) "")))
-      (progn
-        (if (equal target nil)
-	    (dired (file-name-directory (buffer-file-name)))
-	  (find-file target))
-        (kill-buffer cur))))
+  ;; (use-package! adoc-mode
+  ;;   :mode (("\\.adoc$" . adoc-mode)
+  ;;          ("\\.asciidoc$" . adoc-mode)))
 
-  (after! adoc-mode
-    (define-key adoc-mode-map (kbd "M-+") 'increment-clojure-cookbook)
-    (add-hook 'adoc-mode-hook 'cider-mode))
+  ;; (defun increment-clojure-cookbook ()
+  ;;     "When reading the Clojure cookbook, find the next section, and
+  ;; close the buffer. If the next section is a sub-directory or in
+  ;; the next chapter, open Dired so you can find it manually."
+  ;;     (interactive)
+  ;;     (let* ((cur (buffer-name))
+  ;; 	   (split-cur (split-string cur "[-_]"))
+  ;; 	   (chap (car split-cur))
+  ;; 	   (rec (car (cdr split-cur)))
+  ;; 	   (rec-num (string-to-number rec))
+  ;; 	   (next-rec-num (1+ rec-num))
+  ;; 	   (next-rec-s (number-to-string next-rec-num))
+  ;; 	   (next-rec (if (< next-rec-num 10)
+  ;; 		         (concat "0" next-rec-s)
+  ;; 		       next-rec-s))
+  ;; 	   (target (file-name-completion (concat chap "-" next-rec) "")))
+  ;;       (progn
+  ;;         (if (equal target nil)
+  ;; 	    (dired (file-name-directory (buffer-file-name)))
+  ;; 	  (find-file target))
+  ;;         (kill-buffer cur))))
+
+  ;; (after! adoc-mode
+  ;;   (define-key adoc-mode-map (kbd "M-+") 'increment-clojure-cookbook)
+  ;;   (add-hook 'adoc-mode-hook 'cider-mode))
 
 ;;;;; DONT ob-clojure with babashka
 
