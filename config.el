@@ -2108,47 +2108,47 @@ the next chapter, open Dired so you can find it manually."
 
 ;;;; code-cells for python jupyter
 
-(progn
-  (use-package! code-cells
-    :config
-    ;; (setq code-cells-convert-ipynb-style '(("pandoc" "--to" "ipynb" "--from" "org")
-    ;; 					 ("pandoc" "--to" "org" "--from" "ipynb")
-    ;; 					 org-mode))
-    ;; see https://github.com/astoff/code-cells.el/issues/22
-    ;; (defun gm/jupyter-eval-region (beg end)
-    ;;   (jupyter-eval-region nil beg end))
-    ;; (add-to-list 'code-cells-eval-region-commands '(jupyter-repl-interaction-mode . gm/jupyter-eval-region))
-    (let ((map code-cells-mode-map))
-      (define-key map (kbd "C-c <up>") 'code-cells-backward-cell)
-      (define-key map (kbd "C-c <down>") 'code-cells-forward-cell)
-      (define-key map (kbd "M-<up>") 'code-cells-move-cell-up)
-      (define-key map (kbd "M-<down>") 'code-cells-move-cell-down)
-      (define-key map (kbd "C-c C-c") 'code-cells-eval)
-      ;; Overriding other minor mode bindings requires some insistence...
-      (define-key
-       map [remap jupyter-eval-line-or-region] 'code-cells-eval)))
+;; (progn
+;;   (use-package! code-cells
+;;     :config
+;;     ;; (setq code-cells-convert-ipynb-style '(("pandoc" "--to" "ipynb" "--from" "org")
+;;     ;; 					 ("pandoc" "--to" "org" "--from" "ipynb")
+;;     ;; 					 org-mode))
+;;     ;; see https://github.com/astoff/code-cells.el/issues/22
+;;     ;; (defun gm/jupyter-eval-region (beg end)
+;;     ;;   (jupyter-eval-region nil beg end))
+;;     ;; (add-to-list 'code-cells-eval-region-commands '(jupyter-repl-interaction-mode . gm/jupyter-eval-region))
+;;     (let ((map code-cells-mode-map))
+;;       (define-key map (kbd "C-c <up>") 'code-cells-backward-cell)
+;;       (define-key map (kbd "C-c <down>") 'code-cells-forward-cell)
+;;       (define-key map (kbd "M-<up>") 'code-cells-move-cell-up)
+;;       (define-key map (kbd "M-<down>") 'code-cells-move-cell-down)
+;;       (define-key map (kbd "C-c C-c") 'code-cells-eval)
+;;       ;; Overriding other minor mode bindings requires some insistence...
+;;       (define-key
+;;        map [remap jupyter-eval-line-or-region] 'code-cells-eval)))
 
-  (defun my/new-notebook (notebook-name &optional kernel)
-    "Creates an empty notebook in the current directory with an associated kernel."
-    (interactive "sEnter the notebook name: ")
-    (when (file-name-extension notebook-name)
-      (setq notebook-name (file-name-sans-extension notebook-name)))
-    (unless kernel
-      (setq kernel
-            (jupyter-kernelspec-name
-             (jupyter-completing-read-kernelspec))))
-    (unless (executable-find "jupytext")
-      (error "Can't find \"jupytext\""))
-    (let ((notebook-py (concat notebook-name ".py")))
-      (shell-command (concat "touch " notebook-py))
-      (shell-command
-       (concat "jupytext --set-kernel " kernel " " notebook-py))
-      (shell-command (concat "jupytext --to notebook " notebook-py))
-      (shell-command (concat "rm " notebook-py))
-      (message
-       (concat
-        "Notebook successfully created at " notebook-name ".ipynb"))))
-  )
+;;   (defun my/new-notebook (notebook-name &optional kernel)
+;;     "Creates an empty notebook in the current directory with an associated kernel."
+;;     (interactive "sEnter the notebook name: ")
+;;     (when (file-name-extension notebook-name)
+;;       (setq notebook-name (file-name-sans-extension notebook-name)))
+;;     (unless kernel
+;;       (setq kernel
+;;             (jupyter-kernelspec-name
+;;              (jupyter-completing-read-kernelspec))))
+;;     (unless (executable-find "jupytext")
+;;       (error "Can't find \"jupytext\""))
+;;     (let ((notebook-py (concat notebook-name ".py")))
+;;       (shell-command (concat "touch " notebook-py))
+;;       (shell-command
+;;        (concat "jupytext --set-kernel " kernel " " notebook-py))
+;;       (shell-command (concat "jupytext --to notebook " notebook-py))
+;;       (shell-command (concat "rm " notebook-py))
+;;       (message
+;;        (concat
+;;         "Notebook successfully created at " notebook-name ".ipynb"))))
+;;   )
 
 ;;;; TODO embark-indicators
 

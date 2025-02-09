@@ -623,6 +623,7 @@
                             ("fulltext" . ?f)
                             ("nonum" . ?u)
                             ("ATTACH" . ?a)
+                            ("WEBLLM" . ?b)
                             ("LATEST" . ?t) ;; latest version
                             ("WORKLOG" . ?o)
                             ("2022" . ?2) ;; 2022

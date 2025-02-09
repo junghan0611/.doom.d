@@ -759,8 +759,9 @@
         :n "]b"  #'org-next-block
         :n "[b"  #'org-previous-block
         "C-c d"  #'cape-dict
-        :i "<tab>"  #'completion-at-point ; 2025-02-03
-        :i "TAB"  #'completion-at-point
+        ;; :i "<tab>"  #'completion-at-point ; 2025-02-03
+        ;; :i "TAB"  #'completion-at-point
+        :i "<tab>" #'my/denote-try-to-complete-then-cycle
         "M--" #'denote-find-backlink
 
         ;; "C-c C-S-l"  #'+org/remove-link

@@ -255,7 +255,7 @@
       (message "Current buffer is not a Denote file.")))
   )
 
-;;; DONT denote completion
+;;; simple command with denote-links
 
 ;; (progn
 ;;   ;; (( -> <tab> for completion
@@ -272,20 +272,25 @@
 ;;   ;; )
 ;;   ;; (define-key org-mode-map (kbd "<tab>") #'my/expand-and-complete-with-denote)
 
-;;   (defun my/denote-try-to-complete-then-cycle (&optional arg)
-;;     (interactive)
-;;     (let ((limit (- (point) 2)))
-;;       (if (looking-back "((" limit)
-;;           (progn
-;;             (call-interactively #'denote-link-or-create)
-;;             (let ((end-of-link (point)))
-;;               (goto-char limit)
-;;               (delete-char 2)
-;;               (goto-char end-of-link)))
-;;         (org-cycle arg))))
-;;   (evil-define-key '(insert) org-mode-map (kbd "<tab>") 'my/denote-try-to-complete-then-cycle))
+(defun my/denote-try-to-complete-then-cycle (&optional arg)
+  (interactive)
+  (let ((limit (- (point) 2)))
+    (if (looking-back "--" limit)
+        ;; (looking-back "((" limit)
+        (progn
+          (call-interactively #'denote-link-or-create)
+          (let ((end-of-link (point)))
+            (goto-char limit)
+            (delete-char 2)
+            (goto-char end-of-link)))
+      ;; (org-cycle arg)
+      (completion-at-point)
+      )))
 
-;;; DONT denote completion capf on buffer
+;; see +doom-keys.el
+;; (evil-define-key '(insert) org-mode-map (kbd "<tab>") 'my/denote-try-to-complete-then-cycle))
+
+;;; org-link capf on this buffer
 
 ;; https://takeonrules.com/2023/05/07/completion-at-point-function-capf-for-org-mode-links/
 ;; super capf
@@ -355,17 +360,19 @@
 ;;   ;; if you want multiple completion backends, use cape
 ;;   ;; (https://github.com/minad/cape):
 
-;;   ;; (defun jf/org-capf-links-cape-tempel ()
-;;   ;;   "The `completion-at-point-functions' I envision using for `org-mode'."
-;;   ;;   (setq-local completion-at-point-functions
-;;   ;;               (list (cape-capf-super
-;;   ;;                      #'jf/org-capf-links
-;;   ;;                      #'tempel-expand
-;;   ;;                      #'cape-dict
-;;   ;;                      ;; #'cape-file
-;;   ;;                      ))))
-;;   ;; (add-hook 'org-mode-hook #'jf/org-capf-links-cape-tempel)
+;;   (defun jf/org-capf-links-cape-tempel ()
+;;     "The `completion-at-point-functions' I envision using for `org-mode'."
+;;     (setq-local completion-at-point-functions
+;;                 (list (cape-capf-super
+;;                        #'jf/org-capf-links
+;;                        ;; #'tempel-expand
+;;                        ;; #'cape-dict
+;;                        ;; #'cape-file
+;;                        ))))
+;;   (add-hook 'org-mode-hook #'jf/org-capf-links-cape-tempel)
 ;;   )
+
+;; check
 
 ;;; DONT denote sort : Luhmann-style signatures
 

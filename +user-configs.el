@@ -2190,7 +2190,9 @@ only those in the selected frame."
 (setq magit-save-repository-buffers nil
       ;; Don't restore the wconf after quitting magit, it's jarring
       magit-inhibit-save-previous-winconf t
-      evil-collection-magit-want-horizontal-movement t)
+      )
+
+;; (setq evil-collection-magit-want-horizontal-movement t) ; default nil
 
 ;; Location of Git repositories
 ;; define paths and level of sub-directories to search
@@ -2245,15 +2247,6 @@ only those in the selected frame."
           (side . bottom)
           (dedicated . t)
           (inhibit-same-window . t)))
-
-  ;; lambda-emacs-meow-ko/lambda-library/lambda-setup/lem-setup-help.el
-  ;; set transient popop to top of window
-  ;; (setq transient-display-buffer-action '(display-buffer-in-side-window
-  ;;                                         (side . top)
-  ;;                                         (dedicated . t)
-  ;;                                         (inhibit-same-window . t)
-  ;;                                         (window-parameters (no-other-window . t))))
-
   )
 
 ;;;; git-commit : categories
@@ -2957,7 +2950,7 @@ ${content}"))
    '((main
       .
       ;; [${urldate:10}]
-      "[${dateadded:10}] \{${datemodified:10}\} ${author editor:20} ${translator:8} (${date year issued:4}) @${=key= id:14} ${title:68} ")  ; 2024-09-12 김정한
+      "[${dateadded:10}] \{${datemodified:10}\} ${author editor:20} ${translator:8} (${date year issued:4}) @${=key= id:16} ${title:68} ")  ; 2024-09-12 김정한
      (suffix
       . "${shorttitle:25} ${=type=:10} ${namea:16} ${url:20} ${tags keywords:*}") ; 2024-11-17 add url
      (preview

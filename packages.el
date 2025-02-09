@@ -370,8 +370,8 @@
 (package! exercism)
 (package! bats-mode)
 
-(when (modulep! :lang python)
-  (package! code-cells))
+;; (when (modulep! :lang python)
+;;   (package! code-cells))
 
 ;; Use the latest available packages for Clojure
 ;; - cider, clojure-mode
