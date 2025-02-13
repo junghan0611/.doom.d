@@ -305,7 +305,7 @@
           '(
             (0                . (bold 1.2)) ;; variable-pitch
             (1                . (bold  1.1))
-            (2                . (semibold 1.0))
+            (2                . (semibold 1.05))
             (3                . (semibold 1.0))
             (4                . (medium 1.0))
             (5                . (medium 1.0))
@@ -1365,133 +1365,11 @@
 
 ;;; HUGO for quartz
 
-(setq hugo-base-static-dir user-hugo-notes-static-dir)
-;; (setq hugo-base-static-dir user-hugo-blog-dir)
 ;; Setup export processor; default csl/citeproc-el, with biblatex for latex
-
 (after! oc
   (require 'citar-citeproc)
   (setq org-cite-csl-link-cites nil) ; default t
   (setq org-cite-export-processors '((latex biblatex) (t csl))))
-
-(after! ox-hugo
-  (defun org-hugo--attachment-rewrite-maybe (path info)
-    "Copy local images and pdfs to the static/bundle directory if needed.
-Also update the link paths to match those.
-
-PATH is the path to the image or any other attachment.
-
-INFO is a plist used as a communication channel."
-    ;; (message "[ox-hugo attachment DBG] The Hugo section is: %s" (plist-get info :hugo-section))
-    ;; (message "[ox-hugo attachment DBG] The Hugo base dir is: %s" (plist-get info :hugo-base-dir))
-    (let* ((pub-dir (org-hugo--get-pub-dir info)) ;This needs to happen first so that the check for HUGO_BASE_DIR happens.
-           (hugo-base-dir (file-name-as-directory (plist-get info :hugo-base-dir)))
-           (path-unhexified (url-unhex-string path))
-           (path-true (file-truename path-unhexified))
-           (exportables org-hugo-external-file-extensions-allowed-for-copying)
-           (bundle-dir (and (plist-get info :hugo-bundle) pub-dir))
-           (bundle-name (when bundle-dir
-                          (let* ((content-dir (file-truename
-                                               (file-name-as-directory
-                                                (expand-file-name "content" hugo-base-dir))))
-                                 (is-home-branch-bundle (string= bundle-dir content-dir)))
-                            (cond
-                             (is-home-branch-bundle
-                              "_home")
-                             (t ;`bundle-dir'="/foo/bar/" -> `bundle-name'="bar"
-                              (file-name-base (directory-file-name bundle-dir)))))))
-           (static-dir (file-truename
-                        (file-name-as-directory
-                         (expand-file-name "static" hugo-base-static-dir))))
-           (dest-dir (or bundle-dir static-dir))
-           ret)
-      (unless (file-directory-p static-dir)
-        (user-error "Please create the %s directory" static-dir))
-      (if (and (file-exists-p path-true)
-               (member (file-name-extension path-unhexified) exportables)
-               (file-directory-p dest-dir))
-          (progn
-            ;; Check if `path-true' is already inside `dest-dir'.
-            (if (string-match (regexp-quote dest-dir) path-true)
-                (progn
-                  ;; If so, return *only* the path considering the
-                  ;; destination directory as root.
-                  (setq ret (concat "/" (substring path-true (match-end 0)))))
-              (let* ((file-name-relative-path
-                      (cond
-                       ((string-match "/static/" path-true)
-                        ;; `path-true' is "/foo/static/bar/baz.png",
-                        ;; return "bar/baz.png".
-                        ;; (message "[ox-hugo DBG attch rewrite] path contains static")
-                        ;; If path-true contains "/static/", set the
-                        ;; `dest-dir' to `static-dir' (even if this is a
-                        ;; page bundle).
-                        (setq dest-dir static-dir)
-                        (substring path-true (match-end 0)))
-                       (bundle-dir
-                        (cond
-                         ((string-match (concat "/" (regexp-quote bundle-name) "/") path-true)
-                          ;; This is a page bundle.  `bundle-name' is
-                          ;; "<BUNDLE_NAME>", `path-true' is
-                          ;; "<ORG_FILE_DIR>/bar/<BUNDLE_NAME>/zoo/baz.png",
-                          ;; return "zoo/baz.png".
-                          ;; (message "[ox-hugo DBG attch rewrite BUNDLE 1] bundle-name: %s" bundle-name)
-                          ;; (message "[ox-hugo DBG attch rewrite BUNDLE 1] attch along with Org content: %s"
-                          ;;          (substring path-true (match-end 0)))
-                          (substring path-true (match-end 0)))
-                         ((string-match (regexp-quote default-directory) path-true)
-                          ;; This is a page bundle.  `default-path' is
-                          ;; "<ORG_FILE_DIR>/", `path-true' is
-                          ;; "<ORG_FILE_DIR>/bar/baz.png", return
-                          ;; "bar/baz.png".
-                          ;; (message "[ox-hugo DBG attch rewrite BUNDLE 2] attch along with Org content: %s"
-                          ;;          (substring path-true (match-end 0)))
-                          (substring path-true (match-end 0)))
-                         (t
-                          ;; This is a page bundle.  `default-path' is
-                          ;; "<ORG_FILE_DIR>/", `path-true' is
-                          ;; "/foo/bar/baz.png", return "baz.png".
-                          ;; (message "[ox-hugo DBG attch rewrite BUNDLE 3] attch neither in static nor in Org file dir")
-                          (file-name-nondirectory path-unhexified))))
-                       (t
-                        ;; Else, `path-true' is "/foo/bar/baz.png",
-                        ;; return "ox-hugo/baz.png".  "ox-hugo" is the
-                        ;; default value of
-                        ;; `org-hugo-default-static-subdirectory-for-externals'.
-                        ;; (message "[ox-hugo DBG attch rewrite] neither BUNDLE nor contains static")
-                        (concat
-                         (file-name-as-directory org-hugo-default-static-subdirectory-for-externals)
-                         (file-name-nondirectory path-unhexified)))))
-                     (dest-path (concat dest-dir file-name-relative-path))
-                     (dest-path-dir (file-name-directory dest-path)))
-                ;; The `dest-dir' would already exist.  But if
-                ;; `file-name-relative-path' is "images/image.png" or
-                ;; "foo/bar.txt", it's likely that "`dest-dir'/images"
-                ;; or "`dest-dir'/foo" might not exist.  So create those
-                ;; if needed below.
-                (unless (file-exists-p dest-path-dir)
-                  (mkdir dest-path-dir :parents))
-                ;; (message "[ox-hugo DBG attch rewrite] file-name-relative-path: %s" file-name-relative-path)
-                ;; (message "[ox-hugo DBG attch rewrite] dest-path: %s" dest-path)
-                ;; (message "[ox-hugo DBG attch rewrite] dest-path-dir: %s" dest-path-dir)
-
-                ;; Do the copy only if the file to be copied is newer or
-                ;; doesn't exist in the static dir.
-                (when (file-newer-than-file-p path-true dest-path)
-                  (message "[ox-hugo] Copied %S to %S" path-true dest-path)
-                  (copy-file path-true dest-path :ok-if-already-exists))
-                (setq ret (if (and bundle-dir
-                                   (string= bundle-dir dest-dir))
-                              ;; If attachments are copied to the bundle
-                              ;; directory, don't prefix the path as "/"
-                              ;; as those paths won't exist at the site
-                              ;; base URL.
-                              file-name-relative-path
-                            (concat "/" file-name-relative-path))))))
-        (setq ret path))
-      ;; (message "[ox-hugo DBG attch rewrite] returned path: %s" ret)
-      ret))
-  )
 
 ;;; NOTE consult-omni with extra
 

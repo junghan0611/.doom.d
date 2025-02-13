@@ -65,7 +65,6 @@
 ;; org-hugo-base-dir
 (defconst user-hugo-blog-dir (concat user-project-directory "blog/"))
 (defconst user-hugo-notes-dir (concat user-project-directory "notes/"))
-(defconst user-hugo-notes-static-dir (concat user-hugo-notes-dir "quartz/")) ;; org-hugo-base-dir
 
 ;;;; directories
 

@@ -5213,6 +5213,7 @@ Suitable for `imenu-create-index-function'."
 
 (after! elfeed-tube
   (require 'elfeed-tube)
+  ;; (setq elfeed-tube-invidious-url "https://vid.puffyan.us")
   (setq elfeed-tube-captions-languages '("en" "ko" "englsh (auto generated)")))
 
 ;;;; DONT :app @mastodon
