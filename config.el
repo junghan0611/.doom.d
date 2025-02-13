@@ -295,7 +295,7 @@
         )
 
   (when (display-graphic-p) ; gui
-    (setq modus-themes-variable-pitch-ui t)
+    ;; (setq modus-themes-variable-pitch-ui t)
     ;; The `modus-themes-headings' is an alist: read the manual's
     ;; node about it or its doc string. Basically, it supports
     ;; per-level configurations for the optional use of
@@ -434,8 +434,8 @@
   ;; combined in any order.
   (setq ef-themes-region '(intense no-extend neutral))
 
-  (when (display-graphic-p) ; gui
-    (setq ef-themes-variable-pitch-ui t))
+  ;; (when (display-graphic-p) ; gui
+  ;;   (setq ef-themes-variable-pitch-ui t))
 
   (defun my/ef-themes-custom-faces ()
     "Configure `hl-todo-keyword-faces' with Ef themes colors.

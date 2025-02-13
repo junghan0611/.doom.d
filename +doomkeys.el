@@ -114,17 +114,6 @@
       :map evil-normal-state-map
       "." #'+default/search-buffer) ;; / -> .
 
-;;;; 's' search
-
-(map! :leader
-      "/" nil
-      "s f" #'+vertico/consult-fd-or-find
-      :desc "my/consult-fd" "s F" #'my/consult-fd
-      :desc "consult-locate" "s M-l" #'consult-locate
-      ;; :desc "Search project" "/" #'+default/search-project
-      ;; :desc "Search cwd" "/" #'+default/search-cwd
-      :desc "Search for symbol in cwd" "s SPC" #'my/search-cwd-symbol-at-point)
-
 ;;;; 'v' er/expand-region
 
 (map! :leader
@@ -488,10 +477,17 @@
 
 (map! :leader
       (:prefix ("s" . "search/symbol")
-       :desc "consult-omni-transient" "/" #'consult-omni-transient
+       ;; "/" nil
+       ;; :desc "my/consult-fd" "s F" #'my/consult-fd
+       ;; :desc "Search project" "/" #'+default/search-project
+       ;; :desc "Search cwd" "/" #'+default/search-cwd
+       :desc "+vertico/consult-fd-find" "f" #'+vertico/consult-fd-or-find ; Locate file
+       :desc "Search for symbol in cwd" "SPC" #'my/search-cwd-symbol-at-point
        :desc "eww-search-words" "1" #'eww-search-words
        :desc "find-name-dired" "2" #'find-name-dired
        :desc "search-github-with-lang" "g" #'+search-github-with-lang
+       :desc "consult-omni-transient" "n" #'consult-omni-transient
+       :desc "consult-locate" "M-l" #'consult-locate
        :desc "imenu" "j" #'imenu)
       )
 
@@ -820,7 +816,8 @@
                  "D" #'org-attach-delete-all
                  "l" #'+org/attach-file-and-insert-link
                  "f" #'my/consult-org-screenshot
-                 "F" #'+org/find-file-in-attachments
+                 "F" #'+vertico/consult-fd-or-find
+                 ;; "F" #'+org/find-file-in-attachments
                  "n" #'org-attach-new
                  "o" #'org-attach-open
                  "O" #'org-attach-open-in-emacs
