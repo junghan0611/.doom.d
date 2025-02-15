@@ -1416,41 +1416,43 @@
       ;;          )
       )
 
-;;;; python-mode-map
+;;;; DONT python-mode-map
 
-(map! :after python
-      :localleader
-      :map python-mode-map
-      (:prefix ("t" . "test")
-               "a" #'python-pytest
-               "f" #'python-pytest-file-dwim
-               "F" #'python-pytest-file
-               "t" #'python-pytest-function-dwim
-               "T" #'python-pytest-function
-               "r" #'python-pytest-repeat
-               "p" #'python-pytest-dispatch)
-      (:prefix ("h" . "help")
-               "l" #'pylookup-lookup
-               "h" #'pylookup-lookup-at-point)
-      (:prefix ("e" . "pipenv")
-       :desc "activate"    "a" #'pipenv-activate
-       :desc "deactivate"  "d" #'pipenv-deactivate
-       :desc "install"     "i" #'pipenv-install
-       :desc "lock"        "l" #'pipenv-lock
-       :desc "open module" "o" #'pipenv-open
-       :desc "run"         "r" #'pipenv-run
-       :desc "shell"       "s" #'pipenv-shell
-       :desc "uninstall"   "u" #'pipenv-uninstall)
-      (:prefix ("i" . "imports")
-       :desc "Insert missing imports" "i" #'pyimport-insert-missing
-       :desc "Remove unused imports"  "R" #'pyimport-remove-unused
-       :desc "Optimize imports"       "o" #'+python/optimize-imports)
-      ;; (:prefix ("g" . "conda")
-      ;;          "a" #'conda-env-activate
-      ;;          "d" #'conda-env-deactivate
-      ;;          "l" #'conda-env-list
-      ;;          "t" #'conda-env-autoactivate-mode)
-      )
+;; (after! python
+;;   (map! :after python
+;;         :localleader
+;;         :map python-mode-map
+;;         (:prefix ("t" . "test")
+;;                  "a" #'python-pytest
+;;                  "f" #'python-pytest-file-dwim
+;;                  "F" #'python-pytest-file
+;;                  "t" #'python-pytest-function-dwim
+;;                  "T" #'python-pytest-function
+;;                  "r" #'python-pytest-repeat
+;;                  "p" #'python-pytest-dispatch)
+;;         (:prefix ("h" . "help")
+;;                  "l" #'pylookup-lookup
+;;                  "h" #'pylookup-lookup-at-point)
+;;         (:prefix ("e" . "pipenv")
+;;          :desc "activate"    "a" #'pipenv-activate
+;;          :desc "deactivate"  "d" #'pipenv-deactivate
+;;          :desc "install"     "i" #'pipenv-install
+;;          :desc "lock"        "l" #'pipenv-lock
+;;          :desc "open module" "o" #'pipenv-open
+;;          :desc "run"         "r" #'pipenv-run
+;;          :desc "shell"       "s" #'pipenv-shell
+;;          :desc "uninstall"   "u" #'pipenv-uninstall)
+;;         (:prefix ("i" . "imports")
+;;          :desc "Insert missing imports" "i" #'pyimport-insert-missing
+;;          :desc "Remove unused imports"  "R" #'pyimport-remove-unused
+;;          :desc "Optimize imports"       "o" #'+python/optimize-imports)
+;;         ;; (:prefix ("g" . "conda")
+;;         ;;          "a" #'conda-env-activate
+;;         ;;          "d" #'conda-env-deactivate
+;;         ;;          "l" #'conda-env-list
+;;         ;;          "t" #'conda-env-autoactivate-mode)
+;;         )
+;;   )
 
 ;;;; csv-mode-map
 

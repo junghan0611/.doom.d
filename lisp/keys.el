@@ -1107,7 +1107,6 @@
 ;;   (keymap-set reb-lisp-mode-map "C-;" #'casual-re-builder-tmenu)
 
 ;; ; 'M-a' backward-sentence -> '(' evil-backward-sentence-begin
-;;   (keymap-global-set "M-a" #'casual-avy-tmenu)
 ;;   ;; M-e ews-denote-map
 
 ;;   (require 'casual-bookmarks) ;; optional

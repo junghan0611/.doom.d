@@ -345,49 +345,38 @@ If USE-RELREF is non-nil, format it as a Hugo relref link."
 
 ;;;; KLUDGE my/insert-hugo-xxxx
 
-(progn
-  (defun my/insert-hugo-lastmod-time-stamp ()
-    (interactive)
-    (save-excursion
-      (goto-char 0)
-      (search-forward "date:")
-      (end-of-line)
-      (insert "\n#+hugo_lastmod: Time-stamp: <>"
-              )))
-
-  (defun my/insert-hugo-lastmod-time-stamp-on-directory (directory)
-    "Export all Org files in the specified DIRECTORY to Markdown using `org-hugo-export-to-md`."
-    (interactive "DSelect directory: ")
-    (let ((org-files (directory-files-recursively directory "\\.org\\'")))
-      (dolist (org-file org-files)
-        (with-current-buffer (find-file-noselect org-file)
-          (my/insert-hugo-lastmod-time-stamp)
-          ))))
-  )
-
-;; ;; (diredp-do-apply/eval-marked 'my/insert-hugo-categories '(4))
 ;; (progn
-;;   (defun my/insert-hugo-categories ()
-
-;;     "Add metadata to current org-mode file containing export file name.
-;;   Export File Name is returned by `denote-retrieve-title-value'."
+;;   (defun my/insert-hugo-lastmod-time-stamp ()
 ;;     (interactive)
 ;;     (save-excursion
 ;;       (goto-char 0)
-;;       (search-forward "export_file_name")
+;;       (search-forward "date:")
 ;;       (end-of-line)
-;;       (insert "\n#+HUGO_CATEGORIES: notes"
+;;       (insert "\n#+hugo_lastmod: "
 ;;               )))
 
-;;   (defun my/insert-hugo-categories-on-directory (directory)
+;;   (defun my/insert-hugo-lastmod-time-stamp-on-directory (directory)
 ;;     "Export all Org files in the specified DIRECTORY to Markdown using `org-hugo-export-to-md`."
 ;;     (interactive "DSelect directory: ")
 ;;     (let ((org-files (directory-files-recursively directory "\\.org\\'")))
 ;;       (dolist (org-file org-files)
 ;;         (with-current-buffer (find-file-noselect org-file)
-;;           (my/insert-hugo-categories)
+;;           (my/insert-hugo-lastmod-time-stamp)
 ;;           ))))
 ;;   )
+
+
+;; Howto - my/process-files-by-extension
+;; (defun my/insert-hugo-tags ()
+;;   (interactive)
+;;   (save-excursion
+;;     (goto-char 0)
+;;     (search-forward "export_file_name")
+;;     (end-of-line)
+;;     (insert "\n#+hugo_tags: notes"
+;;             )))
+
+;; ;; (diredp-do-apply/eval-marked 'my/insert-hugo-categories '(4))
 
 ;; (progn
 ;;   (defun my/insert-hugo-bibliography ()

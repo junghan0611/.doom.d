@@ -379,11 +379,12 @@ Also see `prot-window-delete-popup-frame'." command)
     ;; (add-hook 'write-file-functions 'time-stamp)
     ;; M-x time-stamp
     ;; Update last modified date for ox-hugo export
+    ;; (add-hook 'before-save-hook 'time-stamp)
     (setq time-stamp-active t
           time-stamp-start "#\\+hugo_lastmod:[ \t]*"
           time-stamp-end "$"
           time-stamp-format "\[%Y-%m-%d\]")
-    (add-hook 'before-save-hook 'time-stamp))
+    )
 
   (setq org-hugo-front-matter-format 'yaml)
 

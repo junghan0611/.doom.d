@@ -228,11 +228,12 @@
 (use-package! modus-themes
   :commands (modus-themes-toggle)
   :init
-  (setq modus-themes-to-toggle
-        (let ((hr (nth 2 (decode-time))))
-          (if (or (< hr 6) (< 19 hr)) ; between 8 PM and 7 AM
-              '(modus-vivendi-tinted modus-operandi) ; load dark theme first
-            '(modus-operandi modus-vivendi-tinted))))
+  (setq modus-themes-to-toggle '(modus-operandi modus-operandi-tinted))
+  ;; (setq modus-themes-to-toggle
+  ;;       (let ((hr (nth 2 (decode-time))))
+  ;;         (if (or (< hr 6) (< 19 hr)) ; between 8 PM and 7 AM
+  ;;             '(modus-vivendi-tinted modus-operandi) ; load dark theme first
+  ;;           '(modus-operandi modus-vivendi-tinted))))
   :config
   (setq modus-themes-italic-constructs nil
         modus-themes-bold-constructs t
@@ -972,16 +973,10 @@
 (use-package! pylookup
   :commands (pylookup-lookup pylookup-update pylookup-update-all)
   :config
-  ;; (spacemacs/set-leader-keys-for-major-mode 'python-mode
-  ;;                                           "hH" 'pylookup-lookup)
-  ;; (evilified-state-evilify-map pylookup-mode-map
-  ;;                              :mode pylookup-mode)
-  (setq
-   pylookup-dir (concat user-dotemacs-dir "local/pylookup/")
-   pylookup-program (concat pylookup-dir "pylookup.py")
-   pylookup-db-file (concat pylookup-dir "pylookup.db"))
-  (setq pylookup-completing-read 'completing-read)
-  (setq pylookup-html-locations '("http://docs.python.org/ko/3.10")))
+  (setq pylookup-dir (concat user-dotemacs-dir "local/pylookup/")
+        pylookup-program (concat pylookup-dir "pylookup.py")
+        pylookup-db-file (concat pylookup-dir "pylookup.db"))
+  (setq pylookup-html-locations '("http://docs.python.org/ko/3.12")))
 
 ;;;; prot-dired-grep-marked-files
 
@@ -1883,15 +1878,6 @@
 ;;   (add-to-list 'flycheck-checkers 'racket-review)
 ;;   )
 
-;;; treesit-auto
-
-;; (use-package! treesit-auto
-;;   :custom
-;;   (treesit-auto-install 'prompt)
-;;   :config
-;;   (treesit-auto-add-to-auto-mode-alist 'all)
-;;   (global-treesit-auto-mode))
-
 ;;; Load ccmenu
 
 ;;;; with ccmenu
@@ -1908,9 +1894,9 @@
          ("C-c C-p C-r" . webpaste-paste-region)
          ("C-c C-p C-p" . webpaste-paste-buffer-or-region)))
 
-(use-package! fireplace :defer t)
-(use-package! snow :defer t)
-(use-package! selectric-mode :defer t)
+;; (use-package! fireplace :defer t)
+;; (use-package! snow :defer t)
+;; (use-package! selectric-mode :defer t)
 
 ;;;; ccmenu: context-menu with casual
 
@@ -1941,9 +1927,8 @@
 
 ;; The arguments passed to the [[https://ipython.org/][ipython]] or [[https://jupyter.org/][jupyter]] shells can be altered through
 ;; these two variables:
-;; (setq +python-ipython-repl-args '("-i" "--simple-prompt" "--no-color-info"))
-;; (setq +python-jupyter-repl-args '("--simple-prompt"))
-;; (setq jupyter-repl-echo-eval-p t)
+(setq +python-ipython-repl-args '("-i" "--simple-prompt" "--no-color-info"))
+(setq +python-jupyter-repl-args '("--simple-prompt"))
 
 ;;;; recent-rgrep
 

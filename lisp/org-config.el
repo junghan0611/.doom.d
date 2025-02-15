@@ -382,14 +382,12 @@
 
 (setq org-indent-mode-turns-on-hiding-stars nil) ; default t -- MINE
 (setq org-indent-mode-turns-off-org-adapt-indentation t) ; must t, default t
-
-;; org-indent-mode 사용하면 org-hide-leading-stars 자동 on
-;; (setq org-hide-leading-stars nil) ; doom t
+(setq org-hide-leading-stars nil) ; doom t
 
 ;;;; DONT custom indentation
 
 ;; (setq org-adapt-indentation t)
-(setq org-startup-indented t) ; doom t, spacemacs nil
+(setq org-startup-indented nil) ; doom t, spacemacs nil
 (setq org-src-preserve-indentation t) ; doom t, spacemacs nil
 (setq org-edit-src-content-indentation 0) ; default 2
 

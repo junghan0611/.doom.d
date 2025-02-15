@@ -993,11 +993,11 @@
   (setq eldoc-echo-area-use-multiline-p nil) ;  important - default 'truncate-sym-name-if-fit
   (setq eldoc-echo-area-display-truncation-message nil)
   (setq eldoc-echo-area-prefer-doc-buffer t) ; default nil - alway show echo-area
-  )
 
-;; =M-x eldoc-doc-buffer= 함수 호출로 표시하는 buffer 크기 조절
-;; (set-popup-rule! "^\\*eldoc for" :size 0.2 :vslot -1)
-;; eldoc-display-functions '(eldoc-display-in-echo-area eldoc-display-in-buffer)
+  ;; =M-x eldoc-doc-buffer= 함수 호출로 표시하는 buffer 크기 조절
+  (set-popup-rule! "^\\*eldoc for" :size 0.2 :vslot -1) ; "*eldoc*"
+  ;; eldoc-display-functions '(eldoc-display-in-echo-area eldoc-display-in-buffer)
+  )
 
 ;;;; OKAY Flycheck
 
@@ -2610,18 +2610,18 @@ ${content}"))
   :if window-system
   :init
   (add-hook 'org-mode-hook 'org-appear-mode)
-(setq org-appear-autolinks t ;; nil
-      org-appear-autoemphasis t
-      org-appear-autosubmarkers t)
-(setq org-appear-trigger 'manual) ;'on-change
-:config
-(when org-appear-trigger 'manual
-      (add-hook 'org-mode-hook
-                (lambda ()
-                  (add-hook 'evil-insert-state-entry-hook #'org-appear-manual-start nil t)
-                  (add-hook 'evil-insert-state-exit-hook #'org-appear-manual-stop nil t)))
-      )
-)
+  (setq org-appear-autolinks t ;; nil
+        org-appear-autoemphasis t
+        org-appear-autosubmarkers t)
+  (setq org-appear-trigger 'manual) ;'on-change
+  :config
+  (when org-appear-trigger 'manual
+        (add-hook 'org-mode-hook
+                  (lambda ()
+                    (add-hook 'evil-insert-state-entry-hook #'org-appear-manual-start nil t)
+                    (add-hook 'evil-insert-state-exit-hook #'org-appear-manual-stop nil t)))
+        )
+  )
 
 ;;;;; org-rich-yank
 
@@ -3090,14 +3090,14 @@ ${content}"))
 
   (setq denote-org-front-matter
         "#+title:      %1$s
-#+hugo_lastmod: Time-stamp: <>
+#+hugo_lastmod: %2$s
 #+filetags:   %3$s
 #+date:       %2$s
 #+identifier: %4$s
 #+export_file_name: %4$s.md
 #+description:
 #+hugo_categories: Noname
-#+hugo_tags: \"fleeting\"
+#+hugo_tags:
 
 #+print_bibliography:
 
@@ -4001,58 +4001,58 @@ ${content}"))
 ;; (use-package! wolfram
 ;;   :config (setq wolfram-alpha-app-id user-wolfram-alpha-app-id))
 
-;;;; DONT llmclient: github copilot
+;;;; llmclient: github copilot
 
-;; (use-package! copilot
-;;   :commands (copilot-login copilot-diagnose)
-;;   :init
-;;   ;; Sometimes the copilot agent doesn't start. Restarting fixes the issue.
-;;   (setq copilot-indent-offset-warning-disable t
-;;         copilot-max-char 10000) ; default 100000
-;;   :bind (:map copilot-completion-map
-;;               ("C-g" . 'copilot-clear-overlay)
-;;               ("M-p" . 'copilot-previous-completion)
-;;               ("M-n" . 'copilot-next-completion)
-;;               ("<tab>" . 'copilot-accept-completion) ; vscode
-;;               ("TAB" . 'copilot-accept-completion) ; vscode
-;;               ("M-f" . 'copilot-accept-completion-by-word)
-;;               ("M-<return>" . 'copilot-accept-completion-by-line)
-;;               ("M-]" . 'copilot-next-completion) ; vscode
-;;               ("M-[" . 'copilot-next-completion) ; vscode
-;;               ;; ("C-'" . 'copilot-accept-completion)
-;;               ;; ("C-;" . 'copilot-accept-completion)
-;;               )
-;;   ;; :hook ((prog-mode . copilot-mode))
-;;   ;; (org-mode . copilot-mode)
-;;   ;; (markdown-mode . copilot-mode)
-;;   )
+(use-package! copilot
+  :commands (copilot-login copilot-diagnose)
+  :init
+  ;; Sometimes the copilot agent doesn't start. Restarting fixes the issue.
+  (setq copilot-indent-offset-warning-disable t
+        copilot-max-char 10000) ; default 100000
+  :bind (:map copilot-completion-map
+              ("C-g" . 'copilot-clear-overlay)
+              ("M-p" . 'copilot-previous-completion)
+              ("M-n" . 'copilot-next-completion)
+              ("<tab>" . 'copilot-accept-completion) ; vscode
+              ("TAB" . 'copilot-accept-completion) ; vscode
+              ("M-f" . 'copilot-accept-completion-by-word)
+              ("M-<return>" . 'copilot-accept-completion-by-line)
+              ("M-]" . 'copilot-next-completion) ; vscode
+              ("M-[" . 'copilot-next-completion) ; vscode
+              ;; ("C-'" . 'copilot-accept-completion)
+              ;; ("C-;" . 'copilot-accept-completion)
+              )
+  ;; :hook ((prog-mode . copilot-mode))
+  ;; (org-mode . copilot-mode)
+  ;; (markdown-mode . copilot-mode)
+  )
 
-;;;; DONT llmclient: github copilot-chat
+;;;; llmclient: github copilot-chat
 
-;; (use-package! copilot-chat
-;;   :after request
-;;   :config
-;;   (setq copilot-chat-backend 'request)
-;;   (setq copilot-chat-frontend 'markdown)
-;;   ;; From https://github.com/chep/copilot-chat.el/issues/24
-;;   (defun meain/copilot-chat-display (prefix)
-;;     "Opens the Copilot chat window, adding the current buffer to the context.
-;; Called with a PREFIX, resets the context buffer list before opening"
-;;     (interactive "P")
+(use-package! copilot-chat
+  :after request
+  :config
+  (setq copilot-chat-backend 'request)
+  (setq copilot-chat-frontend 'markdown)
+  ;; From https://github.com/chep/copilot-chat.el/issues/24
+  (defun meain/copilot-chat-display (prefix)
+    "Opens the Copilot chat window, adding the current buffer to the context.
+Called with a PREFIX, resets the context buffer list before opening"
+    (interactive "P")
 
-;;     (require 'copilot-chat)
-;;     (let ((buf (current-buffer)))
+    (require 'copilot-chat)
+    (let ((buf (current-buffer)))
 
-;;       ;; Explicit reset before doing anything, avoid it resetting later on
-;;       ;; target-fn and ignoring the added buffers
-;;       (unless (copilot-chat--ready-p)
-;;         (copilot-chat-reset))
+      ;; Explicit reset before doing anything, avoid it resetting later on
+      ;; target-fn and ignoring the added buffers
+      (unless (copilot-chat--ready-p)
+        (copilot-chat-reset))
 
-;;       (when prefix (copilot-chat--clear-buffers))
+      (when prefix (copilot-chat--clear-buffers))
 
-;;       (copilot-chat--add-buffer buf)
-;;       (copilot-chat-display)))
-;;   )
+      (copilot-chat--add-buffer buf)
+      (copilot-chat-display)))
+  )
 
 ;;;; DONT llmclient: codeium
 
@@ -4102,43 +4102,43 @@ ${content}"))
 
 ;;; :lang coding
 
-;;;; DONT lsp-mode - lsp-ui-mode - lsp-treemacs
+;;;; lsp-mode - lsp-ui-mode - lsp-treemacs
 
-;; (progn
-;;   (after! lsp-mode
-;;     ;; lsp 관련 설정 메뉴들. 느리게 만드는 범인중 십중팔구 LSP가 관련되어져 있다고 함.
-;;     ;; 해당 튜닝도 구글링을 통해서 찾았다.
-;;     (setq lsp-file-watch-threshold (* 1024 1024))
-;;     (setq read-process-output-max (* 1024 1024))
+(progn
+  (after! lsp-mode
+    ;; lsp 관련 설정 메뉴들. 느리게 만드는 범인중 십중팔구 LSP가 관련되어져 있다고 함.
+    ;; 해당 튜닝도 구글링을 통해서 찾았다.
+    (setq lsp-file-watch-threshold (* 1024 1024))
+    (setq read-process-output-max (* 1024 1024))
 
-;;     (setq
-;;      ;; lsp-keymap-prefix "M-c l"
-;;      lsp-headerline-breadcrumb-enable t ; Breadcrumb trail
-;;      lsp-headerline-breadcrumb-icons-enable nil
-;;      ;; lsp-headerline-breadcrumb-segments '(symbols) ; namespace & symbols, no file path
+    (setq
+     ;; lsp-keymap-prefix "M-c l"
+     lsp-headerline-breadcrumb-enable t ; Breadcrumb trail
+     lsp-headerline-breadcrumb-icons-enable nil
+     ;; lsp-headerline-breadcrumb-segments '(symbols) ; namespace & symbols, no file path
 
-;;      ;; lsp-lens-enable nil ; default t
-;;      ;; lsp-semantic-tokens-enable t ; enhance syntax highlight
+     lsp-lens-enable nil ; default t
+     ;; lsp-semantic-tokens-enable t ; enhance syntax highlight
 
-;;      ;; lsp-idle-delay 0.2  ; smooth LSP features response
-;;      lsp-eldoc-enable-hover nil ; disable all hover actions
-;;      ;; lsp-modeline-code-actions-segments '(count icon)
-;;      ;; lsp-navigation 'both ; default 'both ; 'simple or 'peek
-;;      ;; lsp-modeline-diagnostics-enable nil
-;;      ;; lsp-modeline-code-actions-enable nil
-;;      )
-;;     ;; (add-hook 'lsp-after-apply-edits-hook (lambda (&rest _) (save-buffer)))
-;;     )
+     ;; lsp-idle-delay 0.2  ; smooth LSP features response
+     lsp-eldoc-enable-hover nil ; disable all hover actions
+     ;; lsp-modeline-code-actions-segments '(count icon)
+     ;; lsp-navigation 'both ; default 'both ; 'simple or 'peek
+     ;; lsp-modeline-diagnostics-enable nil
+     ;; lsp-modeline-code-actions-enable nil
+     )
+    ;; (add-hook 'lsp-after-apply-edits-hook (lambda (&rest _) (save-buffer)))
+    )
 
-;;   (after! lsp-ui
-;;     (setq lsp-ui-doc-enable nil       ;; disable all doc popups
-;;           lsp-ui-sideline-enable nil  ;; disable sideline bar for less distraction
-;;           treemacs-space-between-root-nodes nil  ;; no spacing in treemacs views
-;;           lsp-ui-peek-enable t))
+  (after! lsp-ui
+    (setq lsp-ui-doc-enable nil       ;; disable all doc popups
+          lsp-ui-sideline-enable nil  ;; disable sideline bar for less distraction
+          treemacs-space-between-root-nodes nil  ;; no spacing in treemacs views
+          lsp-ui-peek-enable t))
 
-;;   (after! lsp-treemacs
-;;     (setq lsp-treemacs-error-list-current-project-only t))
-;;   )
+  (after! lsp-treemacs
+    (setq lsp-treemacs-error-list-current-project-only t))
+  )
 
 ;;;; goto-addr
 
@@ -4155,25 +4155,24 @@ ${content}"))
   ;; (global-goto-address-mode +1)
   )
 
-;;;; TODO devdocs-browser
+;;;; devdocs-browser
 
-;; 2024-01-31 Python 1.14, NumPy 1.23 pandas 1.5.0, Elixir 1.13
+;; 한글 번역 문서 지원
+;; devdocs-browser-install-doc - index 파일만 저장
+;; devdocs-browser-download-offline-data - 오프라인 전체 데이터 저장 (기본 영어)
+;; 2024-01-31 Python 3.11, NumPy 1.23 pandas 1.5.0, Elixir 1.13
 ;; 2024-06-26 common-lisp
 (use-package! devdocs-browser
-  :defer t
-  ;; :bind (("M-s-," . devdocs-browser-open) ;; M-s-/ yas-next-field
-  ;;           ("M-s-." . devdocs-browser-open-in))
+  :defer 2
+  :commands (devdocs-browser-open devdocs-browser-open-in)
+  :bind (("M-s-," . devdocs-browser-open) ;; M-s-/ yas-next-field
+         ("M-s-." . devdocs-browser-open-in))
   :config
-  (setq devdocs-browser-cache-directory
-        (concat doom-emacs-dir "devdocs-browser"))
-  (add-to-list
-   'devdocs-browser-major-mode-docs-alist '(js2-mode "javascript" "node"))
-  (add-to-list
-   'devdocs-browser-major-mode-docs-alist
-   '(python-mode "Python" "NumPy" "pandas"))
-  (add-to-list
-   'devdocs-browser-major-mode-docs-alist
-   '(python-ts-mode "Python" "NumPy" "pandas"))
+  (set-popup-rule! "*devdocs-.*\\*" :width 84 :side 'right :ttl t :select nil :quit nil :ttl 0)
+  (setq devdocs-browser-data-directory (concat doom-emacs-dir "devdocs-browser"))
+  (add-to-list 'devdocs-browser-major-mode-docs-alist '(js2-mode "javascript" "node"))
+  (add-to-list 'devdocs-browser-major-mode-docs-alist '(python-mode "Python" "NumPy" "pandas"))
+  ;; (add-to-list 'devdocs-browser-major-mode-docs-alist '(python-ts-mode "Python" "NumPy" "pandas"))
   ;; (add-to-list 'devdocs-browser-major-mode-docs-alist '(elixir-ts-mode "Elixir"))
   ;; (add-to-list 'devdocs-browser-major-mode-docs-alist '(rjsx-mode "react" "javascript" "node"))
   ;; (add-to-list 'devdocs-browser-major-mode-docs-alist '(typescript-ts-mode "typescript"))
@@ -4262,21 +4261,30 @@ ${content}"))
   (define-key yas/keymap (kbd "M-p") 'yas-prev-field)
   )
 
-;;;; Eglot + Flycheck
+;;;; DONT Eglot + Flycheck
 
-(use-package! eglot
-  :bind
-  (:map
-   eglot-mode-map ("C-c d" . eldoc) ("C-c a" . eglot-code-actions)
-   ;; ("C-c f" . flymake-show-buffer-diagnostics) ;; flycheck
-   ("C-c r" . eglot-rename)))
+;; (use-package! eglot
+;;   :bind
+;;   (:map
+;;    eglot-mode-map ("C-c d" . eldoc) ("C-c a" . eglot-code-actions)
+;;    ;; ("C-c f" . flymake-show-buffer-diagnostics) ;; flycheck
+;;    ("C-c r" . eglot-rename)))
 
 ;;;; bats-mode for testing awk bash
 
 (use-package! bats-mode :defer t)
 
-;;;; TODO python
+;;;;; remove python-mode-hook
+
+;; (remove-hook 'python-mode-local-vars-hook 'spacemacs//python-setup-backend)
+;; (remove-hook 'python-mode-hook 'spacemacs//python-default)
+
 ;;;;; TODO python-pytest
+
+;; pytest.ini
+;; [pytest]
+;; markers =
+;;     task: A concept exercise task.
 
 ;; (after! python-pytest
 ;; (add-to-list 'pytest-project-root-files "setup.cfg")
@@ -5010,7 +5018,7 @@ Suitable for `imenu-create-index-function'."
   (setq dired-use-ls-dired t)  ; doom t
   (setq dired-do-revert-buffer t) ; doom nil
   ;; (setq dired-clean-confirm-killing-deleted-buffers t) ; doom nil
-  ;; (setq dired-kill-when-opening-new-dired-buffer t) ; doom nil
+  (setq dired-kill-when-opening-new-dired-buffer t) ; doom nil
 
   (require 'wdired)
   (setq wdired-allow-to-change-permissions t) ; doom nil

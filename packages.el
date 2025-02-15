@@ -67,13 +67,13 @@
 ;;; doom-disabled-packages
 
 (disable-packages!
- lsp-mode
- consult-lsp
+ ;; lsp-mode
+ ;; consult-lsp
  diredfl ; conflict denote
  dirvish
  code-review
- nose ; python module
- lsp-python-ms
+ ;; nose ; python module
+ ;; lsp-python-ms
  flyspell-lazy
  flymake-popon
  undo-fu-session
@@ -305,7 +305,9 @@
 
 ;;;; AI
 
-(package! minuet) ;; code completion using LLM
+(package! khoj)
+
+;; (package! minuet) ;; code completion using LLM
 (package! aider :recipe (:host github :repo "tninja/aider.el" :files ("aider.el" "aider-doom.el")))
 
 (package! llm)
@@ -330,7 +332,7 @@
 
 (package! whisper :recipe (:host github :repo "natrys/whisper.el"))
 
-(package! codeium :recipe (:host github :repo "Exafunction/codeium.el"))
+;; (package! codeium :recipe (:host github :repo "Exafunction/codeium.el"))
 
 ;; (package! ellama)
 ;; (package! openai :recipe (:host github :repo "emacs-openai/openai" :files ("*.el")))
@@ -363,6 +365,10 @@
   (package! clj-deps-new)
   (package! clojure-essential-ref-nov)
   (package! clay))
+
+(unpin! lsp-mode)
+(unpin! lsp-ui)
+(unpin! consult-lsp)
 
 (unpin! elisp-demos)
 (package! elisp-demos :recipe (:host github :repo "junghan0611/elisp-demos" :branch "ko")) ;; https://github.com/junghan0611/elisp-demos
@@ -506,14 +512,14 @@
 (package! webpaste)
 ;; (package! password-store-menu)
 
+(package! org-linenote) ; require lsp-mode
 (package! org-sliced-images)
 ;; (package! image-slicing :recipe (:host github :repo "ginqi7/image-slicing"))
-;; (package! org-linenote) ; require lsp-mode
 
 ;;;;; misc
 
-(package! fireplace)
-(package! snow)
-(package! selectric-mode)
+;; (package! fireplace)
+;; (package! snow)
+;; (package! selectric-mode)
 
 ;;; end-of file
