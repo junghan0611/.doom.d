@@ -254,45 +254,46 @@
         ;; '((matches   . (semibold))
         ;;   (selection . (semibold text-also)))
 
-        ;; modus-themes-common-palette-overrides
-        ;; `((fg-mode-line-active fg-main) ; Black
+        modus-themes-common-palette-overrides
+        `(
+          ;; (fg-mode-line-active fg-main) ; Black
 
-        ;;   ;; Comments are yellow, strings are green
-        ;;   (comment yellow-cooler)
-        ;;   (string green-warmer)
+          ;;   ;; Comments are yellow, strings are green
+          ;;   (comment yellow-cooler)
+          ;;   (string green-warmer)
 
-        ;;   ;; "Make the mode line borderless"
-        ;;   (border-mode-line-active unspecified)
-        ;;   (border-mode-line-inactive unspecified)
+          ;;   ;; "Make the mode line borderless"
+          ;;   (border-mode-line-active unspecified)
+          ;;   (border-mode-line-inactive unspecified)
 
-        ;;   ;; "Make matching parenthesis more or less intense"
-        ;;   (bg-paren-match bg-magenta-intense)
-        ;;   (underline-paren-match unspecified)
+          ;;   ;; "Make matching parenthesis more or less intense"
+          ;;   (bg-paren-match bg-magenta-intense)
+          ;;   (underline-paren-match unspecified)
 
-        ;;   ;; Intense magenta background combined with the main foreground
-        ;;   ;; (bg-region bg-magenta-subtle)
-        ;;   ;; (fg-region fg-main)
+          ;;   ;; Intense magenta background combined with the main foreground
+          ;;   ;; (bg-region bg-magenta-subtle)
+          ;;   ;; (fg-region fg-main)
 
-        ;;   ;; Links
-        ;;   ;; (underline-link border)
-        ;;   ;; (underline-link-visited border)
-        ;;   ;; (underline-link-symbolic border)
+          ;;   ;; Links
+          ;;   ;; (underline-link border)
+          ;;   ;; (underline-link-visited border)
+          ;;   ;; (underline-link-symbolic border)
 
-        ;;   (bg-heading-0 bg-green-subtle) ; green
-        ;;   ;; (bg-heading-1 bg-dim)
-        ;;   ;; (bg-heading-2 bg-yellow-nuanced)
-        ;;   ;; (bg-heading-3 bg-blue-nuanced) ; blue
+          ;; (bg-heading-0 bg-green-subtle) ; green
+          (bg-heading-1 bg-dim)
+          ;; (bg-heading-2 bg-yellow-nuanced)
+          ;; (bg-heading-3 bg-blue-nuanced) ; blue
 
-        ;;   ;; copy from intense
-        ;;   (overline-heading-0 unspecified)
-        ;;   (overline-heading-1 magenta-cooler)
-        ;;   (overline-heading-2 magenta-warmer)
+          ;;   ;; copy from intense
+          ;; (overline-heading-0 unspecified)
+          ;;   (overline-heading-1 magenta-cooler)
+          ;;   (overline-heading-2 magenta-warmer)
 
-        ;;   ;; And expand the preset here. Note that the ,@ works because we use
-        ;;   ;; the backtick for this list, instead of a straight quote.
-        ;;   ;; ,@modus-themes-preset-overrides-faint
-        ;;   ;; ,@modus-themes-preset-overrides-intense
-        ;;   )
+          ;;   ;; And expand the preset here. Note that the ,@ works because we use
+          ;;   ;; the backtick for this list, instead of a straight quote.
+          ;;   ;; ,@modus-themes-preset-overrides-faint
+          ,@modus-themes-preset-overrides-intense
+          )
         )
 
   (when (display-graphic-p) ; gui
@@ -306,7 +307,7 @@
           '(
             (0                . (bold 1.2)) ;; variable-pitch
             (1                . (bold  1.1))
-            (2                . (semibold 1.05))
+            (2                . (bold 1.05))
             (3                . (semibold 1.0))
             (4                . (medium 1.0))
             (5                . (medium 1.0))
@@ -395,7 +396,8 @@
         (spacious-padding-mode +1)))
     )
   (add-hook 'modus-themes-post-load-hook #'my/modus-themes-custom-faces)
-  ) ;; end-of use-package
+  )
+;; end-of use-package
 
 ;;;; ef-themes
 
@@ -444,58 +446,58 @@
     (interactive)
     ;; (message "ef-themes-post-load-hook : my-ef-themes-custom-faces")
     (ef-themes-with-colors
-     (custom-set-faces
-      `(consult-separator ((,c :inherit default :foreground ,yellow)))
-      `(consult-notes-time ((,c :inherit default :foreground ,cyan)))
+      (custom-set-faces
+       `(consult-separator ((,c :inherit default :foreground ,yellow)))
+       `(consult-notes-time ((,c :inherit default :foreground ,cyan)))
 
-      ;; `(ekg-notes-mode-title ((,c :inherit outline-1 :weight bold :height 1.0)))
-      ;; `(ekg-title ((,c :inherit outline-2 :weight semibold :height 1.0 :underline t)))
-      ;; `(ekg-tag ((,c :background ,bg-yellow-subtle :box (:line-width 1 :color ,fg-dim) :foreground ,fg-main :style nil))) ; prose-tag
-      ;; `(ekg-resource ((,c :inherit outline-7 :weight regular :height 1.0 :underline t)))
-      ;; `(ekg-metadata ((,c :inherit outline-1 :weight regular :height 1.0)))
+       ;; `(ekg-notes-mode-title ((,c :inherit outline-1 :weight bold :height 1.0)))
+       ;; `(ekg-title ((,c :inherit outline-2 :weight semibold :height 1.0 :underline t)))
+       ;; `(ekg-tag ((,c :background ,bg-yellow-subtle :box (:line-width 1 :color ,fg-dim) :foreground ,fg-main :style nil))) ; prose-tag
+       ;; `(ekg-resource ((,c :inherit outline-7 :weight regular :height 1.0 :underline t)))
+       ;; `(ekg-metadata ((,c :inherit outline-1 :weight regular :height 1.0)))
 
-      ;; `(org-link ((,c :inherit link :weight bold)))
-      ;; `(denote-faces-link ((,c :inherit link :weight bold :slant italic)))
-      ;; `(org-agenda-diary ((,c :inherit org-agenda-calendar-sexp :foreground ,fg-main :weight semibold)))
+       ;; `(org-link ((,c :inherit link :weight bold)))
+       ;; `(denote-faces-link ((,c :inherit link :weight bold :slant italic)))
+       ;; `(org-agenda-diary ((,c :inherit org-agenda-calendar-sexp :foreground ,fg-main :weight semibold)))
 
-      `(org-list-dt ((,c :foreground ,fg-main :weight bold))) ;; 2025-01-14
-      ;; `(org-tag ((,c :background ,bg-yellow-subtle :box (:line-width 1 :color ,fg-dim) :foreground ,fg-main :style nil))) ; prose-tag
-      `(diredp-file-name ((,c :foreground ,fg-main)))
+       `(org-list-dt ((,c :foreground ,fg-main :weight bold))) ;; 2025-01-14
+       ;; `(org-tag ((,c :background ,bg-yellow-subtle :box (:line-width 1 :color ,fg-dim) :foreground ,fg-main :style nil))) ; prose-tag
+       `(diredp-file-name ((,c :foreground ,fg-main)))
 
-      `(tab-bar ((,c :background ,bg-tab-bar)))
-      `(tab-bar-tab-group-current ((,c :inherit bold :background ,bg-tab-current :box (:line-width -2 :color ,bg-tab-current) :foreground ,fg-alt)))
-      `(tab-bar-tab-group-inactive ((,c :background ,bg-tab-bar :box (:line-width -2 :color ,bg-tab-bar) :foreground ,fg-alt)))
-      `(tab-bar-tab ((,c :inherit bold :box (:line-width -2 :color ,bg-tab-current) :background ,bg-tab-current)))
-      `(tab-bar-tab-inactive ((,c :box (:line-width -2 :color ,bg-tab-other) :background ,bg-tab-other)))
-      `(tab-bar-tab-ungrouped ((,c :inherit tab-bar-tab-inactive)))
+       `(tab-bar ((,c :background ,bg-tab-bar)))
+       `(tab-bar-tab-group-current ((,c :inherit bold :background ,bg-tab-current :box (:line-width -2 :color ,bg-tab-current) :foreground ,fg-alt)))
+       `(tab-bar-tab-group-inactive ((,c :background ,bg-tab-bar :box (:line-width -2 :color ,bg-tab-bar) :foreground ,fg-alt)))
+       `(tab-bar-tab ((,c :inherit bold :box (:line-width -2 :color ,bg-tab-current) :background ,bg-tab-current)))
+       `(tab-bar-tab-inactive ((,c :box (:line-width -2 :color ,bg-tab-other) :background ,bg-tab-other)))
+       `(tab-bar-tab-ungrouped ((,c :inherit tab-bar-tab-inactive)))
 
-      ;; `(keycast-command ((,c :inherit ef-themes-ui-variable-pitch :background ,bg-main :foreground ,fg-main :weight semibold)))
-      ;; `(keycast-command ((,c :inherit default :height 0.9)))
-      `(fringe ((,c :background ,bg-dim)))
-      `(org-mode-line-clock ((,c :inherit bold :foreground ,modeline-info)))
-      `(org-mode-line-clock-overrun ((,c :inherit bold :foreground ,modeline-err)))
-      `(jinx-misspelled ((,c :underline (:style wave :color ,magenta-cooler))))
-      ;; `(ten-id-face ((,c :inherit font-lock-keyword-face :underline (:style double-line :color ,cyan))))
-      )
-     (setq hl-todo-keyword-faces
-           `(("HOLD" . ,yellow)
-             ("TODO" . ,red)
-             ("NEXT" . ,blue)
-             ("THEM" . ,magenta)
-             ("PROG" . ,cyan-warmer)
-             ("OKAY" . ,green-warmer)
-             ("DONT" . ,yellow-warmer)
-             ("FAIL" . ,red-warmer)
-             ("BUG" . ,red-warmer)
-             ("DONE" . ,green)
-             ("NOTE" . ,blue-warmer)
-             ("KLUDGE" . ,cyan)
-             ("HACK" . ,cyan)
-             ("TEMP" . ,red)
-             ("FIXME" . ,red-warmer)
-             ("XXX+" . ,red-warmer)
-             ("REVIEW" . ,red)
-             ("DEPRECATED" . ,yellow))))
+       ;; `(keycast-command ((,c :inherit ef-themes-ui-variable-pitch :background ,bg-main :foreground ,fg-main :weight semibold)))
+       ;; `(keycast-command ((,c :inherit default :height 0.9)))
+       `(fringe ((,c :background ,bg-dim)))
+       `(org-mode-line-clock ((,c :inherit bold :foreground ,modeline-info)))
+       `(org-mode-line-clock-overrun ((,c :inherit bold :foreground ,modeline-err)))
+       `(jinx-misspelled ((,c :underline (:style wave :color ,magenta-cooler))))
+       ;; `(ten-id-face ((,c :inherit font-lock-keyword-face :underline (:style double-line :color ,cyan))))
+       )
+      (setq hl-todo-keyword-faces
+            `(("HOLD" . ,yellow)
+              ("TODO" . ,red)
+              ("NEXT" . ,blue)
+              ("THEM" . ,magenta)
+              ("PROG" . ,cyan-warmer)
+              ("OKAY" . ,green-warmer)
+              ("DONT" . ,yellow-warmer)
+              ("FAIL" . ,red-warmer)
+              ("BUG" . ,red-warmer)
+              ("DONE" . ,green)
+              ("NOTE" . ,blue-warmer)
+              ("KLUDGE" . ,cyan)
+              ("HACK" . ,cyan)
+              ("TEMP" . ,red)
+              ("FIXME" . ,red-warmer)
+              ("XXX+" . ,red-warmer)
+              ("REVIEW" . ,red)
+              ("DEPRECATED" . ,yellow))))
 
     (when (display-graphic-p) ; gui
       (when (locate-library "spacious-padding")
@@ -1048,7 +1050,7 @@
       (keycast-tab-bar-mode +1))
 
     ;; load modus-themes
-    (modus-themes-toggle)
+    ;; (modus-themes-toggle)
     )
 
   (add-hook 'doom-after-init-hook #'my/load-global-mode-string 80)

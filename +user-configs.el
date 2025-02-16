@@ -510,6 +510,9 @@
        :ttl nil)) ;; `Info-mode' jh
     )
 
+  ;; =M-x eldoc-doc-buffer= 함수 호출로 표시하는 buffer 크기 조절
+  (set-popup-rule! "^\\*eldoc for" :size 0.2 :vslot -1) ; "*eldoc*"
+
   ;; (add-hook 'imenu-list-major-mode-hook (lambda (tab-line-mode -1) ))
 
   ;; 와우 이거다. 태그랑 쓰기랑 나눠야 한다.
@@ -642,26 +645,6 @@
   ;; (add-hook 'markdown-mode-hook 'display-fill-column-indicator-mode)
   )
 
-
-;;;; backtrace-mode-hook
-
-(add-hook 'backtrace-mode-hook 'display-line-numbers-mode)
-(add-hook 'backtrace-mode-hook 'visual-line-mode)
-
-;;;; dabbrev
-
-(progn
-  (require 'dabbrev)
-  (setq dabbrev-abbrev-char-regexp "[가-힣A-Za-z-_]")
-  (setq dabbrev-ignored-buffer-regexps
-        '("\\` "
-          "\\.\\(?:pdf\\|jpe?g\\|png\\)\\'"
-          "\\(?:\\(?:[EG]?\\|GR\\)TAGS\\|e?tags\\|GPATH\\)\\(<[0-9]+>\\)?"))
-  (setq dabbrev-abbrev-skip-leading-regexp "[$*/=~']")
-  (setq dabbrev-upcase-means-case-search nil) ; default t
-  ;; (setq dabbrev-check-all-buffers t) ;; default t
-  )
-
 ;;;; fortune
 
 ;; not work on termux
@@ -671,10 +654,6 @@
   (setq fortune-dir (concat root-path "usr/share/games/fortunes/advice"))
   (setq fortune-file (concat root-path "usr/share/games/fortunes/advice")))
 
-;;;; goto-adddr
-
-;; Actionable URLs in Emacs buffers via [[http://xenodium.com/#actionable-urls-in-emacs-buffers][Álvaro Ramírez]].
-;; (define-key goto-address-highlight-keymap (kbd "C-c C-o") 'goto-address-at-point)
 
 ;;;; autorevert
 
@@ -984,20 +963,6 @@
 ;; ;; (add-hook 'prog-mode-hook 'cape-prog-mode-setup)
 
 ;;; :checkers
-
-;;;; Eldoc
-
-(progn
-  (require 'eldoc)
-  (setq eldoc-idle-delay 0)
-  (setq eldoc-echo-area-use-multiline-p nil) ;  important - default 'truncate-sym-name-if-fit
-  (setq eldoc-echo-area-display-truncation-message nil)
-  (setq eldoc-echo-area-prefer-doc-buffer t) ; default nil - alway show echo-area
-
-  ;; =M-x eldoc-doc-buffer= 함수 호출로 표시하는 buffer 크기 조절
-  (set-popup-rule! "^\\*eldoc for" :size 0.2 :vslot -1) ; "*eldoc*"
-  ;; eldoc-display-functions '(eldoc-display-in-echo-area eldoc-display-in-buffer)
-  )
 
 ;;;; OKAY Flycheck
 
@@ -2178,7 +2143,9 @@ only those in the selected frame."
 
 (use-package! tabgo)
 
-;;; :tools magit
+;;; :tools magit vc
+
+;;;; magit
 
 ;; Location of developer tokens - default ~/.authinfo
 ;; Use XDG_CONFIG_HOME location or HOME
@@ -4140,21 +4107,6 @@ Called with a PREFIX, resets the context buffer list before opening"
     (setq lsp-treemacs-error-list-current-project-only t))
   )
 
-;;;; goto-addr
-
-;; Actionable URLs in Emacs buffers via [[http://xenodium.com/#actionable-urls-in-emacs-buffers][Álvaro Ramírez]].
-(use-package! goto-addr
-  :hook
-  ((compilation-mode . goto-address-mode)
-   (prog-mode . goto-address-prog-mode)
-   (eshell-mode . goto-address-mode)
-   (shell-mode . goto-address-mode))
-  :bind (:map goto-address-highlight-keymap ("C-c C-o" . goto-address-at-point))
-  :commands (goto-address-prog-mode goto-address-mode)
-  ;; :config
-  ;; (global-goto-address-mode +1)
-  )
-
 ;;;; devdocs-browser
 
 ;; 한글 번역 문서 지원
@@ -5425,7 +5377,7 @@ Suitable for `imenu-create-index-function'."
     "Tweak nov-mode to our liking."
     (face-remap-add-relative 'variable-pitch
                              :family "Pretendard Variable"
-                             :height 1.2
+                             :height 1.1
                              :width 'semi-expanded)
     (face-remap-add-relative 'default :height 1.0)
     (variable-pitch-mode 1)
@@ -5441,7 +5393,6 @@ Suitable for `imenu-create-index-function'."
     ;; Look up words with the dictionary.
     (add-to-list '+lookup-definition-functions #'+lookup/dictionary-definition))
   (add-hook 'nov-mode-hook #'+nov-mode-setup 80)
-
   (setq font-lock-global-modes '(not nov-mode))
   )
 

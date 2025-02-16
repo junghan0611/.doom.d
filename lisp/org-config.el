@@ -796,6 +796,10 @@
 
 ;;; external dependency
 
+;; (setq org-contacts-files (list (my/org-contacts-file)))
+(when (locate-library "org-contacts")
+  (setq org-contacts-files org-user-contacts-files))
+
 ;;;; consult-org-agenda
 
 ;; (defun my/consult-org-agenda ()

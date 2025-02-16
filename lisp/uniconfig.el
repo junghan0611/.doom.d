@@ -14,10 +14,41 @@
 
 ;;; Configs
 
+;;;; backtrace-mode-hook
+
+(add-hook 'backtrace-mode-hook 'display-line-numbers-mode)
+(add-hook 'backtrace-mode-hook 'visual-line-mode)
+
+;;;; dabbrev
+
+(progn
+  (require 'dabbrev)
+  (setq dabbrev-abbrev-char-regexp "[가-힣A-Za-z-_]")
+  (setq dabbrev-ignored-buffer-regexps
+        '("\\` "
+          "\\.\\(?:pdf\\|jpe?g\\|png\\)\\'"
+          "\\(?:\\(?:[EG]?\\|GR\\)TAGS\\|e?tags\\|GPATH\\)\\(<[0-9]+>\\)?"))
+  (setq dabbrev-abbrev-skip-leading-regexp "[$*/=~']")
+  (setq dabbrev-upcase-means-case-search nil) ; default t
+  ;; (setq dabbrev-check-all-buffers t) ;; default t
+  )
+
+;;;; visual-line-mode
+
+;; /home/junghan/sync/man/dotsamples/vanilla/localauthor-dotfiles-zk/init.el:119
+;; (with-current-buffer "*Messages*"
+;;   (visual-line-mode))
+;; (with-current-buffer "*scratch*"
+;;   (visual-line-mode))
+
+(add-hook 'compilation-mode-hook 'visual-line-mode)
+;; (add-hook 'fundamental-mode-hook 'visual-line-mode)
+
 ;;;; Xref
 
 ;; Denote 23.9. Speed up backlinks’ buffer creation?
 ;; Prefer ripgrep, then ugrep, and fall back to regular grep.
+
 (setq xref-search-program
       (cond
        ((or (executable-find "ripgrep")
@@ -27,6 +58,12 @@
         'ugrep)
        (t
         'grep)))
+
+;; check below
+;; (setq xref-file-name-display 'project-relative)
+;; Use completing-read interface instead of definitions buffer (needs xref 1.1.0)
+;; (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
+;; (setq xref-show-definitions-function #'consult-xref) ;; default xref-show-definitions-buffer
 
 ;;; functions
 
@@ -214,7 +251,33 @@
   ;;   (tool-bar-mode 1))
   )
 
-;;;; eldoc toggle
+;;;; goto-addr
+
+;; Actionable URLs in Emacs buffers via [[http://xenodium.com/#actionable-urls-in-emacs-buffers][Álvaro Ramírez]].
+
+(progn
+  (require 'goto-addr)
+  ;; :hook
+  ;; ((compilation-mode . goto-address-mode)
+  ;;  (prog-mode . goto-address-prog-mode)
+  ;;  (eshell-mode . goto-address-mode)
+  ;;  (shell-mode . goto-address-mode))
+  ;; :bind (:map goto-address-highlight-keymap ("C-c C-o" . goto-address-at-point))
+  ;; :config
+  (global-goto-address-mode +1)
+  )
+
+;;;; Eldoc
+
+(progn
+  (require 'eldoc)
+  (setq eldoc-idle-delay 0)
+  (setq eldoc-echo-area-use-multiline-p nil) ;  important - default 'truncate-sym-name-if-fit
+  (setq eldoc-echo-area-display-truncation-message nil)
+  (setq eldoc-echo-area-prefer-doc-buffer t) ; default nil - alway show echo-area
+
+  ;; eldoc-display-functions '(eldoc-display-in-echo-area eldoc-display-in-buffer)
+  )
 
 ;;;###autoload
 (defun eldoc-toggle ()

@@ -581,11 +581,13 @@
       (evil-define-key '(normal visual) outli-mode-map (kbd "<backtab>") `(menu-item "" ,(lambda () (interactive) (outline-cycle -1)) :filter outli--on-heading))
       (evil-define-key '(normal visual) outli-mode-map (kbd "S-<iso-lefttab>") `(menu-item "" ,(lambda () (interactive) (outline-cycle -1)) :filter outli--on-heading))
 
-      ;; 'TAB' for terminal emacs
-      ;; (evil-define-key '(normal visual) outli-mode-map (kbd "<tab>") `(menu-item "" outline-cycle :filter outli--on-heading))
-      ;; (evil-define-key '(normal visual) outli-mode-map (kbd "TAB") `(menu-item "" outline-cycle :filter outli--on-heading))
+      ;; tab for outline-cycle
+      (evil-define-key '(normal visual) outli-mode-map (kbd "<tab>") `(menu-item "" outline-cycle :filter outli--on-heading))
+      (evil-define-key '(normal visual) outli-mode-map (kbd "TAB") `(menu-item "" outline-cycle :filter outli--on-heading)) ;; 'TAB' for terminal emacs
+
       ;; (evil-define-key '(normal visual) prog-mode-map (kbd "<tab>") 'indent-for-tab-command) ;; 2024-09-13 disable for evil-jump-items
       ;; (evil-define-key '(normal visual) prog-mode-map (kbd "TAB") 'indent-for-tab-command)
+
       (evil-define-key '(normal) outli-mode-map (kbd "C-c 1") (lambda () (interactive) (outline--show-headings-up-to-level 1)))
       (evil-define-key '(normal) outli-mode-map (kbd "C-c 2") (lambda () (interactive) (outline--show-headings-up-to-level 2)))
       (evil-define-key '(normal) outli-mode-map (kbd "C-c 3") (lambda () (interactive) (outline--show-headings-up-to-level 3)))
@@ -1078,6 +1080,8 @@
   )
 
 ;;;; DONT move to ccmenu : transient : casual-suite
+
+(keymap-global-set "M-a" #'casual-avy-tmenu)
 
 ;; (when (locate-library "casual-suite")
 ;;   (require 'casual-suite)
