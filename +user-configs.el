@@ -2895,7 +2895,6 @@ ${content}"))
 
 (progn
   (require 'citar)
-
   (setq citar-bibliography config-bibfiles)
   (setq org-cite-global-bibliography config-bibfiles)
 
@@ -2911,20 +2910,6 @@ ${content}"))
 
   ;; (setq citar-format-reference-function 'citar-citeproc-format-reference)
   (setq citar-format-reference-function 'citar-format-reference)
-
-  (setq
-   citar-templates
-   '((main
-      .
-      ;; [${urldate:10}]
-      "[${dateadded:10}] \{${datemodified:10}\} ${author editor:20} ${translator:8} (${date year issued:4}) @${=key= id:16} ${title:68} ")  ; 2024-09-12 김정한
-     (suffix
-      . "${shorttitle:25} ${=type=:10} ${namea:16} ${url:20} ${tags keywords:*}") ; 2024-11-17 add url
-     (preview
-      .
-      "${title} :${year issued date:4}\n- ${author} ${translator} ${namea}\n- ${abstract}\n- ${shorttitle}") ; citar-copy-reference
-     (note . "#+title: ${author translator:10}, ${title}")))
-  ;; (note . "Notes on ${author:10 editor:%etal}, ${title}")
 
   ;; Managing Bibliographies
   ;; (bibtex-user-optional-fields
@@ -4701,27 +4686,27 @@ x×X .,·°;:¡!¿?`'‘’   ÄAÃÀ TODO
   (remove-hook 'display-time-mode-hook #'doom-modeline-override-time)
   (remove-hook 'doom-modeline-mode-hook #'doom-modeline-override-time))
 
-;;;; DONT doom-themes
+;;;; doom-themes
 
-;; (use-package! doom-themes
-;;   ;; improve integration w/ org-mode
-;;   :hook ((doom-load-theme . doom-themes-org-config)
-;;          (doom-load-theme . doom-themes-visual-bell-config))
-;;   :init
-;;   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-;;         doom-themes-enable-italic nil) ; if nil, italics is universally disabled
-;;   (setq doom-themes-to-toggle
-;;         (let ((hr (nth 2 (decode-time))))
-;;           (if (or (< hr 6) (< 19 hr)) ; between 8 PM and 7 AM
-;;               '(doom-one doom-homage-white) ; load dark theme first
-;;             '(doom-homage-white doom-one))))
-;;   (setq doom-theme (car doom-themes-to-toggle))
-;;   ;; (load-theme doom-theme t)
+(use-package! doom-themes
+  ;; improve integration w/ org-mode
+  :hook ((doom-load-theme . doom-themes-org-config)
+         (doom-load-theme . doom-themes-visual-bell-config))
+  :init
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic nil) ; if nil, italics is universally disabled
+  (setq doom-themes-to-toggle
+        (let ((hr (nth 2 (decode-time))))
+          (if (or (< hr 6) (< 19 hr)) ; between 8 PM and 7 AM
+              '(doom-one doom-homage-white) ; load dark theme first
+            '(doom-homage-white doom-one))))
+  (setq doom-theme (car doom-themes-to-toggle))
+  ;; (load-theme doom-theme t)
 
-;;   (defun my/doom-themes-toggle ()
-;;     (interactive) (load-theme doom-theme t))
-;;   ;; (add-hook 'doom-after-reload-hook #'my/doom-themes-toggle)
-;;   )
+  (defun my/doom-themes-toggle ()
+    (interactive) (load-theme doom-theme t))
+  (add-hook 'doom-after-reload-hook #'my/doom-themes-toggle)
+  )
 
 ;;;; celestial-mode-line
 
@@ -5469,6 +5454,110 @@ Suitable for `imenu-create-index-function'."
                                                   (delete-file (gif-screencast-frame-filename f))))))))
   )
 
+
+
+;;;; :app go-translate v3
+
+;; M-x gt-do-translate
+;; /vanilla/douo-dotfiles-kitty/init.el
+(use-package! go-translate
+  :defer t
+  :after pdf-tools
+  :if window-system
+  :commands (douo/go-do-translate douo/pdf-view-translate)
+  :init
+  (setq gt-langs '(en ko))
+  ;; Translate by paragraph and insert each result at the end of source paragraph
+  ;; This configuration is suitable for translation work. That is: Translate -> Modify -> Save
+  (defun douo/go-do-translate (text-property-string)
+    (gt-start (gt-translator
+               :taker (gt-taker
+                       ;; 单个换行替换为空格
+                       :text (replace-regexp-in-string
+                              "\\([^\n]\\)\n\\([^\n]\\)" "\\1 \\2"
+                              text-property-string))
+               :engines (gt-google-engine)
+               :render (gt-posframe-pop-render))))
+  :custom
+  (gt-cache-p t)
+  (gt-default-translator
+   (gt-translator
+    :taker (gt-taker :langs '(en ko) :text (lambda () (replace-regexp-in-string
+                                                   "\\([^\n]\\)\n\\([^\n]\\)" "\\1 \\2"
+                                                   (thing-at-point 'paragraph)))
+                     :prompt t
+                     )
+    :engines (gt-google-engine)
+    :render (gt-buffer-render)))
+  :bind
+  (:map pdf-view-mode-map
+        ;; consult 不支持与 pdf-tools 的交互
+        ;; ("C-s" . isearch-forward)
+        ;; ("C-r" . isearch-backward)
+        ("C-t" . douo/pdf-view-translate))
+  (:map embark-prose-map ;; 覆盖 transpose-xxx
+        ("t" . douo/go-do-translate))
+  (:map embark-region-map ;; 覆盖 transpose-regions
+        ("t" . douo/go-do-translate))
+  :config
+  (setq gt-chatgpt-key user-openai-api-key)
+  ;; (setq gt-chatgpt-model "gpt-4o-mini")
+
+  (require 'pdf-tools)
+  ;; 自定义 pdf 翻译文本提取器
+  ;; 如果有高亮返回高亮文本，无则返回整页文本
+  (defun douo/gts-pdf-view-selection-texter ()
+    (unless (pdf-view-active-region-p)
+      (pdf-view-mark-whole-page))
+    ;; remove-newline-characters-if-not-at-the-end-of-sentence
+    ;; ::HACK:: 解决 pdf 提取文本不能正确断行的问题
+    ;; 移除不是处于句尾[.!?]的换行符
+    (replace-regexp-in-string "\\([^.!?]\\)\n\\([^ ]\\)" "\\1 \\2"
+                              (car (pdf-view-active-region-text))))
+  (defvar douo/pdf-translater
+    (gt-translator
+     :taker (gt-taker :text 'douo/gts-pdf-view-selection-texter)
+     :engines (list (gt-google-engine))
+     :render (gt-buffer-render)
+     ;; :splitter (gts-paragraph-splitter)
+     ))
+  (defun douo/pdf-view-translate ()
+    (interactive)
+    (gt-start douo/pdf-translater)
+    ;;  cancel selection in emacs
+    (deactivate-mark))
+  ) ; end-of go-translate
+
+;; (setq gt-default-translator
+;;       (gt-translator
+;;        :taker (gt-taker :text 'buffer :pick 'paragraph)
+;;        :engines (gt-google-engine)
+;;        :render (gt-insert-render :type 'after)))
+
+;; Translate the current paragraph and replace it with the translation result
+;; This configuration is suitable for scenes such as live chat. Type some text, translate it, and send it
+;; (setq gt-default-translator
+;;       (gt-translator
+;;        :taker (gt-taker :text 'paragraph :pick nil)
+;;        :engines (gt-google-engine)
+;;        :render (gt-insert-render :type 'replace)))
+
+;; Translate specific words in current paragraph and insert the result after each word
+;; This configuration can help in reading articles with some words you don't know
+;; (setq gt-default-translator
+;;       (gt-translator
+;;        :taker (gt-taker :text 'paragraph
+;;                         :pick 'word
+;;                         :pick-pred (lambda (w) (length> w 6)))
+;;        :engines (gt-google-engine)
+;;        :render (gt-insert-render :type 'after
+;;                                  :rfmt " (%s)"
+;;                                  :rface '(:foreground "grey"))))
+
+;; (setq gt-default-translator
+;;       (gt-translator :taker (gt-taker :pick nil :prompt t)
+;;                      :engines (gt-chatgpt-engine :stream t)
+;;                      :render (gt-insert-render)))
 
 ;;; :os tty
 

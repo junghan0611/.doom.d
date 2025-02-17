@@ -378,10 +378,26 @@ Also see `prot-window-delete-popup-frame'." command)
     (goto-last-change))
   (global-set-key (kbd "C-x ,") 'my/goto-last-change))
 
-;;;; Citar with nerd-icons
+;;;; citar templates and nerd-icons
 
 (when (locate-library "citar")
+
   (with-eval-after-load 'citar
+
+    (setq
+     citar-templates
+     '((main
+        .
+        ;; [${urldate:10}]
+        "[${dateadded:10}] \{${datemodified:10}\} ${author editor:20} ${translator:8} (${date year issued:4}) @${=key= id:16} ${title:68} ")  ; 2024-09-12 김정한
+       (suffix
+        . "${shorttitle:25} ${=type=:10} ${namea:16} ${url:20} ${tags keywords:*}") ; 2024-11-17 add url
+       (preview
+        .
+        "${title} :${year issued date:4}\n- ${author} ${translator} ${namea}\n- ${abstract}\n- ${shorttitle}") ; citar-copy-reference
+       (note . "#+title: ${author translator:10}, ${title}")))
+    ;; (note . "Notes on ${author:10 editor:%etal}, ${title}")
+
     (progn
       (defvar citar-indicator-files-icons
         (citar-indicator-create

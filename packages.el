@@ -90,7 +90,7 @@
 
 (package! emojify :disable t) ; from mastodon
 
-;; disable nerd-icons for performance issues
+;; conflict treemacs-lsp icons
 (package! treemacs-nerd-icons :disable t)
 
 ;; (package! corfu-popupinfo :disable t)
@@ -442,12 +442,10 @@
 (package! osm) ; OpenStreetMaps
 (package! gif-screencast)
 (package! lorem-ipsum)
-;;  (package! go-translate :recipe (:host github :repo "lorniu/go-translate" :files ("*.el" "*.org" )))
 (package! go-translate)
 (package! youtube-sub-extractor)
 
 ;; (package! ready-player)
-
 ;; Very large files mode loads large files in chunks to open ridiculously large files.
 ;; (package! vlf :recipe (:host github :repo "m00natic/vlfi" :files ("*.el"))
 ;;   :pin "cc02f2533782d6b9b628cec7e2dcf25b2d05a27c" :disable t)
