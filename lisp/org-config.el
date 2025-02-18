@@ -611,7 +611,6 @@
                             (:startgroup) ;; Action
                             ("LATER" . ?l)
                             ("NOW" . ?n)
-                            ("WAITING" . ?w)
                             ("HOLD" . ?h)
                             (:endgroup)
                             ("IMPORTANT" . ?i) ; 별도 처리
@@ -619,11 +618,14 @@
                             ;; ("NOTE" . ?o)
                             ("noexport" . ?x)
                             ("fulltext" . ?f)
+                            ;; ("CODE" . ?c)
                             ("nonum" . ?u)
                             ("ATTACH" . ?a)
-                            ("WEBLLM" . ?b)
-                            ("LATEST" . ?t) ;; latest version
+                            ;; ("LATEST" . ?t) ;; latest version
+                            ("LLMLOG" . ?m)
                             ("WORKLOG" . ?o)
+                            ("DEPRECATED" . ?d)
+                            ("KLUDGE" . ?k)
                             ("2022" . ?2) ;; 2022
                             ("2023" . ?3) ;; 2023
                             ("2024" . ?4) ;; 2024
@@ -1244,9 +1246,6 @@ A prefix arg forces clock in of the default task."
 ;;  'org-capture-templates
 ;;  `("E" "RRR" entry (file "~/sync/org/rrr.org")
 ;;    (file ,(concat org-capture-template-dir "rrr.capture"))))
-
-;;(setq ob-async-no-async-languages-alist '("gnuplot" "mermaid"))
-
 ;;;; DONT Daily Weekly Review
 
 ;; Capture some feedback for myself or a quick check-in, which I will into other

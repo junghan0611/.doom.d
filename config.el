@@ -446,58 +446,58 @@
     (interactive)
     ;; (message "ef-themes-post-load-hook : my-ef-themes-custom-faces")
     (ef-themes-with-colors
-      (custom-set-faces
-       `(consult-separator ((,c :inherit default :foreground ,yellow)))
-       `(consult-notes-time ((,c :inherit default :foreground ,cyan)))
+     (custom-set-faces
+      `(consult-separator ((,c :inherit default :foreground ,yellow)))
+      `(consult-notes-time ((,c :inherit default :foreground ,cyan)))
 
-       ;; `(ekg-notes-mode-title ((,c :inherit outline-1 :weight bold :height 1.0)))
-       ;; `(ekg-title ((,c :inherit outline-2 :weight semibold :height 1.0 :underline t)))
-       ;; `(ekg-tag ((,c :background ,bg-yellow-subtle :box (:line-width 1 :color ,fg-dim) :foreground ,fg-main :style nil))) ; prose-tag
-       ;; `(ekg-resource ((,c :inherit outline-7 :weight regular :height 1.0 :underline t)))
-       ;; `(ekg-metadata ((,c :inherit outline-1 :weight regular :height 1.0)))
+      ;; `(ekg-notes-mode-title ((,c :inherit outline-1 :weight bold :height 1.0)))
+      ;; `(ekg-title ((,c :inherit outline-2 :weight semibold :height 1.0 :underline t)))
+      ;; `(ekg-tag ((,c :background ,bg-yellow-subtle :box (:line-width 1 :color ,fg-dim) :foreground ,fg-main :style nil))) ; prose-tag
+      ;; `(ekg-resource ((,c :inherit outline-7 :weight regular :height 1.0 :underline t)))
+      ;; `(ekg-metadata ((,c :inherit outline-1 :weight regular :height 1.0)))
 
-       ;; `(org-link ((,c :inherit link :weight bold)))
-       ;; `(denote-faces-link ((,c :inherit link :weight bold :slant italic)))
-       ;; `(org-agenda-diary ((,c :inherit org-agenda-calendar-sexp :foreground ,fg-main :weight semibold)))
+      ;; `(org-link ((,c :inherit link :weight bold)))
+      ;; `(denote-faces-link ((,c :inherit link :weight bold :slant italic)))
+      ;; `(org-agenda-diary ((,c :inherit org-agenda-calendar-sexp :foreground ,fg-main :weight semibold)))
 
-       `(org-list-dt ((,c :foreground ,fg-main :weight bold))) ;; 2025-01-14
-       ;; `(org-tag ((,c :background ,bg-yellow-subtle :box (:line-width 1 :color ,fg-dim) :foreground ,fg-main :style nil))) ; prose-tag
-       `(diredp-file-name ((,c :foreground ,fg-main)))
+      `(org-list-dt ((,c :foreground ,fg-main :weight bold))) ;; 2025-01-14
+      ;; `(org-tag ((,c :background ,bg-yellow-subtle :box (:line-width 1 :color ,fg-dim) :foreground ,fg-main :style nil))) ; prose-tag
+      `(diredp-file-name ((,c :foreground ,fg-main)))
 
-       `(tab-bar ((,c :background ,bg-tab-bar)))
-       `(tab-bar-tab-group-current ((,c :inherit bold :background ,bg-tab-current :box (:line-width -2 :color ,bg-tab-current) :foreground ,fg-alt)))
-       `(tab-bar-tab-group-inactive ((,c :background ,bg-tab-bar :box (:line-width -2 :color ,bg-tab-bar) :foreground ,fg-alt)))
-       `(tab-bar-tab ((,c :inherit bold :box (:line-width -2 :color ,bg-tab-current) :background ,bg-tab-current)))
-       `(tab-bar-tab-inactive ((,c :box (:line-width -2 :color ,bg-tab-other) :background ,bg-tab-other)))
-       `(tab-bar-tab-ungrouped ((,c :inherit tab-bar-tab-inactive)))
+      `(tab-bar ((,c :background ,bg-tab-bar)))
+      `(tab-bar-tab-group-current ((,c :inherit bold :background ,bg-tab-current :box (:line-width -2 :color ,bg-tab-current) :foreground ,fg-alt)))
+      `(tab-bar-tab-group-inactive ((,c :background ,bg-tab-bar :box (:line-width -2 :color ,bg-tab-bar) :foreground ,fg-alt)))
+      `(tab-bar-tab ((,c :inherit bold :box (:line-width -2 :color ,bg-tab-current) :background ,bg-tab-current)))
+      `(tab-bar-tab-inactive ((,c :box (:line-width -2 :color ,bg-tab-other) :background ,bg-tab-other)))
+      `(tab-bar-tab-ungrouped ((,c :inherit tab-bar-tab-inactive)))
 
-       ;; `(keycast-command ((,c :inherit ef-themes-ui-variable-pitch :background ,bg-main :foreground ,fg-main :weight semibold)))
-       ;; `(keycast-command ((,c :inherit default :height 0.9)))
-       `(fringe ((,c :background ,bg-dim)))
-       `(org-mode-line-clock ((,c :inherit bold :foreground ,modeline-info)))
-       `(org-mode-line-clock-overrun ((,c :inherit bold :foreground ,modeline-err)))
-       `(jinx-misspelled ((,c :underline (:style wave :color ,magenta-cooler))))
-       ;; `(ten-id-face ((,c :inherit font-lock-keyword-face :underline (:style double-line :color ,cyan))))
-       )
-      (setq hl-todo-keyword-faces
-            `(("HOLD" . ,yellow)
-              ("TODO" . ,red)
-              ("NEXT" . ,blue)
-              ("THEM" . ,magenta)
-              ("PROG" . ,cyan-warmer)
-              ("OKAY" . ,green-warmer)
-              ("DONT" . ,yellow-warmer)
-              ("FAIL" . ,red-warmer)
-              ("BUG" . ,red-warmer)
-              ("DONE" . ,green)
-              ("NOTE" . ,blue-warmer)
-              ("KLUDGE" . ,cyan)
-              ("HACK" . ,cyan)
-              ("TEMP" . ,red)
-              ("FIXME" . ,red-warmer)
-              ("XXX+" . ,red-warmer)
-              ("REVIEW" . ,red)
-              ("DEPRECATED" . ,yellow))))
+      ;; `(keycast-command ((,c :inherit ef-themes-ui-variable-pitch :background ,bg-main :foreground ,fg-main :weight semibold)))
+      ;; `(keycast-command ((,c :inherit default :height 0.9)))
+      `(fringe ((,c :background ,bg-dim)))
+      `(org-mode-line-clock ((,c :inherit bold :foreground ,modeline-info)))
+      `(org-mode-line-clock-overrun ((,c :inherit bold :foreground ,modeline-err)))
+      `(jinx-misspelled ((,c :underline (:style wave :color ,magenta-cooler))))
+      ;; `(ten-id-face ((,c :inherit font-lock-keyword-face :underline (:style double-line :color ,cyan))))
+      )
+     (setq hl-todo-keyword-faces
+           `(("HOLD" . ,yellow)
+             ("TODO" . ,red)
+             ("NEXT" . ,blue)
+             ("THEM" . ,magenta)
+             ("PROG" . ,cyan-warmer)
+             ("OKAY" . ,green-warmer)
+             ("DONT" . ,yellow-warmer)
+             ("FAIL" . ,red-warmer)
+             ("BUG" . ,red-warmer)
+             ("DONE" . ,green)
+             ("NOTE" . ,blue-warmer)
+             ("KLUDGE" . ,cyan)
+             ("HACK" . ,cyan)
+             ("TEMP" . ,red)
+             ("FIXME" . ,red-warmer)
+             ("XXX+" . ,red-warmer)
+             ("REVIEW" . ,red)
+             ("DEPRECATED" . ,yellow))))
 
     (when (display-graphic-p) ; gui
       (when (locate-library "spacious-padding")
@@ -506,7 +506,7 @@
     )
   (add-hook 'ef-themes-post-load-hook #'my/ef-themes-custom-faces))
 
-;;;; DONT my-themes for doom-themes
+;;;; DONT custom themes loader for doom-themes
 
 ;; (require 'my-themes)
 ;; (add-hook 'doom-load-theme-hook 'my/load-custom-set-faces 90) ; for doom themes
@@ -946,7 +946,7 @@
       (keycast-tab-bar-mode +1))
 
     ;; load modus-themes
-    ;; (modus-themes-toggle)
+    (modus-themes-toggle)
     )
 
   (add-hook 'doom-after-init-hook #'my/load-global-mode-string 80)
@@ -1821,12 +1821,6 @@
   ;; (remove-hook 'marginalia-mode-hook 'nerd-icons-completion-marginalia-setup)
   )
 
-;;;; :lang python - ipython jupyter
-
-;; The arguments passed to the [[https://ipython.org/][ipython]] or [[https://jupyter.org/][jupyter]] shells can be altered through
-;; these two variables:
-(setq +python-ipython-repl-args '("-i" "--simple-prompt" "--no-color-info"))
-(setq +python-jupyter-repl-args '("--simple-prompt"))
 
 ;;;; recent-rgrep
 

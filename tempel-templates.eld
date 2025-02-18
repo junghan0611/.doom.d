@@ -60,7 +60,7 @@ emacs-lisp-mode
 ;;;; fundamental-mode
 fundamental-mode ;; Available everywhere
 
-(did (format-time-string "%Y%m%dT")) ; 20241122T
+(did (format-time-string "%Y%m%d")) ; 20241122T
 (dayid (format-time-string "%Y%m%dT")) ; 20241122T
 (day (format-time-string "%Y-%m-%d"))
 (now (format-time-string "[%Y-%m-%d %a %H:%M]"))
@@ -117,7 +117,7 @@ org-mode
         (format-time-string "%Y-%m-%d W%W") "]]") ; for weekly journal
 
 (Today "[[date:" (format-time-string "%Y-%m-%d") "][Today]]")
-(did (format-time-string "%Y%m%dT"))
+(did (format-time-string "%Y%m%d")) ; remove T
 ;; (tor "[[https://takeonrules.com][Take on Rules]]")
 (jgi "[[https://junghanacs.github.io][junghanacs.github.io]]")
 (uml "#+begin_src plantuml" n> "@startuml" n> "!theme amiga" n> q n> "@enduml" n> "#+end_src" n>)
@@ -200,25 +200,6 @@ org-mode
 ;;  "#+DESCRIPTION: " p n>
 ;;  "#+DATE: " n>
 ;;  "#+AUTHOR: Junganacs" n)
-
-(hugobib
- "#+filetags:
-#+HUGO_CATEGORIES: none
-
-#+hugo: more
-
-* #키워드 :noexport:
-#+BEGIN: denote-links :regexp \"000\" :excluded-dirs-regexp nil :sort-by-component nil :reverse-sort nil :id-only nil :include-date nil
-#+END:
-
-* #백링크 :noexport:
-#+BEGIN: denote-backlinks :excluded-dirs-regexp nil :sort-by-component nil :reverse-sort nil :id-only nil :this-heading-only nil :include-date nil
-#+END:
-
-* #랜덤노트 :noexport:
-
-* Related-Notes
-#+print_bibliography:")
 
 ;; 한글태그, SLUG(URI), 타이틀, 요약/설명,
 ;; (hugofront
@@ -390,6 +371,8 @@ Walter Isaacson 《Leonardo da Vinci》\n#+end_callout")
 
 (python "# #+name:
 #+begin_src python :results output" n> r> n> "#+end_src")
+
+(jupyter-python "#+begin_src jupyter-python :session py" n> r> n> "#+end_src")
 
 (hy "# #+name:
 #+begin_src hy :results output" n> r> n> "#+end_src")

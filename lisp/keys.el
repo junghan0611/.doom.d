@@ -1463,10 +1463,10 @@ window."
   :doc "Bibliograpic functions keymap."
 
   "b" #'org-cite-insert
+  "c" #'citar-create-note
+  "d" #'citar-denote-open-note
+  "o" #'citar-open
 
-  "c" #'citar-open
-
-  "d" #'citar-denote-dwim
   ;; "e" #'citar-open-entry
   "e" #'citar-denote-open-reference-entry
 
@@ -1474,8 +1474,6 @@ window."
   "1" #'citar-denote-find-citation ;; grep [cite @xxx]
 
   "i" #'citar-insert-citation
-  "n" #'citar-create-note
-  "o" #'citar-denote-open-note
   "O" #'citar-open-links
 
   "f" #'citar-denote-find-reference
@@ -1483,6 +1481,8 @@ window."
 
   "s" #'citar-denote-create-silo-note
   "k" #'citar-denote-remove-reference
+
+  "SPC" #'citar-denote-dwim
   )
 
 (defvar-keymap ews-annotate-map

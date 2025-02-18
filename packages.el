@@ -67,6 +67,7 @@
 ;;; doom-disabled-packages
 
 (disable-packages!
+ anaconda-mode
  ;; lsp-mode
  ;; consult-lsp
  diredfl ; conflict denote
@@ -168,7 +169,7 @@
 (package! fontaine)
 (package! golden-ratio)
 (package! mode-minder :recipe (:host github :repo "jdtsmith/mode-minder"))
-(package! breadcrumb)
+;; (package! breadcrumb)
 (package! celestial-mode-line)
 (package! lin)
 (package! nerd-icons-dired)
@@ -332,7 +333,7 @@
 
 (package! whisper :recipe (:host github :repo "natrys/whisper.el"))
 
-;; (package! codeium :recipe (:host github :repo "Exafunction/codeium.el"))
+(package! codeium :recipe (:host github :repo "Exafunction/codeium.el"))
 
 ;; (package! ellama)
 ;; (package! openai :recipe (:host github :repo "emacs-openai/openai" :files ("*.el")))
@@ -393,6 +394,11 @@
 ;; (package! hy-mode :recipe (:host github :repo "jethack23/hy-mode"))
 ;; (package! geiser)
 ;; (package! geiser-mit :recipe (:host github :repo "emacsmirror/geiser-mit"))
+
+;;;;; python
+
+;; (package! uv-mode :recipe (:host github :repo "z80dev/uv-mode"))
+;; (package! uv-menu :recipe (:host github :repo "pizzatorque/uv-menu"))
 
 ;;;; Git
 

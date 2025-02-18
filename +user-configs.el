@@ -878,9 +878,8 @@
 
 (after! corfu
   ;; (setq corfu-auto-delay 0.5) ; doom 0.24
-  (setq corfu-auto-prefix 4) ; doom 2
+  (setq corfu-auto-prefix 2) ; doom 2, default 3
   (setq corfu-preselect 'valid) ; doom 'prompt
-  (setq completion-cycle-threshold 3) ; doom nil
   (setq tab-always-indent t) ; for jump-out-of-pair - doom 'complete
   (setq +corfu-want-minibuffer-completion nil) ; doom t
 
@@ -2478,13 +2477,6 @@ ${content}"))
   (define-key org-mode-map [remap org-cliplink] 'my/org-cliplink)
   )
 
-;;;;; ob-jupyter
-
-;; Workaround; see https://github.com/nnicandro/emacs-jupyter/issues/380#issuecomment-1014026589
-(after! ob-jupyter
-  (defun jupyter-ansi-color-apply-on-region (begin end)
-    (ansi-color-apply-on-region begin end t)))
-
 ;;;; additional packages
 
 ;;;;; DONT org-modern
@@ -3366,7 +3358,7 @@ ${content}"))
         (insert (format "#+date: %s\n" (format-time-string "[%Y-%m-%d %a %H:%M]")))
         (insert (format "#+identifier: %s\n" suffix))
         (insert (format "#+export_file_name: %s.md\n" suffix))
-        (insert (format "#+hugo_tags: \"fleeting\" \"llmlog\" \n\n"))
+        (insert (format "#+hugo_tags: notes \n\n"))
 
         ;; add bib and history
         (insert (format "#+print_bibliography:\n* History\n- %s\n" (format-time-string "[%Y-%m-%d %a %H:%M]")))
@@ -3979,6 +3971,36 @@ ${content}"))
   ;; (markdown-mode . copilot-mode)
   )
 
+;;;; copilot for doom
+
+;; https://github.com/michaelneuper/doom
+;; (after! (evil copilot)
+;;   (evil-define-key 'insert 'global (kbd "<tab>") 'copilot-accept-completion))
+;; (map! :leader
+;;       (:prefix ("e" . "copilot")
+;;        :desc "Enable Copilot Mode"
+;;        "c" #'copilot-mode
+;;        :desc "Display Chat Window"
+;;        "d" #'copilot-chat-display
+;;        :desc "Explain Selected Code"
+;;        "e" #'copilot-chat-explain
+;;        :desc "Review Selected Code"
+;;        "r" #'copilot-chat-review
+;;        :desc "Fix Selected Code"
+;;        "f" #'copilot-chat-fix
+;;        :desc "Optimize Selected Code"
+;;        "o" #'copilot-chat-optimize
+;;        :desc "Write Test for Code"
+;;        "t" #'copilot-chat-test
+;;        :desc "Add Current Buffer"
+;;        "a" #'copilot-chat-add-current-buffer
+;;        :desc "Document Selected Code"
+;;        "D" #'copilot-chat-doc
+;;        :desc "Reset Chat History"
+;;        "R" #'copilot-chat-reset
+;;        :desc "Remove Current Buffer"
+;;        "x" #'copilot-chat-del-current-buffer))
+
 ;;;; llmclient: github copilot-chat
 
 (use-package! copilot-chat
@@ -4211,10 +4233,45 @@ Called with a PREFIX, resets the context buffer list before opening"
 
 (use-package! bats-mode :defer t)
 
-;;;;; remove python-mode-hook
+;;;; :lang python
 
-;; (remove-hook 'python-mode-local-vars-hook 'spacemacs//python-setup-backend)
-;; (remove-hook 'python-mode-hook 'spacemacs//python-default)
+
+;;;;; TODO emacs-jupyter/jupyter ob-jupyter
+
+(require 'my-python-jupyter)
+;; (load-file (concat user-dotemacs-dir "lisp/my-python-jupyter.el"))
+
+;;;;; TODO ob-jupyter - override python and  hy
+
+;; sqrt-dotfiles-elfeed/.emacs.d/init.el
+;; (with-eval-after-load 'ob-jupyter
+;;   (org-babel-jupyter-override-src-block "python")
+;;   (org-babel-jupyter-override-src-block "hy"))
+
+;;;;; ipython jupyter
+
+;; The arguments passed to the [[https://ipython.org/][ipython]] or [[https://jupyter.org/][jupyter]] shells can be altered through
+;; these two variables:
+;; (setq +python-ipython-repl-args '("-i" "--simple-prompt" "--no-color-info"))
+;; (setq +python-jupyter-repl-args '("--simple-prompt"))
+
+;;;;; uv-mode uv-menu
+
+;; .venv
+;; (use-package! uv-mode
+;;   :hook (python-mode . uv-mode-auto-activate-hook))
+
+;;;;; disable lsp! default on python-mode
+
+;; 2025-02-18 python-mode-hook for uv
+;; ;; (remove-hook 'python-mode-hook 'pipenv-mode)
+
+;; 2025-02-18 python-mode-local-vars-hook
+;; lsp! - /modules/tools/lsp/autoload/common.el
+;; python-mode-local-vars-hook - (pyvenv-track-virtualenv lsp!)
+
+;; (when (modulep! :tools lsp -eglot)
+;;   (remove-hook 'python-mode-local-vars-hook 'lsp!))
 
 ;;;;; TODO python-pytest
 
@@ -4245,13 +4302,6 @@ Called with a PREFIX, resets the context buffer list before opening"
 ;;   :mode ("[./]flake8\\'" . conf-mode)
 ;;   :config
 ;;   (add-hook 'before-save-hook 'py-isort-before-save))
-
-;; (after! poetry
-;;   :defer t
-;;   :config
-;;   (setq poetry-tracking-strategy 'projectile)
-;;   :init
-;;   (remove-hook 'python-mode-hook #'poetry-tracking-mode))
 
 ;;;;; DONT disable +format-with-lsp
 
@@ -4451,10 +4501,11 @@ Called with a PREFIX, resets the context buffer list before opening"
     ;; (set-fontset-font t 'emoji (font-spec :family "Noto Color Emoji") nil)
     ;; (set-fontset-font t 'emoji (font-spec :family "Noto Emoji") nil 'prepend) ; Top - my choice
 
+    ;; Noto Emoji, Noto Color Emoji,
     ;; Different computers might need different scaling factors with the same fonts.
     (my/set-fonts-scale
-     "Symbola" 0.9 ; unicode
-     "Noto Emoji" 0.9)
+     "Symbola" 0.90 ; unicode
+     "Noto Color Emoji" 0.95)
     )
 
   (unless (display-graphic-p) ; terminal
@@ -4686,27 +4737,27 @@ x×X .,·°;:¡!¿?`'‘’   ÄAÃÀ TODO
   (remove-hook 'display-time-mode-hook #'doom-modeline-override-time)
   (remove-hook 'doom-modeline-mode-hook #'doom-modeline-override-time))
 
-;;;; doom-themes
+;;;; DONT doom-themes
 
-(use-package! doom-themes
-  ;; improve integration w/ org-mode
-  :hook ((doom-load-theme . doom-themes-org-config)
-         (doom-load-theme . doom-themes-visual-bell-config))
-  :init
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic nil) ; if nil, italics is universally disabled
-  (setq doom-themes-to-toggle
-        (let ((hr (nth 2 (decode-time))))
-          (if (or (< hr 6) (< 19 hr)) ; between 8 PM and 7 AM
-              '(doom-one doom-homage-white) ; load dark theme first
-            '(doom-homage-white doom-one))))
-  (setq doom-theme (car doom-themes-to-toggle))
-  ;; (load-theme doom-theme t)
+;; (use-package! doom-themes
+;;   ;; improve integration w/ org-mode
+;;   :hook ((doom-load-theme . doom-themes-org-config)
+;;          (doom-load-theme . doom-themes-visual-bell-config))
+;;   :init
+;;   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+;;         doom-themes-enable-italic nil) ; if nil, italics is universally disabled
+;;   (setq doom-themes-to-toggle
+;;         (let ((hr (nth 2 (decode-time))))
+;;           (if (or (< hr 6) (< 19 hr)) ; between 8 PM and 7 AM
+;;               '(doom-one doom-homage-white) ; load dark theme first
+;;             '(doom-homage-white doom-one))))
+;;   (setq doom-theme (car doom-themes-to-toggle))
+;;   ;; (load-theme doom-theme t)
 
-  (defun my/doom-themes-toggle ()
-    (interactive) (load-theme doom-theme t))
-  (add-hook 'doom-after-reload-hook #'my/doom-themes-toggle)
-  )
+;;   (defun my/doom-themes-toggle ()
+;;     (interactive) (load-theme doom-theme t))
+;;   (add-hook 'doom-after-reload-hook #'my/doom-themes-toggle)
+;;   )
 
 ;;;; celestial-mode-line
 
@@ -4715,7 +4766,7 @@ x×X .,·°;:¡!¿?`'‘’   ÄAÃÀ TODO
   :init
   (setq celestial-mode-line-update-interval 3600) ; default 60
   (setq celestial-mode-line-sunrise-sunset-alist
-        '((sunrise . "🌅") (sunset . "🌄")))
+        '((sunrise . "🌅") (sunset . "🌃")))
   (setq celestial-mode-line-phase-representation-alist
         '((0 . "🌚") (1 . "🌛") (2 . "🌝") (3 . "🌜")))
   :config (celestial-mode-line-start-timer)
@@ -5019,7 +5070,6 @@ Suitable for `imenu-create-index-function'."
   (winum-mode +1)
   )
 
-
 ;;;; lin - hl-line
 
 ;;  “LIN locally remaps the hl-line face to a style that is optimal
@@ -5061,12 +5111,12 @@ Suitable for `imenu-create-index-function'."
 ;;   (setq ahs-idle-interval 1.0) ; default 1.0
 ;;   (add-hook 'prog-mode-hook #'auto-highlight-symbol-mode))
 
-;;;; breadcrumb
+;;;; DONT breadcrumb
 
-(use-package! breadcrumb
-  :defer 2
-  :hook
-  (eglot-connect . breadcrumb-mode))
+;; (use-package! breadcrumb
+;;   :defer 2
+;;   :hook
+;;   (eglot-connect . breadcrumb-mode))
 
 ;; (use-package! breadcrumb
 ;;   :defer 1
@@ -5559,6 +5609,21 @@ Suitable for `imenu-create-index-function'."
 ;;                      :engines (gt-chatgpt-engine :stream t)
 ;;                      :render (gt-insert-render)))
 
+;;;; TODO notmuch - email
+
+;; karthink-dotfiles-popper/lisp/setup-email.el
+;; Use corfu in notmuch buffers
+;; (use-package notmuch-address
+;;   :when (or (daemonp) (display-graphic-p))
+;;   :defer
+;;   :config
+;;   (setq notmuch-address-use-company nil
+;;         notmuch-address-selection-function #'ignore)
+;;   (define-advice notmuch-address-setup (:after () use-corfu)
+;;     (add-hook 'completion-at-point-functions
+;;               (cape-company-to-capf 'notmuch-company)
+;;               nil t)))
+
 ;;; :os tty
 
 ;;;; term-keys
@@ -5571,9 +5636,10 @@ Suitable for `imenu-create-index-function'."
 
 ;;;;; usage
 
-;; (require 'term-keys-kitty)
-;; (with-temp-buffer
-;;   (insert (term-keys/kitty-conf))
-;;   (write-region (point-min) (point-max) "~/kitty-for-term-keys.conf"))
+;; (progn
+;;   (require 'term-keys-kitty)
+;;   (with-temp-buffer
+;;     (insert (term-keys/kitty-conf))
+;;     (write-region (point-min) (point-max) "~/kitty-for-term-keys.conf")))
 
 ;;; +user-configs.el ends here
