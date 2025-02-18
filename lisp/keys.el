@@ -618,6 +618,12 @@
 ;; (when (locate-library "tabgo")
 ;;   (global-set-key (kbd "M-t") #'tabgo))
 
+;;;; scroll-up / down
+
+;; 2025-02-18 add
+(global-set-key (kbd "M-u") 'evil-scroll-up)
+(global-set-key (kbd "M-v") 'evil-scroll-down)
+
 ;;; C-c M-g M-s
 ;;;; C-c j
 
@@ -1463,8 +1469,10 @@ window."
   :doc "Bibliograpic functions keymap."
 
   "b" #'org-cite-insert
-  "c" #'citar-create-note
-  "d" #'citar-denote-open-note
+  ;; "c" #'citar-denote-create-silo-note
+  "c" #'citar-open
+  "d" #'citar-create-note
+  "n" #'citar-denote-open-note
   "o" #'citar-open
 
   ;; "e" #'citar-open-entry

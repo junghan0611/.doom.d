@@ -1990,11 +1990,8 @@ only those in the selected frame."
     (setq txl-deepl-api-key deeplx-key)
 
     (global-set-key (kbd "M-g 0") 'txl-translate-insert)
-    (global-set-key (kbd "M-v") 'txl-translate-insert)
-    (after! org
-      (define-key org-mode-map (kbd "M-v") 'txl-translate-insert))
-    (after! centered-cursor-mode
-      (define-key ccm-map (kbd "M-v") 'txl-translate-insert))
+    (with-eval-after-load 'evil-org
+      (evil-define-key 'normal 'evil-org-mode-map (kbd "M-t") 'txl-translate-insert))
     )
   )
 
@@ -4235,11 +4232,9 @@ Called with a PREFIX, resets the context buffer list before opening"
 
 ;;;; :lang python
 
-
 ;;;;; TODO emacs-jupyter/jupyter ob-jupyter
 
 (require 'my-python-jupyter)
-;; (load-file (concat user-dotemacs-dir "lisp/my-python-jupyter.el"))
 
 ;;;;; TODO ob-jupyter - override python and  hy
 
@@ -4340,16 +4335,6 @@ Called with a PREFIX, resets the context buffer list before opening"
 
 ;; 2) To disable this behavior in one mode:
 ;; ;; (setq-hook! 'python-mode-hook +format-with-lsp nil) ; python
-
-
-;;;;; DONT elisp-autofmt - manually
-
-;; (use-package! elisp-autofmt
-;;   ;; :load-path "~/sync/emacs/git/junghan0611/emacs-elisp-autofmt/"
-;;   :commands (elisp-autofmt-mode elisp-autofmt-buffer)
-;;   :init (setq elisp-autofmt-format-quoted nil)
-;;   ;; :hook (emacs-lisp-mode . elisp-autofmt-mode)
-;;   )
 
 ;;; :ui
 
