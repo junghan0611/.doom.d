@@ -427,143 +427,143 @@ CUSTOM_ID of the entry is returned."
 
 )
 
-;;;; denote-sort
+;;;; DONT denote-dired - sort
 
-;;;###autoload
-(defun my/goto-denote-dired (&optional _)
-  (interactive)
-  (let ((buf (get-buffer "*denote-dired*")))
-    (tab-bar-switch-to-tab "denote")
-    (tab-bar-move-tab-to 2)
-    (if buf
-        (progn (switch-to-buffer buf)
-               (delete-other-windows)
-               (evil-window-vsplit)
-               ;; (my/denote-random-note-from-directory (concat denote-directory "notes"))
-               )
-      (progn
-        (denote-sort-dired nil 'signature nil)
-        ;; (find-file (concat denote-directory "notes")) ; for denote-dired excerpt
-        (rename-buffer "*denote-dired*")
-        ;; (spacemacs/toggle-current-window-dedication) ; spacemacs Compatibility
-        (evil-window-vsplit)
-        (my/denote-random-note-from-directory (concat denote-directory "notes"))
-        )
-      )))
+;; ;;;###autoload
+;; (defun my/goto-denote-dired (&optional _)
+;;   (interactive)
+;;   (let ((buf (get-buffer "*denote-dired*")))
+;;     (tab-bar-switch-to-tab "denote")
+;;     (tab-bar-move-tab-to 2)
+;;     (if buf
+;;         (progn (switch-to-buffer buf)
+;;                (delete-other-windows)
+;;                (evil-window-vsplit)
+;;                ;; (my/denote-random-note-from-directory (concat denote-directory "notes"))
+;;                )
+;;       (progn
+;;         (denote-sort-dired nil 'signature nil)
+;;         ;; (find-file (concat denote-directory "notes")) ; for denote-dired excerpt
+;;         (rename-buffer "*denote-dired*")
+;;         ;; (spacemacs/toggle-current-window-dedication) ; spacemacs Compatibility
+;;         (evil-window-vsplit)
+;;         (my/denote-random-note-from-directory (concat denote-directory "notes"))
+;;         )
+;;       )))
 
-(defun my/denote-signature-retrieve ()
-  (let* ((file (or (buffer-file-name) (dired-get-filename))))
-    (when file
-      (denote-retrieve-filename-signature file))))
+;; (defun my/denote-signature-retrieve ()
+;;   (let* ((file (or (buffer-file-name) (dired-get-filename))))
+;;     (when file
+;;       (denote-retrieve-filename-signature file))))
 
-(defun my/denote-sort-regexp (regexp)
-  (interactive (list
-	        (read-regexp
-	         (concat "Files matching PATTERN" (format " (default: %s)" (my/denote-signature-retrieve)) ": ")
-	         (my/denote-signature-retrieve)
-	         nil)))
-  (denote-sort-dired (concat "==" regexp) 'signature nil))
+;; (defun my/denote-sort-regexp (regexp)
+;;   (interactive (list
+;; 	        (read-regexp
+;; 	         (concat "Files matching PATTERN" (format " (default: %s)" (my/denote-signature-retrieve)) ": ")
+;; 	         (my/denote-signature-retrieve)
+;; 	         nil)))
+;;   (denote-sort-dired (concat "==" regexp) 'signature nil))
 
-(defun my/denote-sort-with-identifer ()
-  (interactive)
-  (denote-sort-dired (denote-files-matching-regexp-prompt) 'identifier nil))
+;; (defun my/denote-sort-with-identifer ()
+;;   (interactive)
+;;   (denote-sort-dired (denote-files-matching-regexp-prompt) 'identifier nil))
 
-(defun my/denote-sort-with-keywords ()
-  (interactive)
-  (denote-sort-dired (regexp-opt (denote-keywords-prompt)) 'keywords nil))
+;; (defun my/denote-sort-with-keywords ()
+;;   (interactive)
+;;   (denote-sort-dired (regexp-opt (denote-keywords-prompt)) 'keywords nil))
 
-(defun my/denote-sort-with-days ()
-  (interactive)
-  (let ((regexp (call-interactively 'my/denote-week-ago)))
-    (denote-sort-dired regexp 'signature nil)))
+;; (defun my/denote-sort-with-days ()
+;;   (interactive)
+;;   (let ((regexp (call-interactively 'my/denote-week-ago)))
+;;     (denote-sort-dired regexp 'signature nil)))
 
-(defun my/denote-sort-parent-with-children ()
-  (interactive)
-  (let* ((index (my/denote-signature-retrieve))
-	 (length (length index))
-	 (regexp (substring index 0 (- length 1))))
-    (denote-sort-dired (concat "==" regexp) 'signature nil)))
+;; (defun my/denote-sort-parent-with-children ()
+;;   (interactive)
+;;   (let* ((index (my/denote-signature-retrieve))
+;; 	 (length (length index))
+;; 	 (regexp (substring index 0 (- length 1))))
+;;     (denote-sort-dired (concat "==" regexp) 'signature nil)))
 
-(defun my/denote-sort-children-regexp ()
-  (let* ((index (my/denote-signature-retrieve)))
-    (format "==%s" index)))
+;; (defun my/denote-sort-children-regexp ()
+;;   (let* ((index (my/denote-signature-retrieve)))
+;;     (format "==%s" index)))
 
-(defun my/denote-sort-children ()
-  (interactive)
-  (let ((regexp (my/denote-sort-children-regexp)))
-    (denote-sort-dired regexp 'signature nil)))
+;; (defun my/denote-sort-children ()
+;;   (interactive)
+;;   (let ((regexp (my/denote-sort-children-regexp)))
+;;     (denote-sort-dired regexp 'signature nil)))
 
-(defun my/denote-sort-siblings-regexp ()
-  (let* ((index (my/denote-signature-retrieve))
-	 (last-char (substring index (1- (length index)))))
-    (if (string-match "[0-9]" last-char)
-	(format "==\\(%s\\|%s[a-z]\\)-" index index)
-      (format "==\\(%s\\|%s[0-9]+\\)-" index index))))
+;; (defun my/denote-sort-siblings-regexp ()
+;;   (let* ((index (my/denote-signature-retrieve))
+;; 	 (last-char (substring index (1- (length index)))))
+;;     (if (string-match "[0-9]" last-char)
+;; 	(format "==\\(%s\\|%s[a-z]\\)-" index index)
+;;       (format "==\\(%s\\|%s[0-9]+\\)-" index index))))
 
-(defun my/denote-sort-siblings ()
-  (interactive)
-  (let ((regexp (my/denote-sort-siblings-regexp)))
-    (denote-sort-dired regexp 'signature nil)))
+;; (defun my/denote-sort-siblings ()
+;;   (interactive)
+;;   (let ((regexp (my/denote-sort-siblings-regexp)))
+;;     (denote-sort-dired regexp 'signature nil)))
 
-;; fliter denote create by days ago
-(defun my/denote-week-ago ()
-  (interactive)
-  (let* ((current-time (current-time))
-	 (current-date (format-time-string "%Y-%m-%d" current-time))
-	 (ago-date-time (time-subtract current-time (days-to-time 14))) ;; 7
-	 (ago-date (format-time-string "%Y-%m-%d" ago-date-time))
-	 (cur-year (substring current-date 0 4))
-	 (cur-month (substring current-date 5 7))
-	 (cur-day (substring current-date 8 10))
-	 (ago-year (substring ago-date 0 4))
-	 (ago-month (substring ago-date 5 7))
-	 (ago-day (substring ago-date 8 10))
-	 (cur-day-d1 (/ (string-to-number cur-day) 10))
-	 (cur-day-d2 (% (string-to-number cur-day) 10))
-	 (ago-day-d1 (/ (string-to-number ago-day) 10))
-	 (ago-day-d2 (% (string-to-number ago-day) 10)))
-    (if (string= cur-year ago-year)
-	(if (string= cur-month ago-month)
-	    (if (= cur-day-d1 ago-day-d1)
-		(format "\\(%s%s%s[%s-%s]\\)"
-			cur-year cur-month cur-day-d1
-			ago-day-d2 cur-day-d2)
-	      (format "%s%s\\(%s[%s-9]\\|%s[0-%s]\\)"
-		      cur-year cur-month ago-day-d1
-		      ago-day-d2 cur-day-d1 cur-day-d2))
-	  (cond ((< cur-day-d1 ago-day-d1)
-		 (format "\\(%s\\)\\(%s%s[%s-9]\\|3[0-1]\\|%s%s[0-%s]\\)"
-			 cur-year ago-month ago-day-d1 ago-day-d2
-			 cur-month cur-day-d1 cur-day-d2))
-		(t
-		 (format "\\(%s\\)\\(%s%s[%s-9]\\|%s%s[0-%s]\\)"
-			 cur-year ago-month ago-day-d1 ago-day-d2
-			 cur-month cur-day-d1 cur-day-d2))))
-      (if (= ago-day-d1 3)
-	  (format "\\(%s123[%s-1]\\|%s010[0-%s]\\)"
-		  ago-year ago-day-d2
-		  cur-year cur-day-d2)
-	(format "\\(%s12%s[%s-9]\\|%s123[0-1]\\|%s01%s[0-%s]\\)"
-		ago-year ago-day-d1 ago-day-d2
-		ago-year cur-year cur-day-d1 cur-day-d2)))))
+;; ;; fliter denote create by days ago
+;; (defun my/denote-week-ago ()
+;;   (interactive)
+;;   (let* ((current-time (current-time))
+;; 	 (current-date (format-time-string "%Y-%m-%d" current-time))
+;; 	 (ago-date-time (time-subtract current-time (days-to-time 14))) ;; 7
+;; 	 (ago-date (format-time-string "%Y-%m-%d" ago-date-time))
+;; 	 (cur-year (substring current-date 0 4))
+;; 	 (cur-month (substring current-date 5 7))
+;; 	 (cur-day (substring current-date 8 10))
+;; 	 (ago-year (substring ago-date 0 4))
+;; 	 (ago-month (substring ago-date 5 7))
+;; 	 (ago-day (substring ago-date 8 10))
+;; 	 (cur-day-d1 (/ (string-to-number cur-day) 10))
+;; 	 (cur-day-d2 (% (string-to-number cur-day) 10))
+;; 	 (ago-day-d1 (/ (string-to-number ago-day) 10))
+;; 	 (ago-day-d2 (% (string-to-number ago-day) 10)))
+;;     (if (string= cur-year ago-year)
+;; 	(if (string= cur-month ago-month)
+;; 	    (if (= cur-day-d1 ago-day-d1)
+;; 		(format "\\(%s%s%s[%s-%s]\\)"
+;; 			cur-year cur-month cur-day-d1
+;; 			ago-day-d2 cur-day-d2)
+;; 	      (format "%s%s\\(%s[%s-9]\\|%s[0-%s]\\)"
+;; 		      cur-year cur-month ago-day-d1
+;; 		      ago-day-d2 cur-day-d1 cur-day-d2))
+;; 	  (cond ((< cur-day-d1 ago-day-d1)
+;; 		 (format "\\(%s\\)\\(%s%s[%s-9]\\|3[0-1]\\|%s%s[0-%s]\\)"
+;; 			 cur-year ago-month ago-day-d1 ago-day-d2
+;; 			 cur-month cur-day-d1 cur-day-d2))
+;; 		(t
+;; 		 (format "\\(%s\\)\\(%s%s[%s-9]\\|%s%s[0-%s]\\)"
+;; 			 cur-year ago-month ago-day-d1 ago-day-d2
+;; 			 cur-month cur-day-d1 cur-day-d2))))
+;;       (if (= ago-day-d1 3)
+;; 	  (format "\\(%s123[%s-1]\\|%s010[0-%s]\\)"
+;; 		  ago-year ago-day-d2
+;; 		  cur-year cur-day-d2)
+;; 	(format "\\(%s12%s[%s-9]\\|%s123[0-1]\\|%s01%s[0-%s]\\)"
+;; 		ago-year ago-day-d1 ago-day-d2
+;; 		ago-year cur-year cur-day-d1 cur-day-d2)))))
 
-(defun my/denote-sort-sigature-lv1 ()
-  (interactive)
-  (let ((regexp (call-interactively 'my/denote-sort-lv-1)))
-    (denote-sort-dired regexp 'signature nil)))
+;; (defun my/denote-sort-sigature-lv1 ()
+;;   (interactive)
+;;   (let ((regexp (call-interactively 'my/denote-sort-lv-1)))
+;;     (denote-sort-dired regexp 'signature nil)))
 
-(defun my/denote-sort-sigature-lv2 ()
-  (interactive)
-  (let ((regexp (call-interactively 'my/denote-sort-lv-2)))
-    (denote-sort-dired regexp 'signature nil)))
+;; (defun my/denote-sort-sigature-lv2 ()
+;;   (interactive)
+;;   (let ((regexp (call-interactively 'my/denote-sort-lv-2)))
+;;     (denote-sort-dired regexp 'signature nil)))
 
-(defun my/denote-sort-lv-2 (lv)
-  (interactive "nInput the Level of Signature: ")
-  (format "\\(==%s[a-z]-\\)" lv))
+;; (defun my/denote-sort-lv-2 (lv)
+;;   (interactive "nInput the Level of Signature: ")
+;;   (format "\\(==%s[a-z]-\\)" lv))
 
-(defun my/denote-sort-lv-1 ()
-  (interactive)
-  (format "\\(==[0-9]-\\)"))
+;; (defun my/denote-sort-lv-1 ()
+;;   (interactive)
+;;   (format "\\(==[0-9]-\\)"))
 
 ;;; EWS : Emacs Writing Studio
 

@@ -1553,15 +1553,15 @@ window."
   "e" #'prot-eshell-export
 
   ;; "s" #'denote-subdirectory
-  "S" #'my/denote-sort-with-days
 
   "P" #'ews-denote-assign-para
-  "n" #'my/goto-denote-dired
   ;; "z" #'denote-signature ; "zettelkasten" mnemonic
 
   "M-i" #'denote-org-extras-dblock-insert-files
   "M-r" #'my/rename-all-screenshot-images-to-denote-id
 
+  ;; "S" #'my/denote-sort-with-days
+  ;; "n" #'my/goto-denote-dired
   ;; "s" #'denote-sort-dired
   ;; "-" #'my/org-create-id-by-denote-identifier
   ;; "M--" #'my/org-create-id-by-denote-identifier-at-once
