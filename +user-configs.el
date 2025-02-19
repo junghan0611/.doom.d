@@ -5071,7 +5071,7 @@ Suitable for `imenu-create-index-function'."
   ;; (customize-set-variable 'lin-face 'lin-green)
   ;; Or `setopt' on Emacs 29: (setopt lin-face 'lin-yellow)
   ;; I still prefer `setq' for consistency.
-  (setq lin-face 'lin-cyan);; blue
+  (setq lin-face 'lin-blue)
   (lin-global-mode 1))
 
 ;;;; DONT my/switch-themes-toggle

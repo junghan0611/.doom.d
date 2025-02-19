@@ -145,7 +145,7 @@
 
 ;;;; :ui - visual
 
-;; (package! pulsar)
+(package! pulsar)
 (package! transpose-frame)
 (package! hydra)
 (package! pretty-hydra)

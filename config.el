@@ -228,12 +228,12 @@
 (use-package! modus-themes
   :commands (modus-themes-toggle)
   :init
-  (setq modus-themes-to-toggle '(modus-operandi modus-operandi-tinted))
+  (setq modus-themes-to-toggle '(modus-operandi modus-vivendi-tinted))
   ;; (setq modus-themes-to-toggle
   ;;       (let ((hr (nth 2 (decode-time))))
   ;;         (if (or (< hr 6) (< 19 hr)) ; between 8 PM and 7 AM
-  ;;             '(modus-vivendi-tinted modus-operandi) ; load dark theme first
-  ;;           '(modus-operandi modus-vivendi-tinted))))
+  ;;             '(modus-operandi-tinted modus-operandi) ; load dark theme first
+  ;;           '(modus-operandi modus-operandi-tinted))))
   :config
   (setq modus-themes-italic-constructs nil
         modus-themes-bold-constructs t
@@ -279,20 +279,17 @@
           ;;   ;; (underline-link-visited border)
           ;;   ;; (underline-link-symbolic border)
 
-          ;; (bg-heading-0 bg-green-subtle) ; green
-          (bg-heading-1 bg-dim)
-          ;; (bg-heading-2 bg-yellow-nuanced)
-          ;; (bg-heading-3 bg-blue-nuanced) ; blue
+          (bg-heading-0 bg-cyan-nuanced)
+          (bg-heading-1 bg-inactive)
+          (bg-heading-2 bg-yellow-nuanced)
+          (bg-heading-3 bg-blue-nuanced) ; blue
 
-          ;;   ;; copy from intense
           ;; (overline-heading-0 unspecified)
-          ;;   (overline-heading-1 magenta-cooler)
-          ;;   (overline-heading-2 magenta-warmer)
+          (overline-heading-1 magenta-cooler)
+          ;; (overline-heading-2 magenta-warmer)
 
-          ;;   ;; And expand the preset here. Note that the ,@ works because we use
-          ;;   ;; the backtick for this list, instead of a straight quote.
-          ;;   ;; ,@modus-themes-preset-overrides-faint
-          ,@modus-themes-preset-overrides-intense
+          ;; ,@modus-themes-preset-overrides-faint
+          ;; ,@modus-themes-preset-overrides-intense
           )
         )
 
@@ -323,109 +320,73 @@
     (interactive)
     ;; (message "modus-themes-after-hook : my-modus-themes-custom-faces")
     (modus-themes-with-colors
-      (custom-set-faces
-       `(consult-separator ((,c :inherit default :foreground ,yellow-intense)))
-       `(consult-notes-time ((,c :inherit default :foreground ,cyan-intense)))
+     (custom-set-faces
+      `(consult-separator ((,c :inherit default :foreground ,yellow-intense)))
+      `(consult-notes-time ((,c :inherit default :foreground ,cyan-intense)))
 
-       ;; `(ekg-notes-mode-title ((,c :inherit outline-1 :weight bold :height 1.0)))
-       ;; `(ekg-title ((,c :inherit outline-2 :weight semibold :height 1.0 :underline t)))
-       ;; `(ekg-tag ((,c :background ,bg-yellow-nuanced :box (:line-width 1 :color ,fg-dim) :foreground ,fg-main :style nil))) ; prose-tag
-       ;; `(ekg-resource ((,c :inherit outline-7 :weight regular :height 1.0 :underline t)))
-       ;; `(ekg-metadata ((,c :inherit outline-1 :weight regular :height 1.0)))
+      ;; `(ekg-notes-mode-title ((,c :inherit outline-1 :weight bold :height 1.0)))
+      ;; `(ekg-title ((,c :inherit outline-2 :weight semibold :height 1.0 :underline t)))
+      ;; `(ekg-tag ((,c :background ,bg-yellow-nuanced :box (:line-width 1 :color ,fg-dim) :foreground ,fg-main :style nil))) ; prose-tag
+      ;; `(ekg-resource ((,c :inherit outline-7 :weight regular :height 1.0 :underline t)))
+      ;; `(ekg-metadata ((,c :inherit outline-1 :weight regular :height 1.0)))
 
-       `(org-list-dt ((,c :foreground ,fg-main :weight bold))) ;; 2025-01-14
-       ;; `(org-tag ((,c :background ,bg-yellow-nuanced :box (:line-width 1 :color ,fg-dim) :foreground ,fg-main :style nil))) ; prose-tag
+      `(org-list-dt ((,c :foreground ,fg-main :weight bold))) ;; 2025-01-14
+      ;; `(org-tag ((,c :background ,bg-yellow-nuanced :box (:line-width 1 :color ,fg-dim) :foreground ,fg-main :style nil))) ; prose-tag
 
-       `(diredp-file-name ((,c :foreground ,fg-main)))
+      `(diredp-file-name ((,c :foreground ,fg-main)))
+      ;; `(org-agenda-diary ((,c :inherit org-agenda-calendar-sexp :foreground ,fg-main :weight semibold)))
 
-       ;; `(diredp-dir-name ((,c :inherit dired-directory)))
-       ;; `(diredp-ignored-file-name ((,c :inherit shadow)))
-       ;; `(diredp-compressed-file-suffix ((,c :foreground ,err)))
-       ;; `(diredp-symlink ((,c :inherit dired-symlink)))
-       ;; `(diredp-dir-heading ((,c :inherit bold)))
-       ;; `(diredp-file-suffix ((,c :foreground ,variable)))
-       ;; `(diredp-date-time ((,c :foreground ,date-common)))
-       ;; `(diredp-no-priv ((,c :inherit shadow)))
-       ;; `(diredp-number ((,c :inherit shadow)))
-       ;; `(diredp-dir-priv ((,c :inherit dired-directory)))
-       ;; `(diredp-exec-priv ((,c :foreground ,accent-1)))
-       ;; `(diredp-write-priv ((,c :foreground ,accent-0)))
-       ;; `(diredp-rare-priv ((,c :foreground ,accent-3)))
-       ;; `(diredp-read-priv ((,c :foreground ,fg-main)))
-       ;; `(diredp-link-priv ((,c :foreground ,fg-link)))
-       ;; `(diredp-other-priv ((,c :foreground ,accent-2)))
+      ;; `(org-link ((,c :inherit link :weight bold)))
+      ;; `(denote-faces-link ((,c :inherit link :weight bold :slant italic)))
 
-       ;; `(diredp-autofile-name ((,c :background ,bg-inactive)))
-       ;; `(diredp-compressed-file-name ((,c :foreground ,warning)))
-       ;; `(diredp-deletion ((,c :inherit dired-flagged)))
-       ;; `(diredp-deletion-file-name ((,c :inherit diredp-deletion)))
-       ;; `(diredp-executable-tag ((,c :inherit diredp-exec-priv)))
-       ;; `(diredp-flag-mark ((,c :inherit dired-marked)))
-       ;; `(diredp-flag-mark-line ((,c :inherit dired-marked)))
-       ;; `(diredp-tagged-autofile-name ((,c :inherit (diredp-autofile-name dired-marked))))
+      ;; `(org-drawer ((,c :inherit modus-themes-fixed-pitch :foreground ,prose-metadata :height 0.8)))
+      ;; `(org-special-keyword ((,c :inherit modus-themes-fixed-pitch :foreground ,prose-metadata)))
 
-       ;; `(org-agenda-diary ((,c :inherit org-agenda-calendar-sexp :foreground ,fg-main :weight semibold)))
+      ;; 2024-07-03 spacious-padding
+      `(tab-bar ((,c :background ,bg-tab-bar)))
+      `(tab-bar-tab-group-current ((,c :inherit bold :background ,bg-tab-current :box (:line-width -2 :color ,bg-tab-current) :foreground ,fg-alt)))
+      `(tab-bar-tab-group-inactive ((,c :background ,bg-tab-bar :box (:line-width -2 :color ,bg-tab-bar) :foreground ,fg-alt)))
+      `(tab-bar-tab ((,c :inherit bold :box (:line-width -2 :color ,bg-tab-current) :background ,bg-tab-current)))
+      `(tab-bar-tab-inactive ((,c :box (:line-width -2 :color ,bg-tab-other) :background ,bg-tab-other)))
+      `(tab-bar-tab-ungrouped ((,c :inherit tab-bar-tab-inactive)))
+      `(fringe ((,c :background ,bg-dim)))
 
-       ;; `(org-link ((,c :inherit link :weight bold)))
-       ;; `(denote-faces-link ((,c :inherit link :weight bold :slant italic)))
+      `(vterm-color-black ((,c :background "gray25" :foreground "gray25")))
+      `(vterm-color-yellow ((,c :background ,yellow-intense :foreground ,yellow-intense)))
+      `(org-mode-line-clock ((,c :inherit bold :foreground ,modeline-info)))
+      `(org-mode-line-clock-overrun ((,c :inherit bold :foreground ,modeline-err)))
+      `(jinx-misspelled ((,c :underline (:style wave :color ,magenta-cooler))))
+      ;; `(ten-id-face ((,c :inherit font-lock-keyword-face :underline (:style double-line :color ,cyan))))
 
-       ;; `(org-drawer ((,c :inherit modus-themes-fixed-pitch :foreground ,prose-metadata :height 0.8)))
-       ;; `(org-special-keyword ((,c :inherit modus-themes-fixed-pitch :foreground ,prose-metadata)))
-
-       ;; 2024-07-03 spacious-padding
-       `(tab-bar ((,c :background ,bg-tab-bar)))
-       `(tab-bar-tab-group-current ((,c :inherit bold :background ,bg-tab-current :box (:line-width -2 :color ,bg-tab-current) :foreground ,fg-alt)))
-       `(tab-bar-tab-group-inactive ((,c :background ,bg-tab-bar :box (:line-width -2 :color ,bg-tab-bar) :foreground ,fg-alt)))
-       `(tab-bar-tab ((,c :inherit bold :box (:line-width -2 :color ,bg-tab-current) :background ,bg-tab-current)))
-       `(tab-bar-tab-inactive ((,c :box (:line-width -2 :color ,bg-tab-other) :background ,bg-tab-other)))
-       `(tab-bar-tab-ungrouped ((,c :inherit tab-bar-tab-inactive)))
-       `(fringe ((,c :background ,bg-dim)))
-
-       `(vterm-color-black ((,c :background "gray25" :foreground "gray25")))
-       `(vterm-color-yellow ((,c :background ,yellow-intense :foreground ,yellow-intense)))
-       `(org-mode-line-clock ((,c :inherit bold :foreground ,modeline-info)))
-       `(org-mode-line-clock-overrun ((,c :inherit bold :foreground ,modeline-err)))
-       `(jinx-misspelled ((,c :underline (:style wave :color ,magenta-cooler))))
-       ;; `(ten-id-face ((,c :inherit font-lock-keyword-face :underline (:style double-line :color ,cyan))))
-
-       ;; `(keycast-command ((,c :inherit default :height 0.9)))
-       )
+      ;; `(keycast-command ((,c :inherit default :height 0.9)))
       )
+     )
     (when (display-graphic-p) ; gui
       (when (locate-library "spacious-padding")
         (spacious-padding-mode +1)))
     )
   (add-hook 'modus-themes-post-load-hook #'my/modus-themes-custom-faces)
   )
-;; end-of use-package
 
 ;;;; ef-themes
 
 (use-package! ef-themes
   :defer t
   :init
-  (setq ef-themes-to-toggle
-        (let ((hr (nth 2 (decode-time))))
-          (if (or (< hr 6) (< 19 hr)) ; between 7 PM and 6 AM
-              '(ef-owl ef-eagle) ; load dark theme first
-            '(ef-eagle ef-owl))))
-
+  (setq ef-themes-to-toggle '(ef-owl ef-eagle))
   (defun ef-themes-load-random-light ()
     (interactive) (ef-themes-load-random 'light))
   (defun ef-themes-load-random-dark ()
     (interactive) (ef-themes-load-random 'dark))
   :config
   (setq ef-themes-light-themes
-        '(
-          ef-maris-light ; blue
+        '(ef-maris-light ; blue
           ef-eagle ; yellow
           ef-kassio ; pink
           ef-frost ; green
-          ef-reverie
-          ))
+          ef-reverie))
   (setq ef-themes-dark-themes
-        '(
-          ef-melissa-dark ;; Like solarized but much nicer colors.
+        '(ef-melissa-dark ;; Like solarized but much nicer colors.
           ef-dream ; 보라 - 드라큘라
           ef-rosa ; 자주
           ef-maris-dark
@@ -433,12 +394,25 @@
           ef-owl ; 2024-08-19 new
           ))
 
-  ;; Read the doc string or manual for this one.  The symbols can be
-  ;; combined in any order.
+  ;; Read the doc string or manual for this one.  The symbols can be combined in any order.
   (setq ef-themes-region '(intense no-extend neutral))
 
-  ;; (when (display-graphic-p) ; gui
-  ;;   (setq ef-themes-variable-pitch-ui t))
+  (when (display-graphic-p) ; gui
+    ;; (setq ef-themes-variable-pitch-ui t)
+    (setq ef-themes-headings
+          '(
+            (0                . (bold 1.2)) ;; variable-pitch
+            (1                . (bold  1.1))
+            (2                . (bold 1.05))
+            (3                . (semibold 1.0))
+            (4                . (medium 1.0))
+            (5                . (medium 1.0))
+            (6                . (medium 1.0))
+            (7                . (medium 1.0))
+            (agenda-date      . (semibold 1.0))
+            (agenda-structure . (bold 1.1))
+            (t                . (medium 1.0)))
+          ))
 
   (defun my/ef-themes-custom-faces ()
     "Configure `hl-todo-keyword-faces' with Ef themes colors.
@@ -446,63 +420,62 @@
     (interactive)
     ;; (message "ef-themes-post-load-hook : my-ef-themes-custom-faces")
     (ef-themes-with-colors
-     (custom-set-faces
-      `(consult-separator ((,c :inherit default :foreground ,yellow)))
-      `(consult-notes-time ((,c :inherit default :foreground ,cyan)))
+      (custom-set-faces
+       `(consult-separator ((,c :inherit default :foreground ,yellow)))
+       `(consult-notes-time ((,c :inherit default :foreground ,cyan)))
 
-      ;; `(ekg-notes-mode-title ((,c :inherit outline-1 :weight bold :height 1.0)))
-      ;; `(ekg-title ((,c :inherit outline-2 :weight semibold :height 1.0 :underline t)))
-      ;; `(ekg-tag ((,c :background ,bg-yellow-subtle :box (:line-width 1 :color ,fg-dim) :foreground ,fg-main :style nil))) ; prose-tag
-      ;; `(ekg-resource ((,c :inherit outline-7 :weight regular :height 1.0 :underline t)))
-      ;; `(ekg-metadata ((,c :inherit outline-1 :weight regular :height 1.0)))
+       ;; `(ekg-notes-mode-title ((,c :inherit outline-1 :weight bold :height 1.0)))
+       ;; `(ekg-title ((,c :inherit outline-2 :weight semibold :height 1.0 :underline t)))
+       ;; `(ekg-tag ((,c :background ,bg-yellow-subtle :box (:line-width 1 :color ,fg-dim) :foreground ,fg-main :style nil))) ; prose-tag
+       ;; `(ekg-resource ((,c :inherit outline-7 :weight regular :height 1.0 :underline t)))
+       ;; `(ekg-metadata ((,c :inherit outline-1 :weight regular :height 1.0)))
 
-      ;; `(org-link ((,c :inherit link :weight bold)))
-      ;; `(denote-faces-link ((,c :inherit link :weight bold :slant italic)))
-      ;; `(org-agenda-diary ((,c :inherit org-agenda-calendar-sexp :foreground ,fg-main :weight semibold)))
+       ;; `(org-link ((,c :inherit link :weight bold)))
+       ;; `(denote-faces-link ((,c :inherit link :weight bold :slant italic)))
+       ;; `(org-agenda-diary ((,c :inherit org-agenda-calendar-sexp :foreground ,fg-main :weight semibold)))
 
-      `(org-list-dt ((,c :foreground ,fg-main :weight bold))) ;; 2025-01-14
-      ;; `(org-tag ((,c :background ,bg-yellow-subtle :box (:line-width 1 :color ,fg-dim) :foreground ,fg-main :style nil))) ; prose-tag
-      `(diredp-file-name ((,c :foreground ,fg-main)))
+       `(org-list-dt ((,c :foreground ,fg-main :weight bold))) ;; 2025-01-14
+       ;; `(org-tag ((,c :background ,bg-yellow-subtle :box (:line-width 1 :color ,fg-dim) :foreground ,fg-main :style nil))) ; prose-tag
+       `(diredp-file-name ((,c :foreground ,fg-main)))
 
-      `(tab-bar ((,c :background ,bg-tab-bar)))
-      `(tab-bar-tab-group-current ((,c :inherit bold :background ,bg-tab-current :box (:line-width -2 :color ,bg-tab-current) :foreground ,fg-alt)))
-      `(tab-bar-tab-group-inactive ((,c :background ,bg-tab-bar :box (:line-width -2 :color ,bg-tab-bar) :foreground ,fg-alt)))
-      `(tab-bar-tab ((,c :inherit bold :box (:line-width -2 :color ,bg-tab-current) :background ,bg-tab-current)))
-      `(tab-bar-tab-inactive ((,c :box (:line-width -2 :color ,bg-tab-other) :background ,bg-tab-other)))
-      `(tab-bar-tab-ungrouped ((,c :inherit tab-bar-tab-inactive)))
+       `(tab-bar ((,c :background ,bg-tab-bar)))
+       `(tab-bar-tab-group-current ((,c :inherit bold :background ,bg-tab-current :box (:line-width -2 :color ,bg-tab-current) :foreground ,fg-alt)))
+       `(tab-bar-tab-group-inactive ((,c :background ,bg-tab-bar :box (:line-width -2 :color ,bg-tab-bar) :foreground ,fg-alt)))
+       `(tab-bar-tab ((,c :inherit bold :box (:line-width -2 :color ,bg-tab-current) :background ,bg-tab-current)))
+       `(tab-bar-tab-inactive ((,c :box (:line-width -2 :color ,bg-tab-other) :background ,bg-tab-other)))
+       `(tab-bar-tab-ungrouped ((,c :inherit tab-bar-tab-inactive)))
 
-      ;; `(keycast-command ((,c :inherit ef-themes-ui-variable-pitch :background ,bg-main :foreground ,fg-main :weight semibold)))
-      ;; `(keycast-command ((,c :inherit default :height 0.9)))
-      `(fringe ((,c :background ,bg-dim)))
-      `(org-mode-line-clock ((,c :inherit bold :foreground ,modeline-info)))
-      `(org-mode-line-clock-overrun ((,c :inherit bold :foreground ,modeline-err)))
-      `(jinx-misspelled ((,c :underline (:style wave :color ,magenta-cooler))))
-      ;; `(ten-id-face ((,c :inherit font-lock-keyword-face :underline (:style double-line :color ,cyan))))
-      )
-     (setq hl-todo-keyword-faces
-           `(("HOLD" . ,yellow)
-             ("TODO" . ,red)
-             ("NEXT" . ,blue)
-             ("THEM" . ,magenta)
-             ("PROG" . ,cyan-warmer)
-             ("OKAY" . ,green-warmer)
-             ("DONT" . ,yellow-warmer)
-             ("FAIL" . ,red-warmer)
-             ("BUG" . ,red-warmer)
-             ("DONE" . ,green)
-             ("NOTE" . ,blue-warmer)
-             ("KLUDGE" . ,cyan)
-             ("HACK" . ,cyan)
-             ("TEMP" . ,red)
-             ("FIXME" . ,red-warmer)
-             ("XXX+" . ,red-warmer)
-             ("REVIEW" . ,red)
-             ("DEPRECATED" . ,yellow))))
+       ;; `(keycast-command ((,c :inherit ef-themes-ui-variable-pitch :background ,bg-main :foreground ,fg-main :weight semibold)))
+       ;; `(keycast-command ((,c :inherit default :height 0.9)))
+       `(fringe ((,c :background ,bg-dim)))
+       `(org-mode-line-clock ((,c :inherit bold :foreground ,modeline-info)))
+       `(org-mode-line-clock-overrun ((,c :inherit bold :foreground ,modeline-err)))
+       `(jinx-misspelled ((,c :underline (:style wave :color ,magenta-cooler))))
+       ;; `(ten-id-face ((,c :inherit font-lock-keyword-face :underline (:style double-line :color ,cyan))))
+       )
+      (setq hl-todo-keyword-faces
+            `(("HOLD" . ,yellow)
+              ("TODO" . ,red)
+              ("NEXT" . ,blue)
+              ("THEM" . ,magenta)
+              ("PROG" . ,cyan-warmer)
+              ("OKAY" . ,green-warmer)
+              ("DONT" . ,yellow-warmer)
+              ("FAIL" . ,red-warmer)
+              ("BUG" . ,red-warmer)
+              ("DONE" . ,green)
+              ("NOTE" . ,blue-warmer)
+              ("KLUDGE" . ,cyan)
+              ("HACK" . ,cyan)
+              ("TEMP" . ,red)
+              ("FIXME" . ,red-warmer)
+              ("XXX+" . ,red-warmer)
+              ("REVIEW" . ,red)
+              ("DEPRECATED" . ,yellow))))
 
     (when (display-graphic-p) ; gui
       (when (locate-library "spacious-padding")
         (spacious-padding-mode +1)))
-    ;; (setq ring-bell-function 'jf/pulse)
     )
   (add-hook 'ef-themes-post-load-hook #'my/ef-themes-custom-faces))
 
@@ -560,6 +533,33 @@
 ;;   )
 
 ;;;; DONT pulsar - performance issue
+
+(use-package! pulsar
+  ;; A little bit of visual feedback.  See
+  ;; https://protesilaos.com/codelog/2022-03-14-emacs-pulsar-demo/
+  :hook
+  (consult-after-jump . pulsar-recenter-top)
+  (consult-after-jump . pulsar-reveal-entry)
+  ;; integration with the built-in `imenu':
+  (imenu-after-jump . pulsar-recenter-top)
+  (imenu-after-jump . pulsar-reveal-entry)
+  :config
+  (pulsar-global-mode 1)
+  (setq pulsar-face 'pulsar-magenta
+        pulsar-delay 0.05)
+  :bind (("C-c C-l" . jf/pulse)))
+
+(defun jf/pulse (&optional parg)
+  "Pulse the current line.
+
+  When PARG pulse between `point' and `mark'."
+  (interactive "P")
+  (if (car parg)
+      (pulsar--pulse nil nil (point) (mark))
+    (pulsar-pulse-line)))
+
+;; Silence that bell by pulsing the line instead
+(setq ring-bell-function 'jf/pulse)
 
 ;; LionyxML-lemacs/lemacs-init.org
 ;; The `pulsar' package enhances the user experience in Emacs by providing
