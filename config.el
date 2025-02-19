@@ -545,13 +545,14 @@
   (imenu-after-jump . pulsar-reveal-entry)
   :config
   (pulsar-global-mode 1)
-  (setq pulsar-face 'pulsar-magenta
-        pulsar-delay 0.05)
+  (setq pulsar-face 'pulsar-generic)
+  ;; (setq pulsar-face 'evil-ex-lazy-highlight)
+  (setq pulsar-delay 0.025)
+  (setq pulsar-iterations 10)
   :bind (("C-c C-l" . jf/pulse)))
 
 (defun jf/pulse (&optional parg)
   "Pulse the current line.
-
   When PARG pulse between `point' and `mark'."
   (interactive "P")
   (if (car parg)
@@ -644,7 +645,6 @@
 
 (after! denote
   (message "Load: custom denote")
-  ;; no dependency on org-roam, use default's org-id
   (require 'denote-funcs)
   (require 'denote-config)
   (require 'denote-hugo) ; for publish

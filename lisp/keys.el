@@ -63,23 +63,25 @@
 
 ;;; NOTE Switch Buffer / Tab-bar, Tab-line / Workspace (persp-mode)
 
-;;;; DONT 1) Window : winum M-[0-9]
+;;;; 1) Window : winum M-[0-9]
 
-;; 직관적인 원키
-;; (when (locate-library "winum")
-;;   (with-eval-after-load 'winum
-;;     (define-key winum-keymap (kbd "M-0") 'winum-select-window-0-or-10)
-;;     (define-key winum-keymap (kbd "M-1") 'winum-select-window-1)
-;;     (define-key winum-keymap (kbd "M-2") 'winum-select-window-2)
-;;     (define-key winum-keymap (kbd "M-3") 'winum-select-window-3)
-;;     (define-key winum-keymap (kbd "M-4") 'winum-select-window-4)
-;;     (define-key winum-keymap (kbd "M-5") 'winum-select-window-5)
-;;     (define-key winum-keymap (kbd "M-6") 'winum-select-window-6)
-;;     (define-key winum-keymap (kbd "M-7") 'winum-select-window-7)
-;;     (define-key winum-keymap (kbd "M-8") 'winum-select-window-8)
-;;     (define-key winum-keymap (kbd "M-9") 'winum-select-window-9)
-;;     )
-;;   )
+;; Fast Easy Buffer Switching
+(when (locate-library "winum")
+  (with-eval-after-load 'winum
+    (define-key winum-keymap (kbd "M-1") 'winum-select-window-1)
+    (define-key winum-keymap (kbd "M-2") 'winum-select-window-2)
+    (define-key winum-keymap (kbd "M-3") 'winum-select-window-3)
+    (define-key winum-keymap (kbd "M-4") 'winum-select-window-4)
+
+    ;; not used
+    ;; (define-key winum-keymap (kbd "M-5") 'winum-select-window-5)
+    ;; (define-key winum-keymap (kbd "M-6") 'winum-select-window-6)
+    ;; (define-key winum-keymap (kbd "M-7") 'winum-select-window-7)
+    ;; (define-key winum-keymap (kbd "M-8") 'winum-select-window-8)
+    ;; (define-key winum-keymap (kbd "M-9") 'winum-select-window-9)
+    ;; (define-key winum-keymap (kbd "M-0") 'winum-select-window-0-or-10) ; minibuffer
+    )
+  )
 
 ;;;; 2) Worksapce : SPC Tab [0-9]
 
@@ -88,9 +90,11 @@
 
 ;;;; 3) Buffer : tab-line : s-[, s-]
 
-;; Fast
+;; Super Fast
 
-;;;; 4) Tab-bar :
+;;;; 4) Tab-bar
+
+;; g b
 
 ;;; Packages
 
@@ -696,13 +700,13 @@
   (global-set-key (kbd "C-c j E") 'my/open-external)
 
   (global-set-key (kbd "C-c j m") 'my/open-tempel-templates)
-  (global-set-key (kbd "C-c j n") 'my/open-now-inbox-file)
+  (global-set-key (kbd "C-c j i") 'my/consult-org-inbox)
+  (global-set-key (kbd "C-c j I") 'my/open-now-inbox-file)
 
   (global-set-key (kbd "C-c j SPC") 'my/open-index-file)
 
   (global-set-key (kbd "C-c j r") 'my/consult-org-reading)
 
-  ;; (global-set-key (kbd "C-c j i") 'my/consult-org-inbox)
   (global-set-key (kbd "C-c j t") 'my/consult-org-tasks)
 
   (global-set-key (kbd "C-c j k") 'my/consult-org-kdc)
@@ -725,7 +729,7 @@
   (global-set-key (kbd "C-c j o h") 'my/open-hugo-notes-path)
   (global-set-key (kbd "C-c j o e") 'my/open-elfeed-list)
   (global-set-key (kbd "C-c j o q") 'my/open-fortunes-path)
-  ;; (global-set-key (kbd "C-c j o i") 'my/open-inbox-file)
+  (global-set-key (kbd "C-c j o i") 'my/open-now-inbox-file)
   (global-set-key (kbd "C-c j o l") 'my/open-links-file)
   (global-set-key (kbd "C-c j o t") 'my/open-tags-file)
   ;; (global-set-key (kbd "C-c j o t") 'my/open-tasks-file)

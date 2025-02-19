@@ -878,7 +878,7 @@
 
 (after! corfu
   ;; (setq corfu-auto-delay 0.5) ; doom 0.24
-  (setq corfu-auto-prefix 2) ; doom 2, default 3
+  (setq corfu-auto-prefix 3) ; doom 2, default 3
   (setq corfu-preselect 'valid) ; doom 'prompt
   (setq tab-always-indent t) ; for jump-out-of-pair - doom 'complete
   (setq +corfu-want-minibuffer-completion nil) ; doom t
@@ -2856,8 +2856,8 @@ ${content}"))
   :after org
   :init
   (setq org-rainbow-tags-hash-start-index 0)
-  ;; (setq org-rainbow-tags-extra-face-attributes
-  ;;       '(:inverse-video t :box nil :weight 'bold))
+  (setq org-rainbow-tags-extra-face-attributes
+        '(:inverse-video t :box nil :weight 'bold))
   ;; :hook (org-mode . org-rainbow-tags-mode)
   )
 
@@ -4762,7 +4762,7 @@ x×X .,·°;:¡!¿?`'‘’   ÄAÃÀ TODO
 (use-package! keycast
   :config
   ;; (setq keycast-tab-bar-minimal-width 50) ; 40
-  ;; (setq keycast-tab-bar-format "%10s%k%c%r")
+  (setq keycast-tab-bar-format "%10s%k%c%r")
 
   (dolist (input '(self-insert-command org-self-insert-command))
     (add-to-list 'keycast-substitute-alist `(,input "." "Typing…")))
@@ -4783,9 +4783,16 @@ x×X .,·°;:¡!¿?`'‘’   ÄAÃÀ TODO
              pixel-scroll-interpolate-up ; <prior> page-up
              pixel-scroll-interpolate-down ; <next> page-down
 
+             pixel-scroll-precision
+             evil-jump-item
+             evil-mouse-drag-region ;; double click
+
              org-cycle
-             ;; toggle-input-method
-             ;; block-toggle-input-method
+             keyboard-quit
+             block-toggle-input-method
+             save-buffer
+             toggle-input-method
+
              ;; evil-formal-state
              ;; evil-force-normal-state
 
@@ -4796,7 +4803,8 @@ x×X .,·°;:¡!¿?`'‘’   ÄAÃÀ TODO
              ;; pdf-view-mouse-set-region
              ;; mouse-set-region
              ))
-    (add-to-list 'keycast-substitute-alist `(,event nil))))
+    (add-to-list 'keycast-substitute-alist `(,event nil)))
+  )
 
 ;;;; info-colors Info & Help
 

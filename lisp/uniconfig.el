@@ -335,6 +335,7 @@ Also see `prot-window-delete-popup-frame'." command)
   (require 'tmr)
   (declare-function tmr "tmr" (time &optional description acknowledgep))
   (defvar tmr-timer-created-functions)
+
 ;;;###autoload (autoload 'prot-window-popup-tmr "prot-window")
   (prot-window-define-with-popup-frame tmr)
   (add-hook 'tmr-timer-created-functions #'prot-window-delete-popup-frame))
@@ -383,7 +384,6 @@ Also see `prot-window-delete-popup-frame'." command)
 (when (locate-library "citar")
 
   (with-eval-after-load 'citar
-
     (setq
      citar-templates
      '((main
@@ -394,7 +394,7 @@ Also see `prot-window-delete-popup-frame'." command)
         . "${shorttitle:25} ${=type=:10} ${namea:16} ${url:20} ${tags keywords:*}") ; 2024-11-17 add url
        (preview
         .
-        "${title} :${year issued date:4}\n- ${author} ${translator} ${namea}\n- ${abstract}\n- ${shorttitle}") ; citar-copy-reference
+        "${title} ${year issued date:4}\n- ${shorttitle}\n- ${author} ${translator} ${namea}\n- ${abstract}") ; citar-copy-reference
        (note . "#+title: ${author translator:10}, ${title}")))
     ;; (note . "Notes on ${author:10 editor:%etal}, ${title}")
 
